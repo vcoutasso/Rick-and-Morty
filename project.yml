@@ -1,0 +1,17 @@
+name: RickAndMorty
+
+settings:
+  DEVELOPMENT_TEAM: H7BM7N56V5
+
+options:
+  bundleIdPrefix: com.vcoutasso
+
+targets:
+  RickAndMorty:
+    type: application
+    platform: iOS
+    deploymentTarget: 15.0
+    settings:
+      TARGETED_DEVICE_FAMILY: 1
+    sources:
+      - path: RickAndMorty
