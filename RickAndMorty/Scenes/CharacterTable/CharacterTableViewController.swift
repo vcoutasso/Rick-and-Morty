@@ -1,5 +1,5 @@
 //
-//  CharacterListViewController.swift
+//  CharacterTableViewController.swift
 //  RickAndMorty
 //
 //  Created by Vinícius Couto on 14/10/21.
@@ -7,14 +7,14 @@
 
 import UIKit
 
-protocol CharacterListDisplayLogic: AnyObject {
+protocol CharacterTableDisplayLogic: AnyObject {
 
 }
 
-class CharacterListViewController: UITableViewController, CharacterListDisplayLogic {
+class CharacterTableViewController: UITableViewController, CharacterTableDisplayLogic {
 
-    var interactor: CharacterListBusinessLogic?
-    var router: (NSObject & CharacterListRoutingLogic & CharacterListDataPassing)?
+    var interactor: CharacterTableBusinessLogic?
+    var router: (NSObject & CharacterTableRoutingLogic & CharacterTableDataPassing)?
 
     override func viewDidLoad() {
         super.viewDidLoad()
