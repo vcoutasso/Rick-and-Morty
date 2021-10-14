@@ -11,6 +11,6 @@ protocol CharacterTablePresentationLogic {
 
 }
 
-class CharacterTablePresenter {
+class CharacterTablePresenter: CharacterTablePresentationLogic {
     weak var viewController: CharacterTableDisplayLogic?
 }

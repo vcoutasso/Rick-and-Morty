@@ -16,5 +16,6 @@ protocol CharacterTableDataPassing {
 }
 
 class CharacterTableRouter: NSObject, CharacterTableRoutingLogic, CharacterTableDataPassing {
-
+    weak var viewController: CharacterTableViewController?
+    var dataStore: CharacterTableDataStore?
 }
