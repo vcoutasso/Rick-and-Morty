@@ -13,5 +13,14 @@ targets:
     deploymentTarget: 15.0
     settings:
       TARGETED_DEVICE_FAMILY: 1
-    sources:
-      - path: RickAndMorty
+    sources: RickAndMorty
+
+  RickAndMortyTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources: RickAndMortyTests
+
+  RickAndMortyUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources: RickAndMortyUITests

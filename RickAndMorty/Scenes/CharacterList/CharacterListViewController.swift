@@ -16,20 +16,30 @@ class CharacterListViewController: UITableViewController, CharacterListDisplayLo
     var interactor: CharacterListBusinessLogic?
     var router: (NSObject & CharacterListRoutingLogic & CharacterListDataPassing)?
 
-    // MARK: - Lazy views
-
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        tableView.register(CharacterTableViewCell.self)
     }
 
     // MARK: - Table View
+
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        1
+    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         1
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        UITableViewCell()
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CharacterTableViewCell.defaultReuseIdentifier) as? CharacterTableViewCell else {
+            return CharacterTableViewCell()
+        }
+
+        cell.setup()
+
+        return cell
     }
 
     // TODO: A header view would probably be a better fit 
