@@ -14,6 +14,9 @@ targets:
     settings:
       TARGETED_DEVICE_FAMILY: 1
     sources: RickAndMorty
+    scheme:
+      testTargets:
+        - RickAndMortyTests
 
   RickAndMortyTests:
     type: bundle.unit-test
@@ -24,3 +27,5 @@ targets:
     type: bundle.ui-testing
     platform: iOS
     sources: RickAndMortyUITests
+    settings:
+      TEST_TARGET_NAME: RickAndMorty
