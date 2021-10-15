@@ -32,6 +32,12 @@ enum CharacterTable {
             let name: String
             let url: String
         }
+
+        enum StatusValues: String {
+            case alive = "Alive"
+            case dead = "Dead"
+            case unknown = "unknown"
+        }
     }
 
     enum FetchData {
