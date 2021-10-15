@@ -31,14 +31,14 @@ class CharacterTableInteractor: CharacterTableBusinessLogic, CharacterTableDataS
 
     // MARK: - Private methods
 
-    // TODO: Implement
     private func fetchAllCharacters() {
         let worker = CharacterTableWorker()
-        worker.fetchAllCharacters { characters in
-            print(characters.count)
+        worker.fetchAllCharacters { [weak self] characters in
+            self?.presenter?.presentCharactersData(response: .init(characters: characters))
         }
     }
     
     private func fetchCharacter(id: Int) {
+        // TODO: Implement
     }
 }

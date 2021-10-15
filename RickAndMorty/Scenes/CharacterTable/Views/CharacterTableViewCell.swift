@@ -9,9 +9,15 @@ import UIKit
 
 class CharacterTableViewCell: UITableViewCell {
 
-    // MARK: - Setup view
+    // MARK: - Attributes
 
-    func setup() {
+    var character: CharacterTable.Character?
+
+    // MARK: - Lazy views
+
+    // MARK: - Setup
+
+    func setup(with character: CharacterTable.Character) {
 
     }
 }

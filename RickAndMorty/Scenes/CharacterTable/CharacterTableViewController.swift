@@ -12,8 +12,14 @@ protocol CharacterTableDisplayLogic: AnyObject {
 }
 
 class CharacterTableViewController: UITableViewController, CharacterTableDisplayLogic {
-    var interactor: CharacterTableBusinessLogic?
-    var router: (NSObject & CharacterTableRoutingLogic & CharacterTableDataPassing)?
+    // MARK: - Attributes
+
+    private(set) var interactor: CharacterTableBusinessLogic?
+    private(set) var router: (NSObject & CharacterTableRoutingLogic & CharacterTableDataPassing)?
+
+    // MARK: - Table Data
+
+    private(set) var characters = [CharacterTable.Character]()
 
     // MARK: - Object lifecycle
 
@@ -54,7 +60,11 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
     // MARK: - Display logic
 
     func displayCharacters(viewModel: CharacterTable.FetchData.ViewModel) {
-        //
+        characters = viewModel.characters
+
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
 
     // MARK: - Private methods
@@ -71,7 +81,7 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        1
+        characters.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -79,7 +89,7 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
             return CharacterTableViewCell()
         }
 
-        cell.setup()
+        cell.setup(with: characters[indexPath.row])
 
         return cell
     }

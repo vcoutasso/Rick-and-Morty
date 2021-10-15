@@ -45,11 +45,11 @@ enum CharacterTable {
         }
 
         struct Response {
-            var response: RequestResponse<Character>
+            var characters: [CharacterTable.Character]
         }
         
         struct ViewModel {
-            var charactera: [Character]
+            var characters: [CharacterTable.Character]
         }
     }
 }
