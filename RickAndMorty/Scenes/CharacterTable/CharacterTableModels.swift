@@ -16,13 +16,22 @@ enum CharacterTable {
         let species:  String
         let type: String
         let gender: String
-        // TODO: Implement origin and location
-        //let origin
-        //let location
+        let origin: Origin
+        let location: Location
         let image: String
         let episode: [String]
         let url: String
         let created: String
+
+        struct Origin: Decodable {
+            let name: String
+            let url: String
+        }
+
+        struct Location: Decodable {
+            let name: String
+            let url: String
+        }
     }
 
     enum FetchData {
