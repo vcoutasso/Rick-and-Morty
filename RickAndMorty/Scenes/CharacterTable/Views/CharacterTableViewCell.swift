@@ -13,34 +13,10 @@ class CharacterTableViewCell: UITableViewCell {
 
     private(set) var character: CharacterTable.Character?
 
-    // MARK: - Lazy views
+    // MARK: - Views
 
-    private lazy var avatarImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-
-        return imageView
-    }()
-
-    private lazy var statusSpeciesLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-
-        label.textColor = .black
-        label.font = .systemFont(ofSize: 18, weight: .medium)
-
-        return label
-    }()
-
-    private lazy var nameLabelView: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-
-        label.textColor = .black
-        label.font = .systemFont(ofSize: LayoutMetrics.nameFontSize, weight: .heavy)
-
-        return label
-    }()
+    private let titleStackView: CharacterTableViewCellTitle = .init()
+    private let avatarImageView: UIImageView = .init()
 
     private lazy var infoStackView: UIStackView = {
         let stack = UIStackView()
@@ -70,9 +46,7 @@ class CharacterTableViewCell: UITableViewCell {
 
     func setup(with character: CharacterTable.Character) {
         avatarImageView.downloaded(from: character.image)
-
-        nameLabelView.text = character.name
-        statusSpeciesLabel.text = "\(character.status) - \(character.species)"
+        titleStackView.setup(with: character)
     }
 
     private func setupContentView() {
@@ -81,6 +55,8 @@ class CharacterTableViewCell: UITableViewCell {
     }
 
     private func setupAvatarImageView() {
+        avatarImageView.translatesAutoresizingMaskIntoConstraints = false
+
         contentView.addSubview(avatarImageView)
 
         let constraints = [
@@ -95,10 +71,7 @@ class CharacterTableViewCell: UITableViewCell {
     }
 
     private func setupInfoStackView() {
-        let stackView1 = UIStackView(arrangedSubviews: [nameLabelView, statusSpeciesLabel])
-        stackView1.axis = .vertical
-
-        infoStackView.addArrangedSubview(stackView1)
+        infoStackView.addArrangedSubview(titleStackView)
 
         contentView.addSubview(infoStackView)
 
@@ -120,7 +93,6 @@ class CharacterTableViewCell: UITableViewCell {
         static let bottomPadding: CGFloat = -5
         static let imageHeight: CGFloat = UIScreen.main.bounds.height / 8
         static let avatarAspectRatio: CGFloat = 4/3
-        static let nameFontSize: CGFloat = 22
     }
 }
 
