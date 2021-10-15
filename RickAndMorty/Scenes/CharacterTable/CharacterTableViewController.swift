@@ -93,7 +93,7 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
 
         return cell
     }
-
+    
     // TODO: A header view would probably be a better fit 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         "Character List"
