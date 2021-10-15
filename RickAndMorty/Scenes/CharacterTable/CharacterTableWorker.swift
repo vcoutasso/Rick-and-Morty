@@ -58,8 +58,10 @@ class CharacterTableWorker {
 
             // TODO: Handle response cases
             switch urlResponse.statusCode {
-            default:
+            case 200:
                 break
+            default:
+                return
             }
 
             let decoder = JSONDecoder()
