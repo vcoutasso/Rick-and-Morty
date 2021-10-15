@@ -13,7 +13,7 @@ class CharacterTableViewCell: UITableViewCell {
 
     private(set) var character: CharacterTable.Character?
 
-    // MARK: - Views
+    // MARK: - Subviews
 
     private let titleStackView: CharacterTableViewCellTitle = .init()
     private let avatarImageView: UIImageView = .init()

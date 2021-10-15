@@ -9,9 +9,9 @@ import UIKit
 
 class CharacterTableViewCellTitle: UIStackView {
 
-    // MARK: - Lazy views
+    // MARK: - Subviews
 
-    private lazy var nameLabel: UILabel = {
+    private let nameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
 
@@ -21,7 +21,7 @@ class CharacterTableViewCellTitle: UIStackView {
         return label
     }()
 
-    private lazy var statusDot: UIImageView = {
+    private let statusDot: UIImageView = {
         let imageView = UIImageView()
         let configuration = UIImage.SymbolConfiguration(pointSize: LayoutMetrics.symbolFontSize)
         imageView.image = UIImage(systemName: "circle.fill", withConfiguration: configuration)?
@@ -31,7 +31,7 @@ class CharacterTableViewCellTitle: UIStackView {
         return imageView
     }()
 
-    private lazy var aboutLabel: UILabel = {
+    private let aboutLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
 
