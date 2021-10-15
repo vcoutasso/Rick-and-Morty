@@ -85,7 +85,7 @@ class CharacterTableViewCellTitle: UIStackView {
         case CharacterTable.Character.StatusValues.dead.rawValue:
             statusDot.image = statusDot.image?.withTintColor(.red)
         case CharacterTable.Character.StatusValues.unknown.rawValue:
-            break
+            statusDot.image = statusDot.image?.withTintColor(.gray)
         default:
             print("Got unexpected character status value \(character.status)")
         }
@@ -94,12 +94,9 @@ class CharacterTableViewCellTitle: UIStackView {
     // MARK: - Layout Metrics
 
     private enum LayoutMetrics {
-        static let nameFontSize: CGFloat = 22
-        static let statusFontSize: CGFloat = 18
-        static let symbolFontSize: CGFloat = 10
+        static let nameFontSize: CGFloat = 18
+        static let statusFontSize: CGFloat = 14
+        static let symbolFontSize: CGFloat = 8
         static let symbolToTextSpacing: CGFloat = 3
     }
-
-
-
 }

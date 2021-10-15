@@ -17,10 +17,12 @@ class CharacterTableViewCell: UITableViewCell {
 
     private let titleStackView: CharacterTableViewCellTitle = .init()
     private let avatarImageView: UIImageView = .init()
-
-    private lazy var infoStackView: UIStackView = {
+    private let locationInfo: CharacterTableViewCellInfo = .init(title: "Last known location:")
+    private let genderInfo: CharacterTableViewCellInfo = .init(title: "Gender:")
+    private let infoStackView: UIStackView = {
         let stack = UIStackView()
         stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.distribution = .equalCentering
         stack.axis = .vertical
 
         return stack
@@ -47,6 +49,8 @@ class CharacterTableViewCell: UITableViewCell {
     func setup(with character: CharacterTable.Character) {
         avatarImageView.downloaded(from: character.image)
         titleStackView.setup(with: character)
+        locationInfo.setup(with: character.location.name)
+        genderInfo.setup(with: character.gender)
     }
 
     private func setupContentView() {
@@ -62,7 +66,7 @@ class CharacterTableViewCell: UITableViewCell {
         let constraints = [
             avatarImageView.heightAnchor.constraint(equalToConstant: LayoutMetrics.imageHeight).withPriority(.defaultHigh),
             avatarImageView.widthAnchor.constraint(lessThanOrEqualToConstant: LayoutMetrics.imageHeight * LayoutMetrics.avatarAspectRatio),
-            avatarImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            avatarImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).withPriority(.defaultHigh),
             avatarImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: LayoutMetrics.topPadding),
             avatarImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: LayoutMetrics.bottomPadding),
         ]
@@ -72,6 +76,8 @@ class CharacterTableViewCell: UITableViewCell {
 
     private func setupInfoStackView() {
         infoStackView.addArrangedSubview(titleStackView)
+        infoStackView.addArrangedSubview(locationInfo)
+        infoStackView.addArrangedSubview(genderInfo)
 
         contentView.addSubview(infoStackView)
 
@@ -91,7 +97,7 @@ class CharacterTableViewCell: UITableViewCell {
         static let leadingPadding: CGFloat = 14
         static let topPadding: CGFloat = 5
         static let bottomPadding: CGFloat = -5
-        static let imageHeight: CGFloat = UIScreen.main.bounds.height / 8
+        static let imageHeight: CGFloat = UIScreen.main.bounds.height / 7
         static let avatarAspectRatio: CGFloat = 4/3
     }
 }
