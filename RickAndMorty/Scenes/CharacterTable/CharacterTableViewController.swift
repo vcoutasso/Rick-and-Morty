@@ -89,9 +89,13 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
             return CharacterTableViewCell()
         }
 
-        cell.setup(with: characters[indexPath.row])
+        cell.setup(with: self.characters[indexPath.row])
 
         return cell
+    }
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     // TODO: A header view would probably be a better fit 

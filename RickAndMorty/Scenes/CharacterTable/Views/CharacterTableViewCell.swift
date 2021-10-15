@@ -22,9 +22,22 @@ class CharacterTableViewCell: UITableViewCell {
         return imageView
     }()
 
+    private lazy var statusSpeciesLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+
+        label.textColor = .black
+        label.font = .systemFont(ofSize: 18, weight: .medium)
+
+        return label
+    }()
+
     private lazy var nameLabelView: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+
+        label.textColor = .black
+        label.font = .systemFont(ofSize: LayoutMetrics.nameFontSize, weight: .heavy)
 
         return label
     }()
@@ -32,7 +45,7 @@ class CharacterTableViewCell: UITableViewCell {
     private lazy var infoStackView: UIStackView = {
         let stack = UIStackView()
         stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.axis = .horizontal
+        stack.axis = .vertical
 
         return stack
     }()
@@ -55,14 +68,15 @@ class CharacterTableViewCell: UITableViewCell {
 
     // MARK: - Setup
 
-    // TODO: Update tablevc when download finishes
     func setup(with character: CharacterTable.Character) {
         avatarImageView.downloaded(from: character.image)
+
+        nameLabelView.text = character.name
+        statusSpeciesLabel.text = "\(character.status) - \(character.species)"
     }
 
     private func setupContentView() {
         setupAvatarImageView()
-        setupNameLabelView()
         setupInfoStackView()
     }
 
@@ -71,7 +85,7 @@ class CharacterTableViewCell: UITableViewCell {
 
         let constraints = [
             avatarImageView.heightAnchor.constraint(equalToConstant: LayoutMetrics.imageHeight).withPriority(.defaultHigh),
-            avatarImageView.widthAnchor.constraint(equalToConstant: LayoutMetrics.imageHeight * LayoutMetrics.avatarAspectRatio),
+            avatarImageView.widthAnchor.constraint(lessThanOrEqualToConstant: LayoutMetrics.imageHeight * LayoutMetrics.avatarAspectRatio),
             avatarImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             avatarImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: LayoutMetrics.topPadding),
             avatarImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: LayoutMetrics.bottomPadding),
@@ -80,30 +94,33 @@ class CharacterTableViewCell: UITableViewCell {
         NSLayoutConstraint.activate(constraints)
     }
 
-    private func setupNameLabelView() {
-        contentView.addSubview(nameLabelView)
-
-        NSLayoutConstraint.activate([
-            // TODO: Constraints
-        ])
-    }
-
     private func setupInfoStackView() {
+        let stackView1 = UIStackView(arrangedSubviews: [nameLabelView, statusSpeciesLabel])
+        stackView1.axis = .vertical
+
+        infoStackView.addArrangedSubview(stackView1)
+
         contentView.addSubview(infoStackView)
 
-        NSLayoutConstraint.activate([
-            // TODO: Constraints
-        ])
+        let constraints = [
+            infoStackView.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor),
+            infoStackView.topAnchor.constraint(equalTo: avatarImageView.topAnchor, constant: LayoutMetrics.topPadding),
+            infoStackView.bottomAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: LayoutMetrics.bottomPadding),
+            infoStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+        ]
+
+        NSLayoutConstraint.activate(constraints)
     }
 
     // MARK: - Layout Metrics
 
     private enum LayoutMetrics {
-        static let leadingPadding: CGFloat = 16
+        static let leadingPadding: CGFloat = 14
         static let topPadding: CGFloat = 5
         static let bottomPadding: CGFloat = -5
-        static let imageHeight: CGFloat = 80
+        static let imageHeight: CGFloat = UIScreen.main.bounds.height / 8
         static let avatarAspectRatio: CGFloat = 4/3
+        static let nameFontSize: CGFloat = 22
     }
 }
 
