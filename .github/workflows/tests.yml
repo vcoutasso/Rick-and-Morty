@@ -30,6 +30,7 @@ jobs:
         run : xcodebuild -scheme RickAndMorty -destination platform\=iOS\ Simulator,OS\=15.0,name\=iPhone\ 13 build | xcpretty && exit ${PIPESTATUS[0]}
 
   unit_tests:
+    runs-on: macos-11.0
     name: Unit tests
     needs: build
     steps:
@@ -37,6 +38,7 @@ jobs:
         run : xcodebuild -scheme RickAndMorty -destination platform\=iOS\ Simulator,OS\=15.0,name\=iPhone\ 13 test | xcpretty && exit ${PIPESTATUS[0]}
 
   ui_tests:
+    runs-on: macos-11.0
     name: UI tests
     needs: build
     steps:
