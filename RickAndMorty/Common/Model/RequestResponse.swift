@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct RequestResult<T>: Decodable where T: Decodable {
+struct RequestResponse<T>: Decodable where T: Decodable {
     let info: RequestInfo
     let results: [T]
 }

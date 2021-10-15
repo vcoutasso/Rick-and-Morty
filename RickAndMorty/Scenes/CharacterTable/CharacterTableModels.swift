@@ -45,7 +45,7 @@ enum CharacterTable {
         }
 
         struct Response {
-            var response: RequestResult<Character>
+            var response: RequestResponse<Character>
         }
         
         struct ViewModel {

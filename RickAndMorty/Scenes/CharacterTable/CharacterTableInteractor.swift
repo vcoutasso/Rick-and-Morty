@@ -35,7 +35,7 @@ class CharacterTableInteractor: CharacterTableBusinessLogic, CharacterTableDataS
     private func fetchAllCharacters() {
         let worker = CharacterTableWorker()
         worker.fetchAllCharacters { characters in
-            print(characters)
+            print(characters.count)
         }
     }
     
