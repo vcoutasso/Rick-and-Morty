@@ -56,7 +56,7 @@ class CharacterTableWorker {
                       return
                   }
 
-            // TODO: Handle response cases
+            // TODO: Handle more response cases
             switch urlResponse.statusCode {
             case 200:
                 break

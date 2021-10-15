@@ -69,13 +69,15 @@ class CharacterTableViewCell: UITableViewCell {
     private func setupAvatarImageView() {
         contentView.addSubview(avatarImageView)
 
-        // TODO: Review constraints
-        NSLayoutConstraint.activate([
+        let constraints = [
+            avatarImageView.heightAnchor.constraint(equalToConstant: LayoutMetrics.imageHeight).withPriority(.defaultHigh),
+            avatarImageView.widthAnchor.constraint(equalToConstant: LayoutMetrics.imageHeight * LayoutMetrics.avatarAspectRatio),
             avatarImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             avatarImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: LayoutMetrics.topPadding),
             avatarImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: LayoutMetrics.bottomPadding),
-            avatarImageView.heightAnchor.constraint(lessThanOrEqualToConstant: LayoutMetrics.imageHeight)
-        ])
+        ]
+
+        NSLayoutConstraint.activate(constraints)
     }
 
     private func setupNameLabelView() {
@@ -101,6 +103,7 @@ class CharacterTableViewCell: UITableViewCell {
         static let topPadding: CGFloat = 5
         static let bottomPadding: CGFloat = -5
         static let imageHeight: CGFloat = 80
+        static let avatarAspectRatio: CGFloat = 4/3
     }
 }
 
