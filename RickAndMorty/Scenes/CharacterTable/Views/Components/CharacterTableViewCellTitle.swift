@@ -24,7 +24,7 @@ class CharacterTableViewCellTitle: UIStackView {
 
     private let statusDot: UIImageView = {
         let imageView = UIImageView()
-        let configuration = UIImage.SymbolConfiguration(font: .preferredFont(forTextStyle: .caption2))
+        let configuration = UIImage.SymbolConfiguration(font: .preferredFont(forTextStyle: .caption2), scale: LayoutMetrics.symbolFontScale)
         imageView.image = UIImage(systemName: "circle.fill", withConfiguration: configuration)?
             .withTintColor(.gray, renderingMode: .alwaysOriginal)
         imageView.contentMode = .left
@@ -96,7 +96,7 @@ class CharacterTableViewCellTitle: UIStackView {
     // MARK: - Layout Metrics
 
     private enum LayoutMetrics {
-        static let symbolFontSize: CGFloat = 8
+        static let symbolFontScale: UIImage.SymbolScale = .small
         static let symbolToTextSpacing: CGFloat = 3
     }
 }
