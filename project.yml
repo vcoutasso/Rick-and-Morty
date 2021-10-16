@@ -19,13 +19,8 @@ targets:
       TARGETED_DEVICE_FAMILY: 1
       INFOPLIST_FILE: RickAndMorty/Supporting-Files/Info.plist
     sources: RickAndMorty
-    scheme:
-      testTargets:
-        - RickAndMortyTests
 
   RickAndMortyTests:
-    info:
-      path: RickAndMorty/Supporting-Files/Info.plist
     type: bundle.unit-test
     platform: iOS
     sources: RickAndMortyTests
@@ -33,10 +28,31 @@ targets:
       - target: RickAndMorty
 
   RickAndMortyUITests:
-    info:
-      path: RickAndMorty/Supporting-Files/Info.plist
     type: bundle.ui-testing
     platform: iOS
     sources: RickAndMortyUITests
     dependencies:
       - target: RickAndMorty
+
+schemes:
+  RickAndMorty:
+    build:
+      targets:
+        RickAndMorty: all
+    test:
+      config: Debug
+      gatherCoverageData: true
+      targets:
+        - name: RickAndMortyTests
+          parallelizable: true
+          randomExecutionOrder: true
+
+  RickAndMortyUITests:
+    build:
+      targets:
+        RickAndMortyUITests: all
+    test:
+      config: Debug
+      gatherCoverageData: true
+      targets: 
+        - name: RickAndMortyUITests

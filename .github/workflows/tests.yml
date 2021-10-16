@@ -28,13 +28,14 @@ jobs:
       - name: Generate project
         run: make generate
 
-      - name: Run UI tests
-        run : xcodebuild test -scheme RickAndMortyUITests -destination platform\=iOS\ Simulator,OS\=15.0,name\=iPhone\ 13 -enableCodeCoverage YES build test | xcpretty
-
       - name: Run unit tests
-        run : xcodebuild test -scheme RickAndMorty -destination platform\=iOS\ Simulator,OS\=15.0,name\=iPhone\ 13 -enableCodeCoverage YES build test | xcpretty
+        run : xcodebuild test -scheme RickAndMorty -destination platform\=iOS\ Simulator,OS\=15.0,name\=iPhone\ 13 | xcpretty
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1.2.1
+
+      - name: Run UI tests
+        run : xcodebuild test -scheme RickAndMortyUITests -destination platform\=iOS\ Simulator,OS\=15.0,name\=iPhone\ 13 | xcpretty
+
 
 
