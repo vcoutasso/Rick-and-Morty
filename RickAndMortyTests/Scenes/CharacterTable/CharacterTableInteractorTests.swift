@@ -14,7 +14,7 @@ final class CharacterTableInteractorTests: XCTestCase {
 
     private let presenterSpy = CharacterTablePresenterSpy()
     private let workerSpy = CharacterTableWorkerSpy()
-    private lazy var sut = CharacterTableInteractor()
+    private let sut = CharacterTableInteractor()
 
     // MARK: - Test lifecycle
 
