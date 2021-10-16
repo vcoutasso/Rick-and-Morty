@@ -59,11 +59,8 @@ class CharacterTableWorker: CharacterTableWorkerProtocol {
                       return
                   }
 
-            // TODO: Handle more response cases
-            switch urlResponse.statusCode {
-            case 200:
-                break
-            default:
+            // If response is not OK
+            if urlResponse.statusCode != 200 {
                 return
             }
 

@@ -27,7 +27,7 @@ final class CharacterTableInteractorTests: XCTestCase {
 
     // MARK: - Unit tests
 
-    func test_fetchData_shouldFetchAllCharacters() {
+    func testFetchDataShouldFetchAllCharacters() {
         // Given
 
         let request: CharacterTable.FetchData.Request = .init(type: .all)
@@ -41,7 +41,7 @@ final class CharacterTableInteractorTests: XCTestCase {
         XCTAssertEqual(workerSpy.fetchAllCharactersCallCount, 1)
     }
 
-    func test_fetchData_shouldPassResponseToPresenter() {
+    func testFetchDataShouldPassResponseToPresenter() {
         // Given
 
         let request: CharacterTable.FetchData.Request = .init(type: .all)

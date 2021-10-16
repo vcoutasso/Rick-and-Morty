@@ -35,16 +35,17 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
     // MARK: - Setup
 
     private func setup() {
-        let interactor = CharacterTableInteractor()
-        let presenter = CharacterTablePresenter()
-        let router = CharacterTableRouter()
+        let characterTableInteractor = CharacterTableInteractor()
+        let characterTablePresenter = CharacterTablePresenter()
+        let characterTableRouter = CharacterTableRouter()
 
-        interactor.presenter = presenter
-        presenter.viewController = self
-        router.viewController = self
-        router.dataStore = interactor
-        self.interactor = interactor
-        self.router = router
+        characterTableInteractor.presenter = characterTablePresenter
+        characterTablePresenter.viewController = self
+        characterTableRouter.viewController = self
+        characterTableRouter.dataStore = characterTableInteractor
+
+        interactor = characterTableInteractor
+        router = characterTableRouter
     }
 
     // MARK: - View Lifecycle
