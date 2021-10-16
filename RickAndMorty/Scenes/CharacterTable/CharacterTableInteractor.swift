@@ -17,6 +17,7 @@ protocol CharacterTableDataStore {
 
 class CharacterTableInteractor: CharacterTableBusinessLogic, CharacterTableDataStore {
     var presenter: CharacterTablePresentationLogic?
+    var worker: CharacterTableWorkerProtocol = CharacterTableWorker()
 
     // MARK: - Fetch Data
 
@@ -24,21 +25,14 @@ class CharacterTableInteractor: CharacterTableBusinessLogic, CharacterTableDataS
         switch request.type {
         case .all:
             fetchAllCharacters()
-        case .id(let id):
-            fetchCharacter(id: id)
         }
     }
 
     // MARK: - Private methods
 
     private func fetchAllCharacters() {
-        let worker = CharacterTableWorker()
         worker.fetchAllCharacters { [weak self] characters in
             self?.presenter?.presentCharactersData(response: .init(characters: characters))
         }
-    }
-    
-    private func fetchCharacter(id: Int) {
-        // TODO: Implement
     }
 }

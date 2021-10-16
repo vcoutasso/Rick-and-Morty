@@ -46,7 +46,6 @@ enum CharacterTable {
 
             enum RequestType {
                 case all
-                case id(Int)
             }
         }
 
