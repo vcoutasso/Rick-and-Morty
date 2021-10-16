@@ -16,7 +16,14 @@ class CharacterTableViewCell: UITableViewCell {
     // MARK: - Subviews
 
     private let titleStackView: CharacterTableViewCellTitle = .init()
-    private let avatarImageView: UIImageView = .init()
+    private let spinner = UIActivityIndicatorView()
+    private let avatarImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.backgroundColor = .systemGray5
+
+        return imageView
+    }()
     private let locationInfo: CharacterTableViewCellInfo = .init(title: "Last known location:")
     private let genderInfo: CharacterTableViewCellInfo = .init(title: "Gender:")
     private let infoStackView: UIStackView = {
@@ -47,6 +54,7 @@ class CharacterTableViewCell: UITableViewCell {
     // MARK: - Setup
 
     func setup(with character: CharacterTable.Character) {
+        avatarImageView.image = nil
         avatarImageView.downloaded(from: character.image)
         titleStackView.setup(with: character)
         locationInfo.setup(with: character.location.name)
@@ -59,14 +67,12 @@ class CharacterTableViewCell: UITableViewCell {
     }
 
     private func setupAvatarImageView() {
-        avatarImageView.translatesAutoresizingMaskIntoConstraints = false
-
         contentView.addSubview(avatarImageView)
 
         let constraints = [
             avatarImageView.heightAnchor.constraint(equalToConstant: LayoutMetrics.imageHeight).withPriority(.defaultHigh),
             avatarImageView.widthAnchor.constraint(lessThanOrEqualToConstant: LayoutMetrics.imageHeight * LayoutMetrics.avatarAspectRatio),
-            avatarImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).withPriority(.defaultHigh),
+            avatarImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: LayoutMetrics.leadingPadding),
             avatarImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: LayoutMetrics.topPadding),
             avatarImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: LayoutMetrics.bottomPadding),
         ]
@@ -82,7 +88,7 @@ class CharacterTableViewCell: UITableViewCell {
         contentView.addSubview(infoStackView)
 
         let constraints = [
-            infoStackView.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor),
+            infoStackView.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: LayoutMetrics.imageToInfoPadding),
             infoStackView.topAnchor.constraint(equalTo: avatarImageView.topAnchor, constant: LayoutMetrics.topPadding),
             infoStackView.bottomAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: LayoutMetrics.bottomPadding),
             infoStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
@@ -94,11 +100,12 @@ class CharacterTableViewCell: UITableViewCell {
     // MARK: - Layout Metrics
 
     private enum LayoutMetrics {
-        static let leadingPadding: CGFloat = 14
+        static let leadingPadding: CGFloat = 20
         static let topPadding: CGFloat = 5
         static let bottomPadding: CGFloat = -5
         static let imageHeight: CGFloat = UIScreen.main.bounds.height / 7
-        static let avatarAspectRatio: CGFloat = 4/3
+        static let avatarAspectRatio: CGFloat = 1
+        static let imageToInfoPadding: CGFloat = 10
     }
 }
 
