@@ -1,6 +1,6 @@
 name: Tests
 
-on: 
+on:
   pull_request:
     branches:
       - master
@@ -29,5 +29,8 @@ jobs:
       - name: Run unit tests
         run : xcodebuild test -scheme RickAndMorty -destination platform\=iOS\ Simulator,OS\=15.0,name\=iPhone\ 13 | xcpretty
 
-      - name: Run UI tests
-        run : xcodebuild test -scheme RickAndMortyUITests -destination platform\=iOS\ Simulator,OS\=15.0,name\=iPhone\ 13 | xcpretty
+     - name: Upload coverage to Codecov
+       uses: codecov/codecov-action@v1.2.1
+
+     - name: Run UI tests
+       run : xcodebuild test -scheme RickAndMortyUITests -destination platform\=iOS\ Simulator,OS\=15.0,name\=iPhone\ 13 | xcpretty
