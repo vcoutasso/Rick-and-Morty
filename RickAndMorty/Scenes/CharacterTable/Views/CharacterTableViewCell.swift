@@ -107,7 +107,7 @@ class CharacterTableViewCell: UITableViewCell {
         static let leadingPadding: CGFloat = 20
         static let topPadding: CGFloat = 5
         static let bottomPadding: CGFloat = -5
-        static let imageHeight: CGFloat = UIScreen.main.bounds.height / 6
+        static let imageHeight: CGFloat = UIScreen.main.bounds.height / 7
         static let imageToInfoPadding: CGFloat = 10
     }
 }
