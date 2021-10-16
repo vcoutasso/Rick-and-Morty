@@ -72,9 +72,10 @@ class CharacterTableViewCell: UITableViewCell {
     private func setupAvatarImageView() {
         contentView.addSubview(avatarImageView)
 
+        // FIXME: Image size should adjust with font size. The current approach works in many cases, but breaks when text is too large
         let constraints = [
             avatarImageView.heightAnchor.constraint(equalToConstant: LayoutMetrics.imageHeight).withPriority(.defaultHigh),
-            avatarImageView.widthAnchor.constraint(lessThanOrEqualToConstant: LayoutMetrics.imageHeight * LayoutMetrics.avatarAspectRatio),
+            avatarImageView.widthAnchor.constraint(equalToConstant: LayoutMetrics.imageHeight),
             avatarImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: LayoutMetrics.leadingPadding),
             avatarImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: LayoutMetrics.topPadding),
             avatarImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: LayoutMetrics.bottomPadding),
@@ -107,7 +108,6 @@ class CharacterTableViewCell: UITableViewCell {
         static let topPadding: CGFloat = 5
         static let bottomPadding: CGFloat = -5
         static let imageHeight: CGFloat = UIScreen.main.bounds.height / 6
-        static let avatarAspectRatio: CGFloat = 1
         static let imageToInfoPadding: CGFloat = 10
     }
 }
