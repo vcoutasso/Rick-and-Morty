@@ -19,11 +19,17 @@ targets:
         - RickAndMortyTests
 
   RickAndMortyTests:
+    info:
+      path: RickAndMorty/Supporting-Files/Info.plist
     type: bundle.unit-test
     platform: iOS
     sources: RickAndMortyTests
+    settings:
+      TEST_HOST: $(BUILT_PRODUCTS_DIR)/RickAndMorty.app/RickAndMorty
 
   RickAndMortyUITests:
+    info:
+      path: RickAndMorty/Supporting-Files/Info.plist
     type: bundle.ui-testing
     platform: iOS
     sources: RickAndMortyUITests
