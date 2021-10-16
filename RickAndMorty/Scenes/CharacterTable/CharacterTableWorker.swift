@@ -24,6 +24,8 @@ class CharacterTableWorker: CharacterTableWorkerProtocol {
     func fetchAllCharacters(completion: @escaping ([CharacterTable.Character]) -> Void) {
         var allCharacters = [CharacterTable.Character]()
 
+        currentPage = 1
+
         lazy var pageCompletion: ([CharacterTable.Character]) -> Void = { [weak self] pageCharacters in
             guard let self = self, !pageCharacters.isEmpty else { return }
 
