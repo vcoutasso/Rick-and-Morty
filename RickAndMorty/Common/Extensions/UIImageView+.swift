@@ -9,7 +9,7 @@ import UIKit
 
 // Reference: https://stackoverflow.com/a/27712427
 extension UIImageView {
-    func downloaded(from url: URL, contentMode mode: ContentMode = .scaleAspectFit) {
+    func downloaded(from url: URL, contentMode mode: ContentMode = .scaleAspectFit, completion: @escaping () -> Void) {
         contentMode = mode
 
         let spinner = addSpinner()
@@ -24,6 +24,7 @@ extension UIImageView {
                 DispatchQueue.main.async() { [weak self] in
                     self?.removeSpinner(spinner)
                     self?.image = image
+                    completion()
                 }
             } else {
                 print("Got status code \(httpURLResponse.statusCode) from \(url)")
@@ -31,9 +32,9 @@ extension UIImageView {
         }.resume()
     }
 
-    func downloaded(from link: String, contentMode mode: ContentMode = .scaleAspectFit) {
+    func downloaded(from link: String, contentMode mode: ContentMode = .scaleAspectFit, completion: @escaping () -> Void) {
         guard let url = URL(string: link) else { return }
-        downloaded(from: url, contentMode: mode)
+        downloaded(from: url, contentMode: mode, completion: completion)
     }
 
     private func addSpinner() -> UIActivityIndicatorView {

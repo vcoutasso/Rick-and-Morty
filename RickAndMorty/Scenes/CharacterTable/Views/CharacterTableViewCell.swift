@@ -55,7 +55,10 @@ class CharacterTableViewCell: UITableViewCell {
 
     func setup(with character: CharacterTable.Character) {
         avatarImageView.image = nil
-        avatarImageView.downloaded(from: character.image)
+        avatarImageView.backgroundColor = .systemGray5
+        avatarImageView.downloaded(from: character.image) { [weak self] in
+            self?.avatarImageView.backgroundColor = .clear
+        }
         titleStackView.setup(with: character)
         locationInfo.setup(with: character.location.name)
         genderInfo.setup(with: character.gender)
@@ -103,7 +106,7 @@ class CharacterTableViewCell: UITableViewCell {
         static let leadingPadding: CGFloat = 20
         static let topPadding: CGFloat = 5
         static let bottomPadding: CGFloat = -5
-        static let imageHeight: CGFloat = UIScreen.main.bounds.height / 7
+        static let imageHeight: CGFloat = UIScreen.main.bounds.height / 6
         static let avatarAspectRatio: CGFloat = 1
         static let imageToInfoPadding: CGFloat = 10
     }
