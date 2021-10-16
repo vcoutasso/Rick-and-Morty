@@ -15,26 +15,27 @@ class CharacterTableViewCellInfo: UIStackView {
 
     // MARK: - Subviews
 
-    private let infoContentLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-
-        label.textColor = .black
-        label.font = .systemFont(ofSize: LayoutMetrics.contentFontSize, weight: .medium)
-
-        return label
-    }()
-
     private lazy var infoTitleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
 
-        label.textColor = .darkGray
+        label.textColor = .secondaryLabel
         label.text = title
         label.font = .systemFont(ofSize: LayoutMetrics.titleFontSize, weight: .medium)
 
         return label
     }()
+
+    private let infoContentLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+
+        label.textColor = .label
+        label.font = .systemFont(ofSize: LayoutMetrics.contentFontSize, weight: .medium)
+
+        return label
+    }()
+
 
     // MARK: - Object lifecycle
 
