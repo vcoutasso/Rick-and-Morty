@@ -25,8 +25,6 @@ class CharacterTableInteractor: CharacterTableBusinessLogic, CharacterTableDataS
         switch request.type {
         case .all:
             fetchAllCharacters()
-        case .id(_):
-            break
         }
     }
 
@@ -36,9 +34,5 @@ class CharacterTableInteractor: CharacterTableBusinessLogic, CharacterTableDataS
         worker.fetchAllCharacters { [weak self] characters in
             self?.presenter?.presentCharactersData(response: .init(characters: characters))
         }
-    }
-    
-    private func fetchCharacter(id: Int) {
-        // TODO: Implement
     }
 }
