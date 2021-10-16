@@ -11,13 +11,18 @@ import UIKit
 extension UIImageView {
     func downloaded(from url: URL, contentMode mode: ContentMode = .scaleAspectFit) {
         contentMode = mode
+
+        let spinner = addSpinner()
+
         URLSession.shared.dataTask(with: url) { data, response, error in
             guard let httpURLResponse = response as? HTTPURLResponse,
                   let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
                   let data = data, error == nil,
                   let image = UIImage(data: data) else { return }
+
             if httpURLResponse.statusCode == 200 {
                 DispatchQueue.main.async() { [weak self] in
+                    self?.removeSpinner(spinner)
                     self?.image = image
                 }
             } else {
@@ -29,5 +34,24 @@ extension UIImageView {
     func downloaded(from link: String, contentMode mode: ContentMode = .scaleAspectFit) {
         guard let url = URL(string: link) else { return }
         downloaded(from: url, contentMode: mode)
+    }
+
+    private func addSpinner() -> UIActivityIndicatorView {
+        let spinner = UIActivityIndicatorView()
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        spinner.startAnimating()
+        addSubview(spinner)
+
+        NSLayoutConstraint.activate([
+            spinner.centerXAnchor.constraint(equalTo: centerXAnchor),
+            spinner.centerYAnchor.constraint(equalTo: centerYAnchor)
+        ])
+
+        return spinner
+    }
+
+    private func removeSpinner(_ spinner: UIActivityIndicatorView) {
+        spinner.stopAnimating()
+        spinner.removeFromSuperview()
     }
 }
