@@ -16,14 +16,15 @@ class CharacterTableViewCellTitle: UIStackView {
         label.translatesAutoresizingMaskIntoConstraints = false
 
         label.textColor = .black
-        label.font = .systemFont(ofSize: LayoutMetrics.nameFontSize, weight: .heavy)
+        label.font = .preferredFont(for: .title2, weight: .heavy)
+        label.adjustsFontForContentSizeCategory = true
 
         return label
     }()
 
     private let statusDot: UIImageView = {
         let imageView = UIImageView()
-        let configuration = UIImage.SymbolConfiguration(pointSize: LayoutMetrics.symbolFontSize)
+        let configuration = UIImage.SymbolConfiguration(font: .preferredFont(forTextStyle: .caption2))
         imageView.image = UIImage(systemName: "circle.fill", withConfiguration: configuration)?
             .withTintColor(.gray, renderingMode: .alwaysOriginal)
         imageView.contentMode = .left
@@ -36,7 +37,8 @@ class CharacterTableViewCellTitle: UIStackView {
         label.translatesAutoresizingMaskIntoConstraints = false
 
         label.textColor = .black
-        label.font = .systemFont(ofSize: LayoutMetrics.statusFontSize, weight: .medium)
+        label.font = .preferredFont(forTextStyle: .subheadline)
+        label.adjustsFontForContentSizeCategory = true
 
         return label
     }()
@@ -94,8 +96,6 @@ class CharacterTableViewCellTitle: UIStackView {
     // MARK: - Layout Metrics
 
     private enum LayoutMetrics {
-        static let nameFontSize: CGFloat = 18
-        static let statusFontSize: CGFloat = 14
         static let symbolFontSize: CGFloat = 8
         static let symbolToTextSpacing: CGFloat = 3
     }
