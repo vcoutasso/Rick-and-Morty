@@ -1,5 +1,9 @@
 name: RickAndMorty
 
+configs:
+  Debug: debug
+  Release: release
+
 settings:
   DEVELOPMENT_TEAM: H7BM7N56V5
 
@@ -13,6 +17,7 @@ targets:
     deploymentTarget: 15.0
     settings:
       TARGETED_DEVICE_FAMILY: 1
+      INFOPLIST_FILE: RickAndMorty/Supporting-Files/Info.plist
     sources: RickAndMorty
     scheme:
       testTargets:
@@ -24,8 +29,8 @@ targets:
     type: bundle.unit-test
     platform: iOS
     sources: RickAndMortyTests
-    settings:
-      TEST_HOST: $(BUILT_PRODUCTS_DIR)/RickAndMorty.app/RickAndMorty
+    dependencies:
+      - target: RickAndMorty
 
   RickAndMortyUITests:
     info:
@@ -33,5 +38,5 @@ targets:
     type: bundle.ui-testing
     platform: iOS
     sources: RickAndMortyUITests
-    settings:
-      TEST_TARGET_NAME: RickAndMorty
+    dependencies:
+      - target: RickAndMorty
