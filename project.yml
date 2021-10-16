@@ -53,6 +53,5 @@ schemes:
         RickAndMortyUITests: all
     test:
       config: Debug
-      gatherCoverageData: true
       targets: 
         - name: RickAndMortyUITests
