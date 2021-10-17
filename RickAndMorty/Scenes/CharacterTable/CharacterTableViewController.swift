@@ -15,7 +15,7 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
     // MARK: - Attributes
 
     private(set) var interactor: CharacterTableBusinessLogic?
-    private(set) var router: (NSObject & CharacterTableRoutingLogic & CharacterTableDataPassing)?
+    private(set) var router: (NSObjectProtocol & CharacterTableRoutingLogic & CharacterTableDataPassing)?
 
     // MARK: - Table Data
 
