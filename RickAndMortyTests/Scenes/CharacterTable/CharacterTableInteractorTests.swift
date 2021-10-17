@@ -66,13 +66,13 @@ final class CharacterTablePresenterSpy: CharacterTablePresentationLogic {
 
 final class CharacterTableWorkerSpy: CharacterTableWorkerProtocol {
     private(set) var fetchAllCharactersCallCount = 0
-    private(set) var completionStub = [CharacterTable.Character]()
-    func fetchAllCharacters(completion: @escaping ([CharacterTable.Character]) -> Void) {
+    private(set) var completionStub = [RMCharacter]()
+    func fetchAllCharacters(completion: @escaping ([RMCharacter]) -> Void) {
         fetchAllCharactersCallCount += 1
         completion(completionStub)
     }
 
-    func fetchCurrentPage(completion: @escaping ([CharacterTable.Character]) -> Void) {
+    func fetchCurrentPage(completion: @escaping ([RMCharacter]) -> Void) {
         fatalError("not implemented")
     }
 }

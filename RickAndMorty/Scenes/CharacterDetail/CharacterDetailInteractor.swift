@@ -12,13 +12,14 @@ protocol CharacterDetailBusinessLogic {
 }
 
 protocol CharacterDetailDataStore {
-    //var name: String { get set }
+    var character: RMCharacter? { get set }
 }
 
 class CharacterDetailInteractor: CharacterDetailBusinessLogic, CharacterDetailDataStore {
     var presenter: CharacterDetailPresentationLogic?
     var worker: CharacterDetailWorker?
-    //var name: String = ""
+
+    var character: RMCharacter?
 
     // MARK: Do something
 

@@ -8,8 +8,8 @@
 import Foundation
 
 protocol CharacterTableWorkerProtocol {
-    func fetchAllCharacters(completion: @escaping ([CharacterTable.Character]) -> Void)
-    func fetchCurrentPage(completion: @escaping ([CharacterTable.Character]) -> Void)
+    func fetchAllCharacters(completion: @escaping ([RMCharacter]) -> Void)
+    func fetchCurrentPage(completion: @escaping ([RMCharacter]) -> Void)
 }
 
 class CharacterTableWorker: CharacterTableWorkerProtocol {
@@ -21,12 +21,12 @@ class CharacterTableWorker: CharacterTableWorkerProtocol {
         URL(string: baseUrl + "/?page=\(currentPage)")
     }
 
-    func fetchAllCharacters(completion: @escaping ([CharacterTable.Character]) -> Void) {
-        var allCharacters = [CharacterTable.Character]()
+    func fetchAllCharacters(completion: @escaping ([RMCharacter]) -> Void) {
+        var allCharacters = [RMCharacter]()
 
         currentPage = 1
 
-        lazy var pageCompletion: ([CharacterTable.Character]) -> Void = { [weak self] pageCharacters in
+        lazy var pageCompletion: ([RMCharacter]) -> Void = { [weak self] pageCharacters in
             guard let self = self, !pageCharacters.isEmpty else { return }
 
             allCharacters.append(contentsOf: pageCharacters)
@@ -47,7 +47,7 @@ class CharacterTableWorker: CharacterTableWorkerProtocol {
         fetchCurrentPage(completion: pageCompletion)
     }
 
-    func fetchCurrentPage(completion: @escaping ([CharacterTable.Character]) -> Void) {
+    func fetchCurrentPage(completion: @escaping ([RMCharacter]) -> Void) {
         guard let requestUrl = requestUrl else { return }
 
         URLSession.shared.dataTask(with: requestUrl) { [weak self] data, urlResponse, error in
@@ -67,7 +67,7 @@ class CharacterTableWorker: CharacterTableWorkerProtocol {
             }
 
             let decoder = JSONDecoder()
-            guard let response = try? decoder.decode(RequestResponse<CharacterTable.Character>.self, from: data) else {
+            guard let response = try? decoder.decode(RequestResponse<RMCharacter>.self, from: data) else {
                 print("Could not decode request result")
                 return
             }

@@ -19,7 +19,7 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
 
     // MARK: - Table Data
 
-    private(set) var characters = [CharacterTable.Character]()
+    private(set) var characters = [RMCharacter]()
 
     // MARK: - Object lifecycle
 
@@ -55,13 +55,12 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
         setupRouting()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        tableView.register(CharacterTableViewCell.self)
 
         fetchCharacters()
     }
@@ -69,9 +68,7 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
     // MARK: - Routing
 
     func setupRouting() {
-        guard let router = router else { return }
-
-        router.setupNavigationBar()
+        router?.setupNavigationBar()
     }
 
     // MARK: - Display logic
@@ -114,6 +111,6 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+        router?.routeToCharacterDetail()
     }
 }

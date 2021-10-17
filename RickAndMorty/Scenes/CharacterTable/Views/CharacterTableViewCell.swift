@@ -11,7 +11,7 @@ class CharacterTableViewCell: UITableViewCell {
 
     // MARK: - Attributes
 
-    private(set) var character: CharacterTable.Character?
+    private(set) var character: RMCharacter?
 
     // MARK: - Subviews
 
@@ -60,7 +60,7 @@ class CharacterTableViewCell: UITableViewCell {
 
     // MARK: - Setup
 
-    func setup(with character: CharacterTable.Character) {
+    func setup(with character: RMCharacter) {
         avatarImageView.downloaded(from: character.image) { [weak self] in
             self?.avatarImageView.backgroundColor = .clear
         }

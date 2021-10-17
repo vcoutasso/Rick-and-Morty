@@ -12,12 +12,14 @@ protocol CharacterTableBusinessLogic {
 }
 
 protocol CharacterTableDataStore {
-
+    var characters: [RMCharacter]? { get }
 }
 
 class CharacterTableInteractor: CharacterTableBusinessLogic, CharacterTableDataStore {
     var presenter: CharacterTablePresentationLogic?
     var worker: CharacterTableWorkerProtocol = CharacterTableWorker()
+
+    var characters: [RMCharacter]?
 
     // MARK: - Fetch Data
 
@@ -32,7 +34,9 @@ class CharacterTableInteractor: CharacterTableBusinessLogic, CharacterTableDataS
 
     private func fetchAllCharacters() {
         worker.fetchAllCharacters { [weak self] characters in
-            self?.presenter?.presentCharactersData(response: .init(characters: characters))
+            self?.characters = characters
+            let response = CharacterTable.FetchData.Response(characters: characters)
+            self?.presenter?.presentCharactersData(response: response)
         }
     }
 }

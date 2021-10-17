@@ -77,16 +77,16 @@ class CharacterTableViewCellTitle: UIStackView {
 
     // MARK: - Setup
 
-    func setup(with character: CharacterTable.Character) {
+    func setup(with character: RMCharacter) {
         nameLabel.text = character.name
         aboutLabel.text = "\(character.status) - \(character.species)"
 
         switch character.status {
-        case CharacterTable.Character.StatusValues.alive.rawValue:
+        case RMCharacter.StatusValues.alive.rawValue:
             statusDot.image = statusDot.image?.withTintColor(.green)
-        case CharacterTable.Character.StatusValues.dead.rawValue:
+        case RMCharacter.StatusValues.dead.rawValue:
             statusDot.image = statusDot.image?.withTintColor(.red)
-        case CharacterTable.Character.StatusValues.unknown.rawValue:
+        case RMCharacter.StatusValues.unknown.rawValue:
             statusDot.image = statusDot.image?.withTintColor(.gray)
         default:
             print("Got unexpected character status value \(character.status)")
