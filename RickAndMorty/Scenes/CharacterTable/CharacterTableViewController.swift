@@ -25,6 +25,9 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
 
     init() {
         super.init(style: .plain)
+
+        self.title = "Character List"
+
         setup()
     }
 
@@ -41,8 +44,8 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
 
         characterTableInteractor.presenter = characterTablePresenter
         characterTablePresenter.viewController = self
-        characterTableRouter.viewController = self
         characterTableRouter.dataStore = characterTableInteractor
+        characterTableRouter.viewController = self
 
         interactor = characterTableInteractor
         router = characterTableRouter
@@ -50,12 +53,25 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
 
     // MARK: - View Lifecycle
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setupRouting()
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         tableView.register(CharacterTableViewCell.self)
 
         fetchCharacters()
+    }
+
+    // MARK: - Routing
+
+    func setupRouting() {
+        guard let router = router else { return }
+
+        router.setupNavigationBar()
     }
 
     // MARK: - Display logic
@@ -71,8 +87,10 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
     // MARK: - Private methods
 
     private func fetchCharacters() {
+        guard let interactor = interactor else { return }
+
         let request = CharacterTable.FetchData.Request(type: .all)
-        interactor?.fetchData(request: request)
+        interactor.fetchData(request: request)
     }
 
     // MARK: - Table View
@@ -97,10 +115,5 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-    }
-    
-    // TODO: A header view would probably be a better fit 
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        "Character List"
     }
 }
