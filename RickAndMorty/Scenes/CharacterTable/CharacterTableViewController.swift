@@ -25,6 +25,8 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
 
     init() {
         super.init(style: .plain)
+        self.title = "Character List"
+
         setup()
     }
 
@@ -46,9 +48,14 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
 
         interactor = characterTableInteractor
         router = characterTableRouter
+
     }
 
     // MARK: - View Lifecycle
+
+    override func viewDidAppear(_ animated: Bool) {
+        setupRouting()
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,6 +63,13 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
         tableView.register(CharacterTableViewCell.self)
 
         fetchCharacters()
+    }
+
+    // MARK: - Routing
+
+    func setupRouting() {
+        guard let router = router else { return }
+        router.setupNavigationBar()
     }
 
     // MARK: - Display logic
@@ -97,10 +111,5 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-    }
-    
-    // TODO: A header view would probably be a better fit 
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        "Character List"
     }
 }

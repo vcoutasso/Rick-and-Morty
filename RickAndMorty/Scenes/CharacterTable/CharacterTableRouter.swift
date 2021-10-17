@@ -8,7 +8,7 @@
 import UIKit
 
 protocol CharacterTableRoutingLogic {
-
+    func setupNavigationBar()
 }
 
 protocol CharacterTableDataPassing {
@@ -18,4 +18,12 @@ protocol CharacterTableDataPassing {
 class CharacterTableRouter: NSObject, CharacterTableRoutingLogic, CharacterTableDataPassing {
     weak var viewController: CharacterTableViewController?
     var dataStore: CharacterTableDataStore?
+
+    // MARK: - Setup
+
+    func setupNavigationBar() {
+        guard let navigationController = viewController?.navigationController else { return }
+        navigationController.navigationBar.prefersLargeTitles = true
+    }
+
 }
