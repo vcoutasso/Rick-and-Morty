@@ -25,6 +25,7 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
 
     init() {
         super.init(style: .plain)
+
         self.title = "Character List"
 
         setup()
@@ -43,17 +44,17 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
 
         characterTableInteractor.presenter = characterTablePresenter
         characterTablePresenter.viewController = self
-        characterTableRouter.viewController = self
         characterTableRouter.dataStore = characterTableInteractor
+        characterTableRouter.viewController = self
 
         interactor = characterTableInteractor
         router = characterTableRouter
-
     }
 
     // MARK: - View Lifecycle
 
     override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         setupRouting()
     }
 
@@ -69,6 +70,7 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
 
     func setupRouting() {
         guard let router = router else { return }
+
         router.setupNavigationBar()
     }
 
@@ -85,8 +87,10 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
     // MARK: - Private methods
 
     private func fetchCharacters() {
+        guard let interactor = interactor else { return }
+
         let request = CharacterTable.FetchData.Request(type: .all)
-        interactor?.fetchData(request: request)
+        interactor.fetchData(request: request)
     }
 
     // MARK: - Table View

@@ -51,11 +51,16 @@ class CharacterTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - Table view cell
+
+    override func prepareForReuse() {
+        avatarImageView.image = nil
+        avatarImageView.backgroundColor = .systemGray5
+    }
+
     // MARK: - Setup
 
     func setup(with character: CharacterTable.Character) {
-        avatarImageView.image = nil
-        avatarImageView.backgroundColor = .systemGray5
         avatarImageView.downloaded(from: character.image) { [weak self] in
             self?.avatarImageView.backgroundColor = .clear
         }
