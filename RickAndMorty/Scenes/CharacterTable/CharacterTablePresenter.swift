@@ -8,13 +8,15 @@
 import Foundation
 
 protocol CharacterTablePresentationLogic {
-    func presentCharactersData(response: CharacterTable.FetchData.Response)
+    func presentFetchedData(response: CharacterTable.FetchData.Response)
 }
 
 class CharacterTablePresenter: CharacterTablePresentationLogic {
     weak var viewController: CharacterTableDisplayLogic?
 
-    func presentCharactersData(response: CharacterTable.FetchData.Response) {
-        viewController?.displayCharacters(viewModel: .init(characters: response.characters))
+    func presentFetchedData(response: CharacterTable.FetchData.Response) {
+        let characters = response.characters
+        let viewModel = CharacterTable.FetchData.ViewModel(characters: characters)
+        viewController?.displayCharacters(viewModel: viewModel)
     }
 }

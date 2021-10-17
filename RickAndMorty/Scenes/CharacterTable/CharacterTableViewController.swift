@@ -53,15 +53,12 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
 
     // MARK: - View Lifecycle
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        setupRouting()
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        tableView.register(CharacterTableViewCell.self)
+
+        setupRouting()
         fetchCharacters()
     }
 
@@ -86,7 +83,7 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
     private func fetchCharacters() {
         guard let interactor = interactor else { return }
 
-        let request = CharacterTable.FetchData.Request(type: .all)
+        let request = CharacterTable.FetchData.Request()
         interactor.fetchData(request: request)
     }
 

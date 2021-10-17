@@ -43,7 +43,6 @@ class CharacterTableViewCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-
         setupContentView()
     }
 
@@ -63,6 +62,7 @@ class CharacterTableViewCell: UITableViewCell {
     func setup(with character: RMCharacter) {
         avatarImageView.downloaded(from: character.image) { [weak self] in
             self?.avatarImageView.backgroundColor = .clear
+            self?.setNeedsDisplay()
         }
         titleStackView.setup(with: character)
         locationInfo.setup(with: character.location.name)

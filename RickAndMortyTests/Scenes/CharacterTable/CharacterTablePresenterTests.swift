@@ -31,7 +31,7 @@ final class CharacterTablePresenterTests: XCTestCase {
 
         // When
 
-        sut.presentCharactersData(response: response)
+        sut.presentFetchedData(response: response)
 
         // Then
 

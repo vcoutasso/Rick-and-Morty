@@ -8,13 +8,9 @@
 import Foundation
 
 enum CharacterTable {
+    // MARK: - Use cases
     enum FetchData {
         struct Request {
-            let type: RequestType
-
-            enum RequestType {
-                case all
-            }
         }
 
         struct Response {

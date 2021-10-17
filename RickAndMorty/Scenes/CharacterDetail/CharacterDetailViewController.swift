@@ -19,6 +19,7 @@ class CharacterDetailViewController: UIViewController, CharacterDetailDisplayLog
 
     init() {
         super.init(nibName: nil, bundle: nil)
+        view.backgroundColor = .systemPink
         setup()
     }
 

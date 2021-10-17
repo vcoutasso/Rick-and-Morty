@@ -59,7 +59,7 @@ final class CharacterTableInteractorTests: XCTestCase {
 
 final class CharacterTablePresenterSpy: CharacterTablePresentationLogic {
     private(set) var presentCharactersDataCallCount = 0
-    func presentCharactersData(response: CharacterTable.FetchData.Response) {
+    func presentFetchedData(response: CharacterTable.FetchData.Response) {
         presentCharactersDataCallCount += 1
     }
 }
