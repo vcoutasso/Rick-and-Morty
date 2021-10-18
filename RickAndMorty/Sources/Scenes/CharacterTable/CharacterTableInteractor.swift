@@ -24,6 +24,14 @@ class CharacterTableInteractor: CharacterTableBusinessLogic, CharacterTableDataS
 
     var characters: [RMCharacter]?
 
+    // MARK: - Object lifecycle
+
+    init(apiWorker:CharacterTableAPIWorkerProtocol = CharacterTableAPIWorker(),
+         filterWorker: CharacterTableFilterWorkerProtocol = CharacterTableFilterWorker()) {
+        self.apiWorker = apiWorker
+        self.filterWorker = filterWorker
+    }
+
     // MARK: - Fetch Data
 
     func fetchData(request: CharacterTable.FetchData.Request) {
