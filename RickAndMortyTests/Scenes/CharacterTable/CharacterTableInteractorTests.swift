@@ -55,6 +55,21 @@ final class CharacterTableInteractorTests: XCTestCase {
         XCTAssertEqual(presenterSpy.presentCharactersDataCallCount, 1)
     }
 
+    func testFilterDataShould() {
+        // Given
+
+        let request: CharacterTable.FilterData.Request = .init(searchText: "")
+        sut.characters = []
+
+        // When
+
+        sut.filterData(request: request)
+
+        // Then
+
+        XCTAssertEqual(presenterSpy.presentFilteredDataCallCount, 1)
+    }
+
 }
 
 final class CharacterTablePresenterSpy: CharacterTablePresentationLogic {
@@ -63,8 +78,9 @@ final class CharacterTablePresenterSpy: CharacterTablePresentationLogic {
         presentCharactersDataCallCount += 1
     }
 
+    private(set) var presentFilteredDataCallCount = 0
     func presentFilteredData(response: CharacterTable.FilterData.Response) {
-        fatalError("not implemented")
+        presentFilteredDataCallCount += 1
     }
 }
 
