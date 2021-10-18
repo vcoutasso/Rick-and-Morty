@@ -40,7 +40,7 @@ final class CharacterTableAPIWorkerTests: XCTestCase {
 
         // Then
 
-        wait(for: [completionExpectation], timeout: 3)
+        wait(for: [completionExpectation], timeout: 1)
         XCTAssertEqual(fetchResults.count, pageSizeStub)
     }
 
@@ -59,7 +59,7 @@ final class CharacterTableAPIWorkerTests: XCTestCase {
 
         // Then
 
-        wait(for: [completionExpectation], timeout: 3)
+        wait(for: [completionExpectation], timeout: 5)
         XCTAssertGreaterThan(fetchResults.count, pageSizeStub)
     }
 }
