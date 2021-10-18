@@ -15,8 +15,12 @@ class CharacterTablePresenter: CharacterTablePresentationLogic {
     weak var viewController: CharacterTableDisplayLogic?
 
     func presentFetchedData(response: CharacterTable.FetchData.Response) {
-        let characters = response.characters
-        let viewModel = CharacterTable.FetchData.ViewModel(characters: characters)
+        let sortedCharacters = response.characters.sorted { $0.name < $1.name }
+        let sections = Set(sortedCharacters.map({ String($0.name.first!) })).sorted()
+        let characters = sections.map { sectionName in
+            sortedCharacters.filter { $0.name.starts(with: sectionName) }
+        }
+        let viewModel = CharacterTable.FetchData.ViewModel(characters: characters, sections: sections)
         viewController?.displayCharacters(viewModel: viewModel)
     }
 }

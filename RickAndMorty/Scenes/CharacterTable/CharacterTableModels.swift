@@ -18,7 +18,8 @@ enum CharacterTable {
         }
         
         struct ViewModel {
-            var characters: [RMCharacter]
+            var characters: [[RMCharacter]]
+            var sections: [String]
         }
     }
 }

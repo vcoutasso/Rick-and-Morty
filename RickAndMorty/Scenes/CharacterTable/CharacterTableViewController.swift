@@ -19,7 +19,8 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
 
     // MARK: - Table Data
 
-    private(set) var characters = [RMCharacter]()
+    private(set) var characters = [[RMCharacter]]()
+    private(set) var sections = [String]()
 
     // MARK: - Object lifecycle
 
@@ -78,6 +79,7 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
 
     func displayCharacters(viewModel: CharacterTable.FetchData.ViewModel) {
         characters = viewModel.characters
+        sections = viewModel.sections
 
         reloadData()
     }
@@ -106,12 +108,20 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
 
     // MARK: - Table View
 
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        sections[section]
+    }
+
     override func numberOfSections(in tableView: UITableView) -> Int {
-        1
+        sections.count
+    }
+
+    override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
+        sections
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        characters.count
+        characters[section].count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -119,7 +129,7 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
             return CharacterTableViewCell()
         }
 
-        cell.setup(with: self.characters[indexPath.row])
+        cell.setup(with: characters[indexPath.section][indexPath.row])
 
         return cell
     }
