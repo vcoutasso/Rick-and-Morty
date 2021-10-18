@@ -6,12 +6,10 @@
       "scale" : "1x"
     },
     {
-      "filename" : "rick-and-morty-portal@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "rick-and-morty-portal@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
