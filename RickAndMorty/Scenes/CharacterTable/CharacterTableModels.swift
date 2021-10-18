@@ -22,4 +22,19 @@ enum CharacterTable {
             var sections: [String]
         }
     }
+
+    enum FilterData {
+        struct Request{
+            let searchText: String
+        }
+
+        struct Response {
+            var characters: [RMCharacter]
+        }
+
+        struct ViewModel {
+            var characters: [[RMCharacter]]
+            var sections: [String]
+        }
+    }
 }
