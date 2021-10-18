@@ -18,7 +18,7 @@ enum CharacterTable {
             var characters: [RMCharacter]
         }
         
-        struct ViewModel {
+        struct ViewModel: Equatable {
             var characters: [[RMCharacter]]
             var sections: [String]
         }
@@ -33,7 +33,7 @@ enum CharacterTable {
             var characters: [RMCharacter]
         }
 
-        struct ViewModel {
+        struct ViewModel: Equatable {
             var characters: [[RMCharacter]]
             var sections: [String]
         }

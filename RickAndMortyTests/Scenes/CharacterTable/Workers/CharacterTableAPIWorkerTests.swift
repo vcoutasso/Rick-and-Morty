@@ -28,7 +28,7 @@ final class CharacterTableAPIWorkerTests: XCTestCase {
     func testFetchCurrentPageShouldReturnFullPage() {
         // Given
 
-        let completionExpectation = XCTestExpectation(description: "Fetch should complete")
+        let completionExpectation = XCTestExpectation(description: "Completion should be called")
         var fetchResults = [RMCharacter]()
 
         // When
@@ -40,14 +40,14 @@ final class CharacterTableAPIWorkerTests: XCTestCase {
 
         // Then
 
-        wait(for: [completionExpectation], timeout: 1)
+        wait(for: [completionExpectation], timeout: 5)
         XCTAssertEqual(fetchResults.count, pageSizeStub)
     }
 
     func testFetchAllCharactersShouldFetchMultiplePages() {
         // Given
 
-        let completionExpectation = XCTestExpectation(description: "Fetch should complete")
+        let completionExpectation = XCTestExpectation(description: "Completion should be called")
         var fetchResults = [RMCharacter]()
 
         // When
@@ -59,7 +59,7 @@ final class CharacterTableAPIWorkerTests: XCTestCase {
 
         // Then
 
-        wait(for: [completionExpectation], timeout: 5)
+        wait(for: [completionExpectation], timeout: 10)
         XCTAssertGreaterThan(fetchResults.count, pageSizeStub)
     }
 }
