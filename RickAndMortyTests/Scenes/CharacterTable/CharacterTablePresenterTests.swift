@@ -37,6 +37,20 @@ final class CharacterTablePresenterTests: XCTestCase {
 
         XCTAssertEqual(viewControllerSpy.displayCharactersCallCount, 1)
     }
+
+    func testPresentFilteredDataShouldDisplaySearchResults() {
+        // Given
+
+        let response: CharacterTable.FilterData.Response = .init(characters: [])
+
+        // When
+
+        sut.presentFilteredData(response: response)
+
+        // Then
+
+        XCTAssertEqual(viewControllerSpy.displaySearchResultsCallCount, 1)
+    }
 }
 
 // MARK: - Testing doubles
@@ -47,7 +61,8 @@ final class CharacterTableViewControllerSpy: CharacterTableDisplayLogic {
         displayCharactersCallCount += 1
     }
 
+    private(set) var displaySearchResultsCallCount = 0
     func displaySearchResults(viewModel: CharacterTable.FilterData.ViewModel) {
-        fatalError("not implemented")
+        displaySearchResultsCallCount += 1
     }
 }
