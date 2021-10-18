@@ -60,7 +60,7 @@ class CharacterTableViewCell: UITableViewCell {
     // MARK: - Setup
 
     func setup(with character: RMCharacter) {
-        avatarImageView.downloaded(from: character.image) { [weak self] in
+        avatarImageView.downloadRMImage(from: character.image) { [weak self] in
             self?.avatarImageView.backgroundColor = .clear
             self?.setNeedsDisplay()
         }

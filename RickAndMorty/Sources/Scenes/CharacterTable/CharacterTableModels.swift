@@ -9,6 +9,7 @@ import Foundation
 
 enum CharacterTable {
     // MARK: - Use cases
+    
     enum FetchData {
         struct Request {
         }
