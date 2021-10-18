@@ -18,11 +18,7 @@ class CharacterTablePresenter: CharacterTablePresentationLogic {
     // MARK: - Fetched data
 
     func presentFetchedData(response: CharacterTable.FetchData.Response) {
-        let sortedCharacters = response.characters.sorted { $0.name < $1.name }
-        let sections = Set(sortedCharacters.map({ String($0.name.first!) })).sorted()
-        let characters = sections.map { sectionName in
-            sortedCharacters.filter { $0.name.starts(with: sectionName) }
-        }
+        let (characters, sections) = characterListToListOfSections(response.characters)
         let viewModel = CharacterTable.FetchData.ViewModel(characters: characters, sections: sections)
         viewController?.displayCharacters(viewModel: viewModel)
     }
@@ -30,12 +26,20 @@ class CharacterTablePresenter: CharacterTablePresentationLogic {
     // MARK: - Filtered data
 
     func presentFilteredData(response: CharacterTable.FilterData.Response) {
-        let sortedCharacters = response.characters.sorted { $0.name < $1.name }
+        let (characters, sections) = characterListToListOfSections(response.characters)
+        let viewModel = CharacterTable.FilterData.ViewModel(characters: characters, sections: sections)
+        viewController?.displaySearchResults(viewModel: viewModel)
+    }
+
+    // MARK: - List to sections
+
+    private func characterListToListOfSections(_ characters: [RMCharacter]) -> ([[RMCharacter]], [String]) {
+        let sortedCharacters = characters.sorted { $0.name < $1.name }
         let sections = Set(sortedCharacters.map({ String($0.name.first!) })).sorted()
         let characters = sections.map { sectionName in
             sortedCharacters.filter { $0.name.starts(with: sectionName) }
         }
-        let viewModel = CharacterTable.FilterData.ViewModel(characters: characters, sections: sections)
-        viewController?.displaySearchResults(viewModel: viewModel)
+
+        return (characters, sections)
     }
 }
