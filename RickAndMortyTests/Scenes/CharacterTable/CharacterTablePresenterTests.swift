@@ -46,4 +46,8 @@ final class CharacterTableViewControllerSpy: CharacterTableDisplayLogic {
     func displayCharacters(viewModel: CharacterTable.FetchData.ViewModel) {
         displayCharactersCallCount += 1
     }
+
+    func displaySearchResults(viewModel: CharacterTable.FilterData.ViewModel) {
+        fatalError("not implemented")
+    }
 }

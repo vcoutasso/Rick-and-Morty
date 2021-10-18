@@ -13,7 +13,7 @@ final class CharacterTableInteractorTests: XCTestCase {
     // MARK: - Attributes
 
     private let presenterSpy = CharacterTablePresenterSpy()
-    private let workerSpy = CharacterTableWorkerSpy()
+    private let apiWorkerSpy = CharacterTableAPIWorkerSpy()
     private let sut = CharacterTableInteractor()
 
     // MARK: - Test lifecycle
@@ -22,7 +22,7 @@ final class CharacterTableInteractorTests: XCTestCase {
         super.setUp()
 
         sut.presenter = presenterSpy
-        sut.worker = workerSpy
+        sut.apiWorker = apiWorkerSpy
     }
 
     // MARK: - Unit tests
@@ -38,7 +38,7 @@ final class CharacterTableInteractorTests: XCTestCase {
 
         // Then
 
-        XCTAssertEqual(workerSpy.fetchAllCharactersCallCount, 1)
+        XCTAssertEqual(apiWorkerSpy.fetchAllCharactersCallCount, 1)
     }
 
     func testFetchDataShouldPassResponseToPresenter() {
@@ -62,9 +62,13 @@ final class CharacterTablePresenterSpy: CharacterTablePresentationLogic {
     func presentFetchedData(response: CharacterTable.FetchData.Response) {
         presentCharactersDataCallCount += 1
     }
+
+    func presentFilteredData(response: CharacterTable.FilterData.Response) {
+        fatalError("not implemented")
+    }
 }
 
-final class CharacterTableWorkerSpy: CharacterTableWorkerProtocol {
+final class CharacterTableAPIWorkerSpy: CharacterTableAPIWorkerProtocol {
     private(set) var fetchAllCharactersCallCount = 0
     private(set) var completionStub = [RMCharacter]()
     func fetchAllCharacters(completion: @escaping ([RMCharacter]) -> Void) {

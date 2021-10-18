@@ -1,5 +1,5 @@
 //
-//  CharacterTableWorkerTests.swift
+//  CharacterTableAPIWorkerTests.swift
 //  RickAndMortyTests
 //
 //  Created by Vinícius Couto on 16/10/21.
@@ -8,10 +8,10 @@
 import XCTest
 @testable import RickAndMorty
 
-final class CharacterTableWorkerTests: XCTestCase {
+final class CharacterTableAPIWorkerTests: XCTestCase {
     // MARK: - Attributes
 
-    private let sut = CharacterTableWorker()
+    private let sut = CharacterTableAPIWorker()
 
     // MARK: - Stubs
 
@@ -63,5 +63,3 @@ final class CharacterTableWorkerTests: XCTestCase {
         XCTAssertGreaterThan(fetchResults.count, pageSizeStub)
     }
 }
-
-// MARK: - Testing doubles
