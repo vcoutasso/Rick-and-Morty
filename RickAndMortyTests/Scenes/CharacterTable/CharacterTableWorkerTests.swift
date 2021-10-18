@@ -29,7 +29,7 @@ final class CharacterTableWorkerTests: XCTestCase {
         // Given
 
         let completionExpectation = XCTestExpectation(description: "Fetch should complete")
-        var fetchResults = [CharacterTable.Character]()
+        var fetchResults = [RMCharacter]()
 
         // When
 
@@ -48,7 +48,7 @@ final class CharacterTableWorkerTests: XCTestCase {
         // Given
 
         let completionExpectation = XCTestExpectation(description: "Fetch should complete")
-        var fetchResults = [CharacterTable.Character]()
+        var fetchResults = [RMCharacter]()
 
         // When
 

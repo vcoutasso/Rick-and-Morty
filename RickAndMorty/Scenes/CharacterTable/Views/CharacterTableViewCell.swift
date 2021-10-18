@@ -11,7 +11,7 @@ class CharacterTableViewCell: UITableViewCell {
 
     // MARK: - Attributes
 
-    private(set) var character: CharacterTable.Character?
+    private(set) var character: RMCharacter?
 
     // MARK: - Subviews
 
@@ -43,7 +43,6 @@ class CharacterTableViewCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-
         setupContentView()
     }
 
@@ -60,9 +59,10 @@ class CharacterTableViewCell: UITableViewCell {
 
     // MARK: - Setup
 
-    func setup(with character: CharacterTable.Character) {
+    func setup(with character: RMCharacter) {
         avatarImageView.downloaded(from: character.image) { [weak self] in
             self?.avatarImageView.backgroundColor = .clear
+            self?.setNeedsDisplay()
         }
         titleStackView.setup(with: character)
         locationInfo.setup(with: character.location.name)

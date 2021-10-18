@@ -8,13 +8,19 @@
 import Foundation
 
 protocol CharacterTablePresentationLogic {
-    func presentCharactersData(response: CharacterTable.FetchData.Response)
+    func presentFetchedData(response: CharacterTable.FetchData.Response)
 }
 
 class CharacterTablePresenter: CharacterTablePresentationLogic {
     weak var viewController: CharacterTableDisplayLogic?
 
-    func presentCharactersData(response: CharacterTable.FetchData.Response) {
-        viewController?.displayCharacters(viewModel: .init(characters: response.characters))
+    func presentFetchedData(response: CharacterTable.FetchData.Response) {
+        let sortedCharacters = response.characters.sorted { $0.name < $1.name }
+        let sections = Set(sortedCharacters.map({ String($0.name.first!) })).sorted()
+        let characters = sections.map { sectionName in
+            sortedCharacters.filter { $0.name.starts(with: sectionName) }
+        }
+        let viewModel = CharacterTable.FetchData.ViewModel(characters: characters, sections: sections)
+        viewController?.displayCharacters(viewModel: viewModel)
     }
 }

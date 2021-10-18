@@ -15,11 +15,12 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
     // MARK: - Attributes
 
     private(set) var interactor: CharacterTableBusinessLogic?
-    private(set) var router: (NSObject & CharacterTableRoutingLogic & CharacterTableDataPassing)?
+    private(set) var router: (NSObjectProtocol & CharacterTableRoutingLogic & CharacterTableDataPassing)?
 
     // MARK: - Table Data
 
-    private(set) var characters = [CharacterTable.Character]()
+    private(set) var characters = [[RMCharacter]]()
+    private(set) var sections = [String]()
 
     // MARK: - Object lifecycle
 
@@ -51,37 +52,36 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
         router = characterTableRouter
     }
 
-    // MARK: - View Lifecycle
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        setupRouting()
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
+    private func setupTableView() {
         tableView.register(CharacterTableViewCell.self)
 
-        fetchCharacters()
+        refreshControl = UIRefreshControl()
+        refreshControl?.addTarget(self, action: #selector(handlePullToRefresh), for: .valueChanged)
     }
 
     // MARK: - Routing
 
     func setupRouting() {
-        guard let router = router else { return }
-
-        router.setupNavigationBar()
+        router?.setupNavigationBar()
     }
+
+    // MARK: - View Lifecycle
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupTableView()
+        setupRouting()
+        fetchCharacters()
+    }
+
 
     // MARK: - Display logic
 
     func displayCharacters(viewModel: CharacterTable.FetchData.ViewModel) {
         characters = viewModel.characters
+        sections = viewModel.sections
 
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
+        reloadData()
     }
 
     // MARK: - Private methods
@@ -89,18 +89,39 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
     private func fetchCharacters() {
         guard let interactor = interactor else { return }
 
-        let request = CharacterTable.FetchData.Request(type: .all)
+        let request = CharacterTable.FetchData.Request()
         interactor.fetchData(request: request)
+    }
+
+    // MARK: - Data source
+
+    @objc func handlePullToRefresh() {
+        refreshControl?.endRefreshing()
+        reloadData()
+    }
+
+    func reloadData() {
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
 
     // MARK: - Table View
 
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        sections[section]
+    }
+
     override func numberOfSections(in tableView: UITableView) -> Int {
-        1
+        sections.count
+    }
+
+    override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
+        sections
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        characters.count
+        characters[section].count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -108,12 +129,12 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
             return CharacterTableViewCell()
         }
 
-        cell.setup(with: self.characters[indexPath.row])
+        cell.setup(with: characters[indexPath.section][indexPath.row])
 
         return cell
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+        router?.routeToCharacterDetail()
     }
 }

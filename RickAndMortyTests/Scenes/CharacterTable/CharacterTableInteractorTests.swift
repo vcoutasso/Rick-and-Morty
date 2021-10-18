@@ -30,7 +30,7 @@ final class CharacterTableInteractorTests: XCTestCase {
     func testFetchDataShouldFetchAllCharacters() {
         // Given
 
-        let request: CharacterTable.FetchData.Request = .init(type: .all)
+        let request: CharacterTable.FetchData.Request = .init()
 
         // When
 
@@ -44,7 +44,7 @@ final class CharacterTableInteractorTests: XCTestCase {
     func testFetchDataShouldPassResponseToPresenter() {
         // Given
 
-        let request: CharacterTable.FetchData.Request = .init(type: .all)
+        let request: CharacterTable.FetchData.Request = .init()
 
         // When
 
@@ -59,20 +59,20 @@ final class CharacterTableInteractorTests: XCTestCase {
 
 final class CharacterTablePresenterSpy: CharacterTablePresentationLogic {
     private(set) var presentCharactersDataCallCount = 0
-    func presentCharactersData(response: CharacterTable.FetchData.Response) {
+    func presentFetchedData(response: CharacterTable.FetchData.Response) {
         presentCharactersDataCallCount += 1
     }
 }
 
 final class CharacterTableWorkerSpy: CharacterTableWorkerProtocol {
     private(set) var fetchAllCharactersCallCount = 0
-    private(set) var completionStub = [CharacterTable.Character]()
-    func fetchAllCharacters(completion: @escaping ([CharacterTable.Character]) -> Void) {
+    private(set) var completionStub = [RMCharacter]()
+    func fetchAllCharacters(completion: @escaping ([RMCharacter]) -> Void) {
         fetchAllCharactersCallCount += 1
         completion(completionStub)
     }
 
-    func fetchCurrentPage(completion: @escaping ([CharacterTable.Character]) -> Void) {
+    func fetchCurrentPage(completion: @escaping ([RMCharacter]) -> Void) {
         fatalError("not implemented")
     }
 }
