@@ -37,3 +37,9 @@ struct RMCharacter: Decodable {
         case unknown = "unknown"
     }
 }
+
+extension RMCharacter: Equatable {
+    static func == (lhs: RMCharacter, rhs: RMCharacter) -> Bool {
+        lhs.id == rhs.id
+    }
+}
