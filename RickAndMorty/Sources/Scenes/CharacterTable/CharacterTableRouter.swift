@@ -8,7 +8,7 @@
 import UIKit
 
 protocol CharacterTableRoutingLogic {
-    func setupNavigationBar()
+    func setup()
     func routeToCharacterDetail()
 }
 
@@ -24,7 +24,7 @@ class CharacterTableRouter: NSObject, CharacterTableRoutingLogic, CharacterTable
 
     // MARK: - Setup
 
-    func setupNavigationBar() {
+    func setup() {
         guard let viewController = viewController, let navigationController = viewController.navigationController else { return }
         viewController.navigationItem.searchController = viewController.searchController
         viewController.navigationItem.hidesSearchBarWhenScrolling = false

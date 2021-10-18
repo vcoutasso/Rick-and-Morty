@@ -35,8 +35,6 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
     init() {
         super.init(style: .plain)
 
-        self.title = "Character List"
-
         setup()
     }
 
@@ -47,6 +45,8 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
     // MARK: - Setup
 
     private func setup() {
+        title = "Character List"
+
         let characterTableInteractor = CharacterTableInteractor()
         let characterTablePresenter = CharacterTablePresenter()
         let characterTableRouter = CharacterTableRouter()
@@ -70,13 +70,14 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
     // MARK: - Routing
 
     func setupRouting() {
-        router?.setupNavigationBar()
+        router?.setup()
     }
 
     // MARK: - View Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setupTableView()
         setupRouting()
         fetchCharacters()
