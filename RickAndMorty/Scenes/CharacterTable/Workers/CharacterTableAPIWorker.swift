@@ -1,5 +1,5 @@
 //
-//  CharacterTableWorker.swift
+//  CharacterTableAPIWorker.swift
 //  RickAndMorty
 //
 //  Created by Vinícius Couto on 14/10/21.
@@ -7,12 +7,12 @@
 
 import Foundation
 
-protocol CharacterTableWorkerProtocol {
+protocol CharacterTableAPIWorkerProtocol {
     func fetchAllCharacters(completion: @escaping ([RMCharacter]) -> Void)
     func fetchCurrentPage(completion: @escaping ([RMCharacter]) -> Void)
 }
 
-class CharacterTableWorker: CharacterTableWorkerProtocol {
+class CharacterTableAPIWorker: CharacterTableAPIWorkerProtocol {
     let baseUrl = "https://rickandmortyapi.com/api/character"
     var currentPage: Int = 1
     var lastPage: Int?

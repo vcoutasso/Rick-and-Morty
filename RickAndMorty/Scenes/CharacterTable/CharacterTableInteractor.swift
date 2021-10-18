@@ -9,6 +9,7 @@ import Foundation
 
 protocol CharacterTableBusinessLogic {
     func fetchData(request: CharacterTable.FetchData.Request)
+    func filterData(request: CharacterTable.FilterData.Request)
 }
 
 protocol CharacterTableDataStore {
@@ -17,17 +18,31 @@ protocol CharacterTableDataStore {
 
 class CharacterTableInteractor: CharacterTableBusinessLogic, CharacterTableDataStore {
     var presenter: CharacterTablePresentationLogic?
-    var worker: CharacterTableWorkerProtocol = CharacterTableWorker()
+
+    var apiWorker: CharacterTableAPIWorkerProtocol = CharacterTableAPIWorker()
+    var filterWorker: CharacterTableFilterWorkerProtocol = CharacterTableFilterWorker()
 
     var characters: [RMCharacter]?
 
     // MARK: - Fetch Data
 
     func fetchData(request: CharacterTable.FetchData.Request) {
-        worker.fetchAllCharacters { characters in
+        apiWorker.fetchAllCharacters { characters in
             self.characters = characters
             let response = CharacterTable.FetchData.Response(characters: characters)
+
             self.presenter?.presentFetchedData(response: response)
         }
+    }
+
+    // MARK: - Filter Data
+
+    func filterData(request: CharacterTable.FilterData.Request) {
+        guard let characters = characters else { return }
+
+        let filteredCharacters = filterWorker.filterCharacters(characters, contains: request.searchText)
+        let response = CharacterTable.FilterData.Response(characters: filteredCharacters)
+
+        self.presenter?.presentFilteredData(response: response)
     }
 }

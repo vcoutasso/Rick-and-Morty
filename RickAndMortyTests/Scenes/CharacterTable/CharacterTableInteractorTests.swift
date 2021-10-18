@@ -13,7 +13,7 @@ final class CharacterTableInteractorTests: XCTestCase {
     // MARK: - Attributes
 
     private let presenterSpy = CharacterTablePresenterSpy()
-    private let workerSpy = CharacterTableWorkerSpy()
+    private let apiWorkerSpy = CharacterTableAPIWorkerSpy()
     private let sut = CharacterTableInteractor()
 
     // MARK: - Test lifecycle
@@ -22,7 +22,7 @@ final class CharacterTableInteractorTests: XCTestCase {
         super.setUp()
 
         sut.presenter = presenterSpy
-        sut.worker = workerSpy
+        sut.apiWorker = apiWorkerSpy
     }
 
     // MARK: - Unit tests
@@ -38,7 +38,7 @@ final class CharacterTableInteractorTests: XCTestCase {
 
         // Then
 
-        XCTAssertEqual(workerSpy.fetchAllCharactersCallCount, 1)
+        XCTAssertEqual(apiWorkerSpy.fetchAllCharactersCallCount, 1)
     }
 
     func testFetchDataShouldPassResponseToPresenter() {
@@ -55,6 +55,21 @@ final class CharacterTableInteractorTests: XCTestCase {
         XCTAssertEqual(presenterSpy.presentCharactersDataCallCount, 1)
     }
 
+    func testFilterDataShould() {
+        // Given
+
+        let request: CharacterTable.FilterData.Request = .init(searchText: "")
+        sut.characters = []
+
+        // When
+
+        sut.filterData(request: request)
+
+        // Then
+
+        XCTAssertEqual(presenterSpy.presentFilteredDataCallCount, 1)
+    }
+
 }
 
 final class CharacterTablePresenterSpy: CharacterTablePresentationLogic {
@@ -62,9 +77,14 @@ final class CharacterTablePresenterSpy: CharacterTablePresentationLogic {
     func presentFetchedData(response: CharacterTable.FetchData.Response) {
         presentCharactersDataCallCount += 1
     }
+
+    private(set) var presentFilteredDataCallCount = 0
+    func presentFilteredData(response: CharacterTable.FilterData.Response) {
+        presentFilteredDataCallCount += 1
+    }
 }
 
-final class CharacterTableWorkerSpy: CharacterTableWorkerProtocol {
+final class CharacterTableAPIWorkerSpy: CharacterTableAPIWorkerProtocol {
     private(set) var fetchAllCharactersCallCount = 0
     private(set) var completionStub = [RMCharacter]()
     func fetchAllCharacters(completion: @escaping ([RMCharacter]) -> Void) {

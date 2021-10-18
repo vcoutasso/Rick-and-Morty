@@ -9,6 +9,7 @@ import UIKit
 
 protocol CharacterTableDisplayLogic: AnyObject {
     func displayCharacters(viewModel: CharacterTable.FetchData.ViewModel)
+    func displaySearchResults(viewModel: CharacterTable.FilterData.ViewModel)
 }
 
 class CharacterTableViewController: UITableViewController, CharacterTableDisplayLogic {
@@ -21,6 +22,13 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
 
     private(set) var characters = [[RMCharacter]]()
     private(set) var sections = [String]()
+
+    private(set) lazy var searchController: UISearchController = {
+        let searchController = UISearchController()
+        searchController.searchBar.delegate = self
+
+        return searchController
+    }()
 
     // MARK: - Object lifecycle
 
@@ -81,7 +89,14 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
         characters = viewModel.characters
         sections = viewModel.sections
 
-        reloadData()
+        reloadData(animated: true)
+    }
+
+    func displaySearchResults(viewModel: CharacterTable.FilterData.ViewModel) {
+        characters = viewModel.characters
+        sections = viewModel.sections
+
+        reloadData(animated: false)
     }
 
     // MARK: - Private methods
@@ -97,12 +112,20 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
 
     @objc func handlePullToRefresh() {
         refreshControl?.endRefreshing()
-        reloadData()
+        reloadData(animated: true)
     }
 
-    func reloadData() {
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
+    func reloadData(animated: Bool) {
+        if animated {
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        } else {
+            UIView.performWithoutAnimation {
+                self.tableView.reloadData()
+                self.tableView.beginUpdates()
+                self.tableView.endUpdates()
+            }
         }
     }
 
@@ -136,5 +159,14 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         router?.routeToCharacterDetail()
+    }
+}
+
+extension CharacterTableViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        guard let interactor = interactor else { return }
+        
+        let request = CharacterTable.FilterData.Request(searchText: searchText)
+        interactor.filterData(request: request)
     }
 }

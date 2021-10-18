@@ -25,7 +25,9 @@ class CharacterTableRouter: NSObject, CharacterTableRoutingLogic, CharacterTable
     // MARK: - Setup
 
     func setupNavigationBar() {
-        guard let navigationController = viewController?.navigationController else { return }
+        guard let viewController = viewController, let navigationController = viewController.navigationController else { return }
+        viewController.navigationItem.searchController = viewController.searchController
+        viewController.navigationItem.hidesSearchBarWhenScrolling = false
         navigationController.navigationBar.prefersLargeTitles = true
     }
 
