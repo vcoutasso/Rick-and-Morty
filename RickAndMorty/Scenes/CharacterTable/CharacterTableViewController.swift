@@ -51,15 +51,11 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
         router = characterTableRouter
     }
 
-    // MARK: - View Lifecycle
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
+    private func setupTableView() {
         tableView.register(CharacterTableViewCell.self)
 
-        setupRouting()
-        fetchCharacters()
+        refreshControl = UIRefreshControl()
+        refreshControl?.addTarget(self, action: #selector(handlePullToRefresh), for: .valueChanged)
     }
 
     // MARK: - Routing
@@ -68,14 +64,22 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
         router?.setupNavigationBar()
     }
 
+    // MARK: - View Lifecycle
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupTableView()
+        setupRouting()
+        fetchCharacters()
+    }
+
+
     // MARK: - Display logic
 
     func displayCharacters(viewModel: CharacterTable.FetchData.ViewModel) {
         characters = viewModel.characters
 
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
+        reloadData()
     }
 
     // MARK: - Private methods
@@ -85,6 +89,19 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
 
         let request = CharacterTable.FetchData.Request()
         interactor.fetchData(request: request)
+    }
+
+    // MARK: - Data source
+
+    @objc func handlePullToRefresh() {
+        refreshControl?.endRefreshing()
+        reloadData()
+    }
+
+    func reloadData() {
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
 
     // MARK: - Table View
