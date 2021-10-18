@@ -30,7 +30,7 @@ final class CharacterTableInteractorTests: XCTestCase {
     func testFetchDataShouldFetchAllCharacters() {
         // Given
 
-        let request: CharacterTable.FetchData.Request = .init(type: .all)
+        let request: CharacterTable.FetchData.Request = .init()
 
         // When
 
@@ -44,7 +44,7 @@ final class CharacterTableInteractorTests: XCTestCase {
     func testFetchDataShouldPassResponseToPresenter() {
         // Given
 
-        let request: CharacterTable.FetchData.Request = .init(type: .all)
+        let request: CharacterTable.FetchData.Request = .init()
 
         // When
 
