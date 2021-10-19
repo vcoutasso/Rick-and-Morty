@@ -170,4 +170,8 @@ extension CharacterTableViewController: UISearchBarDelegate {
         let request = CharacterTable.FilterData.Request(searchText: searchText)
         interactor.filterData(request: request)
     }
+
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        self.searchBar(searchBar, textDidChange: "")
+    }
 }
