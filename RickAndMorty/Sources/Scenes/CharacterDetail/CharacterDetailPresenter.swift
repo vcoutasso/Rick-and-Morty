@@ -8,7 +8,7 @@
 import UIKit
 
 protocol CharacterDetailPresentationLogic {
-    func presentSomething(response: CharacterDetail.Something.Response)
+    func presentCharacterDetail(response: CharacterDetail.Character.Response)
 }
 
 class CharacterDetailPresenter: CharacterDetailPresentationLogic {
@@ -16,8 +16,21 @@ class CharacterDetailPresenter: CharacterDetailPresentationLogic {
 
     // MARK: Do something
 
-    func presentSomething(response: CharacterDetail.Something.Response) {
-        let viewModel = CharacterDetail.Something.ViewModel()
-        viewController?.displaySomething(viewModel: viewModel)
+    func presentCharacterDetail(response: CharacterDetail.Character.Response) {
+        let character = response.character
+        let isFavorite = response.isFavorite
+        let id = character.id
+        let name = character.name
+        let status = character.status
+        let species = character.species
+        let type = character.type
+        let gender = character.gender
+        let imageLink = character.image
+        let image = UIImageView()
+
+        image.downloadRMImage(client: RMImageClient(), from: imageLink) {
+            let viewModel = CharacterDetail.Character.ViewModel(id: id, name: name, status: status, species: species, type: type, gender: gender, image: image, isFavorite: isFavorite)
+            self.viewController?.displayDetailView(viewModel: viewModel)
+        }
     }
 }

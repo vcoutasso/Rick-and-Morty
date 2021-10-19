@@ -8,18 +8,19 @@
 import UIKit
 
 protocol CharacterDetailDisplayLogic: AnyObject {
-    func displaySomething(viewModel: CharacterDetail.Something.ViewModel)
+    func displayDetailView(viewModel: CharacterDetail.Character.ViewModel)
 }
 
 class CharacterDetailViewController: UIViewController, CharacterDetailDisplayLogic {
     var interactor: CharacterDetailBusinessLogic?
     var router: (NSObjectProtocol & CharacterDetailRoutingLogic & CharacterDetailDataPassing)?
 
+    private lazy var detailView = CharacterDetailScrollView()
+
     // MARK: Object lifecycle
 
     init() {
         super.init(nibName: nil, bundle: nil)
-        view.backgroundColor = .systemBackground
         setup()
     }
 
@@ -31,36 +32,59 @@ class CharacterDetailViewController: UIViewController, CharacterDetailDisplayLog
 
     private func setup() {
         let viewController = self
-        let interactor = CharacterDetailInteractor()
-        let presenter = CharacterDetailPresenter()
-        let router = CharacterDetailRouter()
-        viewController.interactor = interactor
-        viewController.router = router
-        interactor.presenter = presenter
-        presenter.viewController = viewController
-        router.viewController = viewController
-        router.dataStore = interactor
+        let characterDetailInteractor = CharacterDetailInteractor()
+        let characterDetailPresenter = CharacterDetailPresenter()
+        let characterDetailRouter = CharacterDetailRouter()
+
+        characterDetailInteractor.presenter = characterDetailPresenter
+        characterDetailPresenter.viewController = viewController
+        characterDetailRouter.dataStore = characterDetailInteractor
+        characterDetailRouter.viewController = viewController
+
+        interactor = characterDetailInteractor
+        router = characterDetailRouter
+    }
+
+    private func setupView() {
+        view.backgroundColor = .systemBackground
+
+        view.addSubview(detailView)
+
+        let constraints = [
+            detailView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            detailView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            detailView.topAnchor.constraint(equalTo: view.topAnchor),
+            detailView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            detailView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            detailView.rightAnchor.constraint(equalTo: view.rightAnchor),
+        ]
+
+        NSLayoutConstraint.activate(constraints)
     }
 
     // MARK: Routing
 
-    // TODO: Implement routing
+    func setupRouting() {
+    }
 
     // MARK: View lifecycle
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupView()
         doSomething()
     }
 
     // MARK: Do something
 
     func doSomething() {
-        let request = CharacterDetail.Something.Request()
+        let dataStore = router!.dataStore!
+        let request = CharacterDetail.Character.Request(character: dataStore.character)
         interactor?.doSomething(request: request)
     }
 
-    func displaySomething(viewModel: CharacterDetail.Something.ViewModel) {
-        //nameTextField.text = viewModel.name
+    func displayDetailView(viewModel: CharacterDetail.Character.ViewModel) {
+        detailView.characterData = viewModel
+        detailView.show()
     }
 }
