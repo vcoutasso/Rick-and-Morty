@@ -8,7 +8,7 @@
 import XCTest
 @testable import RickAndMorty
 
-class UIImageView_Tests: XCTestCase {
+class UIImageViewTests: XCTestCase {
 
     // MARK: - System under test
 
