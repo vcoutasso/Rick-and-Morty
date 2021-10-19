@@ -13,6 +13,8 @@ class CharacterTableViewCell: UITableViewCell {
 
     private(set) var character: RMCharacter?
 
+    private let imageCacheClient = RMImageClient()
+
     // MARK: - Subviews
 
     private let titleStackView: CharacterTableViewCellTitle = .init()
@@ -62,7 +64,7 @@ class CharacterTableViewCell: UITableViewCell {
 
     func setup(with character: RMCharacter) {
         self.character = character
-        avatarImageView.downloadRMImage(from: character.image) { [weak self] in
+        avatarImageView.downloadRMImage(client: imageCacheClient, from: character.image) { [weak self] in
             self?.avatarImageView.backgroundColor = .clear
             self?.setNeedsDisplay()
         }

@@ -44,7 +44,6 @@ schemes:
       gatherCoverageData: true
       targets:
         - name: RickAndMortyTests
-          parallelizable: true
           randomExecutionOrder: true
 
   RickAndMortyUITests:
