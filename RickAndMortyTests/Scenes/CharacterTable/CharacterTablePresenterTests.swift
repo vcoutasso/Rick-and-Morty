@@ -35,7 +35,7 @@ final class CharacterTablePresenterTests: XCTestCase {
 
         // Then
 
-        XCTAssertEqual(viewControllerSpy.displayCharactersCalled, true)
+        XCTAssert(viewControllerSpy.displayCharactersCalled)
     }
 
     func testPresentFilteredDataShouldDisplaySearchResults() {
@@ -49,7 +49,7 @@ final class CharacterTablePresenterTests: XCTestCase {
 
         // Then
 
-        XCTAssertEqual(viewControllerSpy.displaySearchResultsCalled, true)
+        XCTAssert(viewControllerSpy.displaySearchResultsCalled)
     }
 
     func testCharacterListToListOfSections() {
