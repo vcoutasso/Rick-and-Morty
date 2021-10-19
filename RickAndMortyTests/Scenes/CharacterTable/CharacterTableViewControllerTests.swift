@@ -11,21 +11,8 @@ import XCTest
 class CharacterTableViewControllerTests: XCTestCase {
     // MARK: - Attributes
 
-    private var window: UIWindow!
-    private var sut: CharacterTableViewController!
-
-    // MARK: - Test lifecycle
-
-    override func setUp() {
-        super.setUp()
-        window = UIWindow()
-        sut = .init()
-    }
-
-    override func tearDown() {
-        window = nil
-        sut = nil
-    }
+    private var window = UIWindow()
+    private var sut = CharacterTableViewController()
 
     // MARK: - Test setup
 
