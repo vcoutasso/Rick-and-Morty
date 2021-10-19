@@ -12,11 +12,10 @@ extension UIImageView {
 
     // MARK: - Download + caching
 
-    func downloadRMImage(from url: URL, contentMode mode: ContentMode = .scaleAspectFit, completion: @escaping () -> Void) {
-        let client = RMImageClient()
-
+    func downloadRMImage(client: RMImageClientProtocol & RMImageCacheInjector,from url: URL, contentMode mode: ContentMode = .scaleAspectFit, completion: @escaping () -> Void) {
         if let image = client.getImage(forURL: url) {
             self.image = image
+            completion()
         } else {
             downloaded(from: url, contentMode: mode) {
                 if let image = self.image {
@@ -27,9 +26,9 @@ extension UIImageView {
         }
     }
 
-    func downloadRMImage(from link: String, contentMode mode: ContentMode = .scaleAspectFit, completion: @escaping () -> Void) {
+    func downloadRMImage(client: RMImageClientProtocol & RMImageCacheInjector, from link: String, contentMode mode: ContentMode = .scaleAspectFit, completion: @escaping () -> Void) {
         guard let url = URL(string: link) else { return }
-        downloadRMImage(from: url, contentMode: mode, completion: completion)
+        downloadRMImage(client: client, from: url, contentMode: mode, completion: completion)
     }
 
 

@@ -7,14 +7,31 @@
 
 import UIKit
 
-fileprivate let imageCache: NSCache<NSString, UIImage> = {
-    let cache = NSCache<NSString, UIImage>()
-    cache.countLimit = 1000
+fileprivate let sharedImageCache: NSCache<NSString, UIImage> = .init()
 
-    return cache
-}()
+protocol RMImageCacheInjector {
+    var imageCache: NSCache<NSString, UIImage> { get }
+}
 
-class RMImageClient {
+extension RMImageCacheInjector {
+    var imageCache: NSCache<NSString, UIImage> {
+        sharedImageCache
+    }
+}
+
+protocol RMImageClientProtocol {
+    static var cacheCountLimit: Int { get }
+
+    func getImage(forURL url: URL) -> UIImage?
+    func setImage(_ image: UIImage, forURL url: URL)
+}
+
+class RMImageClient: RMImageClientProtocol, RMImageCacheInjector {
+    static var cacheCountLimit = 1000
+
+    init() {
+        imageCache.countLimit = Self.cacheCountLimit
+    }
 
     func getImage(forURL url: URL) -> UIImage? {
         imageCache.object(forKey: url.absoluteString as NSString)
