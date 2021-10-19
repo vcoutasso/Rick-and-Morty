@@ -38,7 +38,7 @@ final class CharacterTableInteractorTests: XCTestCase {
 
         // Then
 
-        XCTAssertEqual(apiWorkerSpy.fetchAllCharactersCallCount, 1)
+        XCTAssert(apiWorkerSpy.fetchAllCharactersCalled)
     }
 
     func testFetchDataShouldPassResponseToPresenter() {
@@ -52,10 +52,10 @@ final class CharacterTableInteractorTests: XCTestCase {
 
         // Then
 
-        XCTAssertEqual(presenterSpy.presentCharactersDataCallCount, 1)
+        XCTAssert(presenterSpy.presentCharactersDataCalled)
     }
 
-    func testFilterDataShould() {
+    func testFilterDataShouldPassResponseToPresenter() {
         // Given
 
         let request: CharacterTable.FilterData.Request = .init(searchText: "")
@@ -67,28 +67,28 @@ final class CharacterTableInteractorTests: XCTestCase {
 
         // Then
 
-        XCTAssertEqual(presenterSpy.presentFilteredDataCallCount, 1)
+        XCTAssert(presenterSpy.presentFilteredDataCalled)
     }
 
 }
 
 final class CharacterTablePresenterSpy: CharacterTablePresentationLogic {
-    private(set) var presentCharactersDataCallCount = 0
+    private(set) var presentCharactersDataCalled = false
     func presentFetchedData(response: CharacterTable.FetchData.Response) {
-        presentCharactersDataCallCount += 1
+        presentCharactersDataCalled = true
     }
 
-    private(set) var presentFilteredDataCallCount = 0
+    private(set) var presentFilteredDataCalled = false
     func presentFilteredData(response: CharacterTable.FilterData.Response) {
-        presentFilteredDataCallCount += 1
+        presentFilteredDataCalled = true
     }
 }
 
 final class CharacterTableAPIWorkerSpy: CharacterTableAPIWorkerProtocol {
-    private(set) var fetchAllCharactersCallCount = 0
+    private(set) var fetchAllCharactersCalled = false
     private(set) var completionStub = [RMCharacter]()
     func fetchAllCharacters(completion: @escaping ([RMCharacter]) -> Void) {
-        fetchAllCharactersCallCount += 1
+        fetchAllCharactersCalled = true
         completion(completionStub)
     }
 

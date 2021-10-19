@@ -35,7 +35,7 @@ final class CharacterTablePresenterTests: XCTestCase {
 
         // Then
 
-        XCTAssertEqual(viewControllerSpy.displayCharactersCallCount, 1)
+        XCTAssert(viewControllerSpy.displayCharactersCalled)
     }
 
     func testPresentFilteredDataShouldDisplaySearchResults() {
@@ -49,20 +49,43 @@ final class CharacterTablePresenterTests: XCTestCase {
 
         // Then
 
-        XCTAssertEqual(viewControllerSpy.displaySearchResultsCallCount, 1)
+        XCTAssert(viewControllerSpy.displaySearchResultsCalled)
+    }
+
+    func testCharacterListToListOfSections() {
+        // Given
+
+        let dummyCharacters = [Seeds.RMCharacters.rick, Seeds.RMCharacters.morty, Seeds.RMCharacters.summer]
+        let dummyResponse = CharacterTable.FilterData.Response(characters: dummyCharacters)
+
+        let sortedSectionNames = ["M", "R", "S"]
+        let sortedSortedCharacters = [[Seeds.RMCharacters.morty], [Seeds.RMCharacters.rick], [Seeds.RMCharacters.summer]]
+        let expectedViewModel = CharacterTable.FilterData.ViewModel(characters: sortedSortedCharacters, sections: sortedSectionNames)
+
+        // When
+
+        sut.presentFilteredData(response: dummyResponse)
+
+        // Then
+
+        XCTAssertEqual(viewControllerSpy.displaySearchResultsPassedViewModel, expectedViewModel)
     }
 }
 
 // MARK: - Testing doubles
 
 final class CharacterTableViewControllerSpy: CharacterTableDisplayLogic {
-    private(set) var displayCharactersCallCount = 0
+    private(set) var displayCharactersCalled = false
+    private(set) var displayCharactersPassedViewModel: CharacterTable.FetchData.ViewModel?
     func displayCharacters(viewModel: CharacterTable.FetchData.ViewModel) {
-        displayCharactersCallCount += 1
+        displayCharactersCalled = true
+        displayCharactersPassedViewModel = viewModel
     }
 
-    private(set) var displaySearchResultsCallCount = 0
+    private(set) var displaySearchResultsCalled = false
+    private(set) var displaySearchResultsPassedViewModel: CharacterTable.FilterData.ViewModel?
     func displaySearchResults(viewModel: CharacterTable.FilterData.ViewModel) {
-        displaySearchResultsCallCount += 1
+        displaySearchResultsCalled = true
+        displaySearchResultsPassedViewModel = viewModel
     }
 }

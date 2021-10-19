@@ -15,8 +15,8 @@ protocol CharacterTableDisplayLogic: AnyObject {
 class CharacterTableViewController: UITableViewController, CharacterTableDisplayLogic {
     // MARK: - Attributes
 
-    private(set) var interactor: CharacterTableBusinessLogic?
-    private(set) var router: (NSObjectProtocol & CharacterTableRoutingLogic & CharacterTableDataPassing)?
+    var interactor: CharacterTableBusinessLogic?
+    var router: (NSObjectProtocol & CharacterTableRoutingLogic & CharacterTableDataPassing)?
 
     // MARK: - Table Data
 
@@ -90,7 +90,7 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
         characters = viewModel.characters
         sections = viewModel.sections
 
-        reloadData(animated: true)
+        reloadData(animated: false)
     }
 
     func displaySearchResults(viewModel: CharacterTable.FilterData.ViewModel) {
@@ -117,15 +117,15 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
     }
 
     func reloadData(animated: Bool) {
-        if animated {
-            DispatchQueue.main.async {
+        DispatchQueue.main.async {
+            if animated {
                 self.tableView.reloadData()
-            }
-        } else {
-            UIView.performWithoutAnimation {
-                self.tableView.reloadData()
-                self.tableView.beginUpdates()
-                self.tableView.endUpdates()
+            } else {
+                UIView.performWithoutAnimation {
+                    self.tableView.reloadData()
+                    self.tableView.beginUpdates()
+                    self.tableView.endUpdates()
+                }
             }
         }
     }

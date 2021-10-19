@@ -53,6 +53,7 @@ class CharacterTableViewCell: UITableViewCell {
     // MARK: - Table view cell
 
     override func prepareForReuse() {
+        character = nil
         avatarImageView.image = nil
         avatarImageView.backgroundColor = .systemGray5
     }
@@ -60,6 +61,7 @@ class CharacterTableViewCell: UITableViewCell {
     // MARK: - Setup
 
     func setup(with character: RMCharacter) {
+        self.character = character
         avatarImageView.downloadRMImage(from: character.image) { [weak self] in
             self?.avatarImageView.backgroundColor = .clear
             self?.setNeedsDisplay()
