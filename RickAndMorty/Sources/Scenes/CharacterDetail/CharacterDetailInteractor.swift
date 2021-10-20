@@ -9,7 +9,8 @@ import UIKit
 
 protocol CharacterDetailBusinessLogic {
     func getCharacter(request: CharacterDetail.Character.Request)
-    func favoriteItem(request: CharacterDetail.Favorite.Request)
+    func getFavorite(request: CharacterDetail.Favorite.Request)
+    func setFavorite(request: CharacterDetail.Favorite.Request)
 }
 
 protocol CharacterDetailDataStore {
@@ -33,11 +34,20 @@ class CharacterDetailInteractor: CharacterDetailBusinessLogic, CharacterDetailDa
         presenter?.presentCharacterDetail(response: response)
     }
 
-    // MARK: - Favorite item
+    // MARK: - Get/set favorite
 
-    func favoriteItem(request: CharacterDetail.Favorite.Request) {
+    func getFavorite(request: CharacterDetail.Favorite.Request) {
         // TODO: Worker must get this from database
         let isFavorite = Bool.random()
+
+        let response = CharacterDetail.Favorite.Response(isFavorite: isFavorite)
+        presenter?.presentFavoriteIcon(response: response)
+    }
+
+    func setFavorite(request: CharacterDetail.Favorite.Request) {
+        // TODO: Worker must get this from database
+        var isFavorite = Bool.random()
+        isFavorite.toggle()
 
         let response = CharacterDetail.Favorite.Response(isFavorite: isFavorite)
         presenter?.presentFavoriteIcon(response: response)

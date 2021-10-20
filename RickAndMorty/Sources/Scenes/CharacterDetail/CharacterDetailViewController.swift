@@ -68,15 +68,11 @@ class CharacterDetailViewController: UIViewController, CharacterDetailDisplayLog
         NSLayoutConstraint.activate(constraints)
     }
 
-    func setupFavoriteButton() {
-        let request = CharacterDetail.Favorite.Request(characterID: router!.dataStore!.character.id)
-        interactor?.favoriteItem(request: request)
-    }
 
     // MARK: - Handle events
 
     @objc func handleFavoriteTapped() {
-        setupFavoriteButton()
+        setFavoriteButton()
     }
 
     // MARK: Routing
@@ -92,7 +88,7 @@ class CharacterDetailViewController: UIViewController, CharacterDetailDisplayLog
         setupRouting()
         setupView()
         getCharacter()
-        setupFavoriteButton()
+        getFavoriteButton()
     }
 
     // MARK: Get character
@@ -103,6 +99,20 @@ class CharacterDetailViewController: UIViewController, CharacterDetailDisplayLog
         interactor?.getCharacter(request: request)
     }
 
+    // MARK: - Set favorite
+
+    func setFavoriteButton() {
+        let request = CharacterDetail.Favorite.Request(characterID: router!.dataStore!.character.id)
+        interactor?.setFavorite(request: request)
+    }
+
+    // MARK: - Get favorite
+
+    func getFavoriteButton() {
+        let request = CharacterDetail.Favorite.Request(characterID: router!.dataStore!.character.id)
+        interactor?.getFavorite(request: request)
+    }
+    
     // MARK: - Display
 
     func displayDetailView(viewModel: CharacterDetail.Character.ViewModel) {
