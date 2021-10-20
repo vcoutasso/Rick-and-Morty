@@ -7,7 +7,7 @@
 
 import UIKit
 
-@objc protocol CharacterDetailRoutingLogic {
+protocol CharacterDetailRoutingLogic {
     func setup()
 }
 
@@ -25,6 +25,8 @@ class CharacterDetailRouter: NSObject, CharacterDetailRoutingLogic, CharacterDet
         guard let viewController = viewController else { return }
         viewController.navigationItem.largeTitleDisplayMode = .never
         viewController.navigationItem.searchController = nil
+        let rightBarButton = UIBarButtonItem(image: UIImage(), style: .plain, target: viewController, action: #selector(viewController.handleFavoriteTapped))
+        viewController.navigationItem.setRightBarButton(rightBarButton, animated: true)
     }
 
     // MARK: - Routing

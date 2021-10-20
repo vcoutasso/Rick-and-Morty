@@ -1,5 +1,5 @@
 //
-//  CharacterTableViewCellInfo.swift
+//  CharacterDetailInfoView.swift
 //  RickAndMorty
 //
 //  Created by Vinícius Couto on 15/10/21.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CharacterTableViewCellInfo: UIStackView {
+class CharacterDetailInfoView: UIStackView {
 
     // MARK: - Attributes
 
@@ -21,7 +21,7 @@ class CharacterTableViewCellInfo: UIStackView {
 
         label.textColor = .secondaryLabel
         label.text = title
-        label.font = .preferredFont(forTextStyle: .caption2)
+        label.font = .preferredFont(forTextStyle: .headline)
         label.adjustsFontForContentSizeCategory = true
 
         return label
@@ -32,7 +32,7 @@ class CharacterTableViewCellInfo: UIStackView {
         label.translatesAutoresizingMaskIntoConstraints = false
 
         label.textColor = .label
-        label.font = .preferredFont(forTextStyle: .footnote)
+        label.font = .preferredFont(forTextStyle: .body)
         label.adjustsFontForContentSizeCategory = true
 
         return label

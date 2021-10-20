@@ -9,6 +9,7 @@ import UIKit
 
 protocol CharacterDetailDisplayLogic: AnyObject {
     func displayDetailView(viewModel: CharacterDetail.Character.ViewModel)
+    func displayFavoriteButton(viewModel: CharacterDetail.Favorite.ViewModel)
 }
 
 class CharacterDetailViewController: UIViewController, CharacterDetailDisplayLogic {
@@ -67,6 +68,17 @@ class CharacterDetailViewController: UIViewController, CharacterDetailDisplayLog
         NSLayoutConstraint.activate(constraints)
     }
 
+    func setupFavoriteButton() {
+        let request = CharacterDetail.Favorite.Request(characterID: router!.dataStore!.character.id)
+        interactor?.favoriteItem(request: request)
+    }
+
+    // MARK: - Handle events
+
+    @objc func handleFavoriteTapped() {
+        setupFavoriteButton()
+    }
+
     // MARK: Routing
 
     func setupRouting() {
@@ -80,6 +92,7 @@ class CharacterDetailViewController: UIViewController, CharacterDetailDisplayLog
         setupRouting()
         setupView()
         getCharacter()
+        setupFavoriteButton()
     }
 
     // MARK: Get character
@@ -90,8 +103,15 @@ class CharacterDetailViewController: UIViewController, CharacterDetailDisplayLog
         interactor?.getCharacter(request: request)
     }
 
+    // MARK: - Display
+
     func displayDetailView(viewModel: CharacterDetail.Character.ViewModel) {
         detailView.characterData = viewModel
         detailView.setup()
+    }
+
+    func displayFavoriteButton(viewModel: CharacterDetail.Favorite.ViewModel) {
+        let image = viewModel.image
+        navigationItem.rightBarButtonItem?.image = image
     }
 }

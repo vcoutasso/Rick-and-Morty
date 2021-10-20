@@ -9,6 +9,7 @@ import UIKit
 
 protocol CharacterDetailBusinessLogic {
     func getCharacter(request: CharacterDetail.Character.Request)
+    func favoriteItem(request: CharacterDetail.Favorite.Request)
 }
 
 protocol CharacterDetailDataStore {
@@ -21,7 +22,7 @@ class CharacterDetailInteractor: CharacterDetailBusinessLogic, CharacterDetailDa
 
     var character: RMCharacter!
 
-    // MARK: Get character
+    // MARK: - Get character
 
     func getCharacter(request: CharacterDetail.Character.Request) {
         character = request.character
@@ -30,5 +31,15 @@ class CharacterDetailInteractor: CharacterDetailBusinessLogic, CharacterDetailDa
 
         let response = CharacterDetail.Character.Response(character: character!, isFavorite: isFavorite)
         presenter?.presentCharacterDetail(response: response)
+    }
+
+    // MARK: - Favorite item
+
+    func favoriteItem(request: CharacterDetail.Favorite.Request) {
+        // TODO: Worker must get this from database
+        let isFavorite = Bool.random()
+
+        let response = CharacterDetail.Favorite.Response(isFavorite: isFavorite)
+        presenter?.presentFavoriteIcon(response: response)
     }
 }

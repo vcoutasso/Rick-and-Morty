@@ -29,4 +29,16 @@ enum CharacterDetail {
             var isFavorite = false
         }
     }
+
+    enum Favorite {
+        struct Request {
+            let characterID: Int
+        }
+        struct Response {
+            let isFavorite: Bool
+        }
+        struct ViewModel {
+            let image: UIImage
+        }
+    }
 }
