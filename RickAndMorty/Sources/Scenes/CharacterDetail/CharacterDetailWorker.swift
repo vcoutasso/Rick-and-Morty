@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 protocol CharacterDetailWorkerProtocol {
     func fetchFavoritedStatus(for id: Int) -> Bool
@@ -17,15 +18,7 @@ class CharacterDetailWorker: CharacterDetailWorkerProtocol {
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
     func fetchFavoritedStatus(for id: Int) -> Bool {
-        do {
-            let favorites = try context.fetch(FavoriteCharacter.fetchRequest())
-            return favorites.contains { $0.characterID == id}
-
-        } catch {
-            print(error)
-        }
-
-        return false
+        getFavoriteCharacter(for: id) != nil
     }
 
     func addFavorite(id: Int) {
@@ -45,8 +38,12 @@ class CharacterDetailWorker: CharacterDetailWorkerProtocol {
 
     private func getFavoriteCharacter(for id: Int) -> FavoriteCharacter? {
         do {
-            let favorites = try context.fetch(FavoriteCharacter.fetchRequest())
-            return favorites.first { $0.characterID == Int64(id) }
+            let request = FavoriteCharacter.fetchRequest() as NSFetchRequest<FavoriteCharacter>
+
+            let pred = NSPredicate(format: "characterID == %d", id)
+            request.predicate = pred
+
+            return try context.fetch(request).first
         } catch {
             print(error)
         }

@@ -34,7 +34,7 @@ class CharacterDetailInteractor: CharacterDetailBusinessLogic, CharacterDetailDa
         presenter?.presentCharacterDetail(response: response)
     }
 
-    // MARK: - Get/set favorite
+    // MARK: - Get favorite
 
     func getFavorite(request: CharacterDetail.Favorite.Request) {
         guard let worker = worker else { return }
@@ -47,6 +47,8 @@ class CharacterDetailInteractor: CharacterDetailBusinessLogic, CharacterDetailDa
         let response = CharacterDetail.Favorite.Response(isFavorite: isFavorite)
         presenter?.presentFavoriteIcon(response: response)
     }
+
+    // MARK: - Set favorite
 
     func setFavorite(request: CharacterDetail.Favorite.Request) {
         guard let worker = worker else { return }
