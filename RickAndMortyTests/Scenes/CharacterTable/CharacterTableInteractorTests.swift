@@ -14,7 +14,8 @@ final class CharacterTableInteractorTests: XCTestCase {
 
     private let presenterSpy = CharacterTablePresenterSpy()
     private let apiWorkerSpy = CharacterTableAPIWorkerSpy()
-    private let sut = CharacterTableInteractor()
+    private let filterWorkerSpy = CharacterTableFilterWorkerSpy()
+    private lazy var sut = CharacterTableInteractor(apiWorker: apiWorkerSpy, filterWorker: filterWorkerSpy)
 
     // MARK: - Test lifecycle
 
@@ -22,7 +23,6 @@ final class CharacterTableInteractorTests: XCTestCase {
         super.setUp()
 
         sut.presenter = presenterSpy
-        sut.apiWorker = apiWorkerSpy
     }
 
     // MARK: - Unit tests
@@ -41,7 +41,7 @@ final class CharacterTableInteractorTests: XCTestCase {
         XCTAssert(apiWorkerSpy.fetchAllCharactersCalled)
     }
 
-    func testFetchDataShouldPassResponseToPresenter() {
+    func testFetchDDataShouldCallPresentCharactersData() {
         // Given
 
         let request: CharacterTable.FetchData.Request = .init()
@@ -55,7 +55,21 @@ final class CharacterTableInteractorTests: XCTestCase {
         XCTAssert(presenterSpy.presentCharactersDataCalled)
     }
 
-    func testFilterDataShouldPassResponseToPresenter() {
+    func testFilterDataShouldFilterData() {
+        // Given
+
+        let request: CharacterTable.FilterData.Request = .init(searchText: "")
+        sut.characters = []
+
+        // When
+
+        sut.filterData(request: request)
+
+        // Then
+        XCTAssert(filterWorkerSpy.filterCharactersCalled)
+    }
+
+    func testFilterDataShouldPresentFilteredData() {
         // Given
 
         let request: CharacterTable.FilterData.Request = .init(searchText: "")
@@ -85,8 +99,9 @@ final class CharacterTablePresenterSpy: CharacterTablePresentationLogic {
 }
 
 final class CharacterTableAPIWorkerSpy: CharacterTableAPIWorkerProtocol {
-    private(set) var fetchAllCharactersCalled = false
     private(set) var completionStub = [RMCharacter]()
+
+    private(set) var fetchAllCharactersCalled = false
     func fetchAllCharacters(completion: @escaping ([RMCharacter]) -> Void) {
         fetchAllCharactersCalled = true
         completion(completionStub)
@@ -94,5 +109,15 @@ final class CharacterTableAPIWorkerSpy: CharacterTableAPIWorkerProtocol {
 
     func fetchCurrentPage(completion: @escaping ([RMCharacter]) -> Void) {
         fatalError("not implemented")
+    }
+}
+
+final class CharacterTableFilterWorkerSpy: CharacterTableFilterWorkerProtocol {
+    private(set) var returnStub = [RMCharacter]()
+
+    private(set) var filterCharactersCalled = false
+    func filterCharacters(_ characters: [RMCharacter], contains searchText: String) -> [RMCharacter] {
+        filterCharactersCalled = true
+        return returnStub
     }
 }

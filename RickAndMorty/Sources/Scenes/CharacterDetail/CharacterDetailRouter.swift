@@ -8,7 +8,7 @@
 import UIKit
 
 @objc protocol CharacterDetailRoutingLogic {
-    //func routeToSomewhere(segue: UIStoryboardSegue?)
+    func setup()
 }
 
 protocol CharacterDetailDataPassing {
@@ -19,34 +19,17 @@ class CharacterDetailRouter: NSObject, CharacterDetailRoutingLogic, CharacterDet
     weak var viewController: CharacterDetailViewController?
     var dataStore: CharacterDetailDataStore?
 
-    // MARK: Routing
+    // MARK: - Setup
 
-    //func routeToSomewhere(segue: UIStoryboardSegue?)
-    //{
-    //  if let segue = segue {
-    //    let destinationVC = segue.destination as! SomewhereViewController
-    //    var destinationDS = destinationVC.router!.dataStore!
-    //    passDataToSomewhere(source: dataStore!, destination: &destinationDS)
-    //  } else {
-    //    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-    //    let destinationVC = storyboard.instantiateViewController(withIdentifier: "SomewhereViewController") as! SomewhereViewController
-    //    var destinationDS = destinationVC.router!.dataStore!
-    //    passDataToSomewhere(source: dataStore!, destination: &destinationDS)
-    //    navigateToSomewhere(source: viewController!, destination: destinationVC)
-    //  }
-    //}
+    func setup() {
+        guard let viewController = viewController else { return }
+        viewController.navigationItem.largeTitleDisplayMode = .never
+        viewController.navigationItem.searchController = nil
+    }
 
-    // MARK: Navigation
+    // MARK: - Routing
 
-    //func navigateToSomewhere(source: CharacterDetailViewController, destination: SomewhereViewController)
-    //{
-    //  source.show(destination, sender: nil)
-    //}
+    // MARK: - Navigation
 
-    // MARK: Passing data
-
-    //func passDataToSomewhere(source: CharacterDetailDataStore, destination: inout SomewhereDataStore)
-    //{
-    //  destination.name = source.name
-    //}
+    // MARK: - Passing data
 }

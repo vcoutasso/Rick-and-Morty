@@ -47,11 +47,13 @@ class CharacterTableRouter: NSObject, CharacterTableRoutingLogic, CharacterTable
         source.navigationController?.pushViewController(destination, animated: true)
     }
 
-
     // MARK: - Passing data
 
+    // TODO: Too messy, clean this up
     func passDataToCharacterDetail(source: CharacterTableDataStore, destination: inout CharacterDetailDataStore) {
-        let selectedRow = viewController?.tableView.indexPathForSelectedRow?.row
-        destination.character = source.characters?[selectedRow!]
+        let selectedIndexPath = viewController?.tableView.indexPathForSelectedRow
+        let cell = viewController?.tableView.cellForRow(at: selectedIndexPath!) as! CharacterTableViewCell
+        let selectedCharacter = cell.character!
+        destination.character = source.characters?.first { $0.id == selectedCharacter.id }
     }
 }

@@ -19,14 +19,14 @@ protocol CharacterTableDataStore {
 class CharacterTableInteractor: CharacterTableBusinessLogic, CharacterTableDataStore {
     var presenter: CharacterTablePresentationLogic?
 
-    var apiWorker: CharacterTableAPIWorkerProtocol = CharacterTableAPIWorker()
-    var filterWorker: CharacterTableFilterWorkerProtocol = CharacterTableFilterWorker()
+    var apiWorker: CharacterTableAPIWorkerProtocol
+    var filterWorker: CharacterTableFilterWorkerProtocol
 
     var characters: [RMCharacter]?
 
     // MARK: - Object lifecycle
 
-    init(apiWorker:CharacterTableAPIWorkerProtocol = CharacterTableAPIWorker(),
+    init(apiWorker: CharacterTableAPIWorkerProtocol = CharacterTableAPIWorker(),
          filterWorker: CharacterTableFilterWorkerProtocol = CharacterTableFilterWorker()) {
         self.apiWorker = apiWorker
         self.filterWorker = filterWorker

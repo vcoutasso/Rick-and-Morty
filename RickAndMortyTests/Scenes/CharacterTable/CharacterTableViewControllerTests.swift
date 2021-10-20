@@ -14,6 +14,14 @@ class CharacterTableViewControllerTests: XCTestCase {
     private var window = UIWindow()
     private var sut = CharacterTableViewController()
 
+    // MARK: - Test lifecycle
+
+    override func setUp() {
+        super.setUp()
+
+        sut.interactor = CharacterTableBusinessLogicSpy()
+    }
+
     // MARK: - Test setup
 
     func loadView() {

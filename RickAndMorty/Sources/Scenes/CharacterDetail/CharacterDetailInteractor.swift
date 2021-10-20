@@ -8,26 +8,27 @@
 import UIKit
 
 protocol CharacterDetailBusinessLogic {
-    func doSomething(request: CharacterDetail.Something.Request)
+    func getCharacter(request: CharacterDetail.Character.Request)
 }
 
 protocol CharacterDetailDataStore {
-    var character: RMCharacter? { get set }
+    var character: RMCharacter! { get set }
 }
 
 class CharacterDetailInteractor: CharacterDetailBusinessLogic, CharacterDetailDataStore {
     var presenter: CharacterDetailPresentationLogic?
     var worker: CharacterDetailWorker?
 
-    var character: RMCharacter?
+    var character: RMCharacter!
 
-    // MARK: Do something
+    // MARK: Get character
 
-    func doSomething(request: CharacterDetail.Something.Request) {
-        worker = CharacterDetailWorker()
-        worker?.doSomeWork()
+    func getCharacter(request: CharacterDetail.Character.Request) {
+        character = request.character
 
-        let response = CharacterDetail.Something.Response()
-        presenter?.presentSomething(response: response)
+        let isFavorite = false
+
+        let response = CharacterDetail.Character.Response(character: character!, isFavorite: isFavorite)
+        presenter?.presentCharacterDetail(response: response)
     }
 }

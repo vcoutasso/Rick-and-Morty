@@ -10,12 +10,23 @@ import UIKit
 enum CharacterDetail {
     // MARK: Use cases
 
-    enum Something {
+    enum Character {
         struct Request {
+            let character: RMCharacter
         }
         struct Response {
+            let character: RMCharacter
+            let isFavorite: Bool
         }
         struct ViewModel {
+            let id: Int
+            let name: String
+            let status: String
+            let species: String
+            let type: String
+            let gender: String
+            let imageLink: String
+            var isFavorite = false
         }
     }
 }
