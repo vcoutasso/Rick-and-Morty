@@ -16,7 +16,8 @@ class CharacterTableViewCellTitle: UIStackView {
         label.translatesAutoresizingMaskIntoConstraints = false
 
         label.textColor = .label
-        label.font = .preferredFont(for: .title2, weight: .heavy)
+        label.numberOfLines = 0
+        label.font = .preferredFont(for: .title3, weight: .semibold)
         label.adjustsFontForContentSizeCategory = true
 
         return label
@@ -37,7 +38,7 @@ class CharacterTableViewCellTitle: UIStackView {
         label.translatesAutoresizingMaskIntoConstraints = false
 
         label.textColor = .label
-        label.font = .preferredFont(forTextStyle: .subheadline)
+        label.font = .preferredFont(forTextStyle: .footnote)
         label.adjustsFontForContentSizeCategory = true
 
         return label

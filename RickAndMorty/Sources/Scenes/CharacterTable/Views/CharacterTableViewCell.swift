@@ -18,23 +18,14 @@ class CharacterTableViewCell: UITableViewCell {
     // MARK: - Subviews
 
     private let titleStackView: CharacterTableViewCellTitle = .init()
-    private let spinner = UIActivityIndicatorView()
     private let avatarImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.backgroundColor = .systemGray5
+        imageView.layer.cornerRadius = LayoutMetrics.imageHeight / 2
+        imageView.clipsToBounds = true
 
         return imageView
-    }()
-    private let locationInfo: CharacterTableViewCellInfo = .init(title: "Last known location:")
-    private let genderInfo: CharacterTableViewCellInfo = .init(title: "Gender:")
-    private let infoStackView: UIStackView = {
-        let stack = UIStackView()
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.distribution = .equalCentering
-        stack.axis = .vertical
-
-        return stack
     }()
 
     // MARK: - Object lifecycle
@@ -65,17 +56,16 @@ class CharacterTableViewCell: UITableViewCell {
     func setup(with character: RMCharacter) {
         self.character = character
         avatarImageView.downloadRMImage(client: imageCacheClient, from: character.image) { [weak self] in
-            self?.avatarImageView.backgroundColor = .clear
-            self?.setNeedsDisplay()
+            guard let self = self else { return }
+            self.avatarImageView.backgroundColor = .clear
+            self.setNeedsDisplay()
         }
         titleStackView.setup(with: character)
-        locationInfo.setup(with: character.location.name)
-        genderInfo.setup(with: character.gender)
     }
 
     private func setupContentView() {
         setupAvatarImageView()
-        setupInfoStackView()
+        setupTitleStackView()
     }
 
     private func setupAvatarImageView() {
@@ -93,18 +83,14 @@ class CharacterTableViewCell: UITableViewCell {
         NSLayoutConstraint.activate(constraints)
     }
 
-    private func setupInfoStackView() {
-        infoStackView.addArrangedSubview(titleStackView)
-        infoStackView.addArrangedSubview(locationInfo)
-        infoStackView.addArrangedSubview(genderInfo)
-
-        contentView.addSubview(infoStackView)
+    private func setupTitleStackView() {
+        contentView.addSubview(titleStackView)
 
         let constraints = [
-            infoStackView.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: LayoutMetrics.imageToInfoPadding),
-            infoStackView.topAnchor.constraint(equalTo: avatarImageView.topAnchor, constant: LayoutMetrics.topPadding),
-            infoStackView.bottomAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: LayoutMetrics.bottomPadding),
-            infoStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            titleStackView.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: LayoutMetrics.imageToInfoPadding),
+            titleStackView.topAnchor.constraint(equalTo: avatarImageView.topAnchor, constant: LayoutMetrics.topPadding),
+            titleStackView.bottomAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: LayoutMetrics.bottomPadding),
+            titleStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
         ]
 
         NSLayoutConstraint.activate(constraints)
@@ -113,10 +99,12 @@ class CharacterTableViewCell: UITableViewCell {
     // MARK: - Layout Metrics
 
     private enum LayoutMetrics {
+        private static let distanceToCellSeparator: CGFloat = 8
+
         static let leadingPadding: CGFloat = 20
-        static let topPadding: CGFloat = 5
-        static let bottomPadding: CGFloat = -5
-        static let imageHeight: CGFloat = UIScreen.main.bounds.height / 7
+        static let topPadding: CGFloat = distanceToCellSeparator
+        static let bottomPadding: CGFloat = -distanceToCellSeparator
+        static let imageHeight: CGFloat = UIScreen.main.bounds.height / 12
         static let imageToInfoPadding: CGFloat = 10
     }
 }

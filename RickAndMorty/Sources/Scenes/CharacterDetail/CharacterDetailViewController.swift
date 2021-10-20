@@ -15,7 +15,7 @@ class CharacterDetailViewController: UIViewController, CharacterDetailDisplayLog
     var interactor: CharacterDetailBusinessLogic?
     var router: (NSObjectProtocol & CharacterDetailRoutingLogic & CharacterDetailDataPassing)?
 
-    private lazy var detailView = CharacterDetailScrollView()
+    private lazy var detailView = CharacterDetailView()
 
     // MARK: Object lifecycle
 

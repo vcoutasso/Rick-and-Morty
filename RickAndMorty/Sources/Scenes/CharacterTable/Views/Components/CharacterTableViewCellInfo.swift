@@ -21,7 +21,7 @@ class CharacterTableViewCellInfo: UIStackView {
 
         label.textColor = .secondaryLabel
         label.text = title
-        label.font = .preferredFont(for: .caption2, weight: .medium)
+        label.font = .preferredFont(forTextStyle: .caption2)
         label.adjustsFontForContentSizeCategory = true
 
         return label
