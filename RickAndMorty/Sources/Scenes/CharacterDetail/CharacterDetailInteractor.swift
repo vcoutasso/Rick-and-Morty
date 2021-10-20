@@ -8,7 +8,7 @@
 import UIKit
 
 protocol CharacterDetailBusinessLogic {
-    func doSomething(request: CharacterDetail.Character.Request)
+    func getCharacter(request: CharacterDetail.Character.Request)
 }
 
 protocol CharacterDetailDataStore {
@@ -21,13 +21,11 @@ class CharacterDetailInteractor: CharacterDetailBusinessLogic, CharacterDetailDa
 
     var character: RMCharacter!
 
-    // MARK: Do something
+    // MARK: Get character
 
-    func doSomething(request: CharacterDetail.Character.Request) {
+    func getCharacter(request: CharacterDetail.Character.Request) {
         character = request.character
-        worker = CharacterDetailWorker()
-        worker?.doSomeWork()
-        
+
         let isFavorite = false
 
         let response = CharacterDetail.Character.Response(character: character!, isFavorite: isFavorite)

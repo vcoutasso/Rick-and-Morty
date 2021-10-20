@@ -14,7 +14,7 @@ protocol CharacterDetailPresentationLogic {
 class CharacterDetailPresenter: CharacterDetailPresentationLogic {
     weak var viewController: CharacterDetailDisplayLogic?
 
-    // MARK: Do something
+    // MARK: Present character detail
 
     func presentCharacterDetail(response: CharacterDetail.Character.Response) {
         let character = response.character
@@ -26,11 +26,8 @@ class CharacterDetailPresenter: CharacterDetailPresentationLogic {
         let type = character.type
         let gender = character.gender
         let imageLink = character.image
-        let imageView = UIImageView()
-
-        imageView.downloadRMImage(client: RMImageClient(), from: imageLink) {
-            let viewModel = CharacterDetail.Character.ViewModel(id: id, name: name, status: status, species: species, type: type, gender: gender, image: imageView.image!, isFavorite: isFavorite)
-            self.viewController?.displayDetailView(viewModel: viewModel)
-        }
+        let viewModel = CharacterDetail.Character.ViewModel(id: id, name: name, status: status, species: species, type: type, gender: gender, imageLink: imageLink, isFavorite: isFavorite)
+        
+        viewController?.displayDetailView(viewModel: viewModel)
     }
 }

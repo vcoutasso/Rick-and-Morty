@@ -25,7 +25,7 @@ enum CharacterDetail {
             let species: String
             let type: String
             let gender: String
-            let image: UIImage
+            let imageLink: String
             var isFavorite = false
         }
     }

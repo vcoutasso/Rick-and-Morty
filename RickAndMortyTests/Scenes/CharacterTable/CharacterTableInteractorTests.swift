@@ -41,7 +41,7 @@ final class CharacterTableInteractorTests: XCTestCase {
         XCTAssert(apiWorkerSpy.fetchAllCharactersCalled)
     }
 
-    func testFetchDataShouldPassResponseToPresenter() {
+    func testFetchDDataShouldCallPresentCharactersData() {
         // Given
 
         let request: CharacterTable.FetchData.Request = .init()
@@ -69,7 +69,7 @@ final class CharacterTableInteractorTests: XCTestCase {
         XCTAssert(filterWorkerSpy.filterCharactersCalled)
     }
 
-    func testFilterDataShouldPassResponseToPresenter() {
+    func testFilterDataShouldPresentFilteredData() {
         // Given
 
         let request: CharacterTable.FilterData.Request = .init(searchText: "")

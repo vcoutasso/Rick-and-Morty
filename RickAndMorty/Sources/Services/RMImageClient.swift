@@ -27,7 +27,7 @@ protocol RMImageClientProtocol {
 }
 
 class RMImageClient: RMImageClientProtocol, RMImageCacheInjector {
-    static var cacheCountLimit = 1000
+    static var cacheCountLimit = 10
 
     init() {
         imageCache.countLimit = Self.cacheCountLimit

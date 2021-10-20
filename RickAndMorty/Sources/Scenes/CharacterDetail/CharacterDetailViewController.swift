@@ -78,20 +78,16 @@ class CharacterDetailViewController: UIViewController, CharacterDetailDisplayLog
     override func viewDidLoad() {
         super.viewDidLoad()
         setupRouting()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         setupView()
-        doSomething()
+        getCharacter()
     }
 
-    // MARK: Do something
+    // MARK: Get character
 
-    func doSomething() {
+    func getCharacter() {
         let dataStore = router!.dataStore!
         let request = CharacterDetail.Character.Request(character: dataStore.character)
-        interactor?.doSomething(request: request)
+        interactor?.getCharacter(request: request)
     }
 
     func displayDetailView(viewModel: CharacterDetail.Character.ViewModel) {

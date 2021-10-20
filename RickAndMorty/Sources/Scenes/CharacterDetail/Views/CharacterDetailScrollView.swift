@@ -12,11 +12,15 @@ class CharacterDetailScrollView: UIView {
     // MARK: - Attributes
 
     var characterData: CharacterDetail.Character.ViewModel?
+    private let imageClient = RMImageClient()
 
     // MARK: - Lazy views
 
     private lazy var backgroundImageView: UIImageView = {
-        let imageView = UIImageView(image: characterData!.image)
+        let imageView = UIImageView()
+        imageView.downloadRMImage(client: imageClient, from: characterData!.imageLink) {
+            imageView.setNeedsDisplay()
+        }
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleToFill
         imageView.applyBlurEffect(style: .light)
@@ -41,7 +45,10 @@ class CharacterDetailScrollView: UIView {
     }()
 
     private lazy var characterImageView: UIImageView = {
-        let imageView = UIImageView(image: characterData!.image)
+        let imageView = UIImageView()
+        imageView.downloadRMImage(client: imageClient, from: characterData!.imageLink) {
+            imageView.setNeedsDisplay()
+        }
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
         imageView.layer.cornerRadius = LayoutMetrics.imageCornerRadius
