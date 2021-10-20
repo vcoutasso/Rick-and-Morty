@@ -43,6 +43,15 @@ class CharacterDetailView: UIView {
 
         return card
     }()
+    private lazy var infoStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.alignment = .leading
+        stackView.spacing = LayoutMetrics.infoSpacing
+
+        return stackView
+    }()
 
     private lazy var characterImageView: UIImageView = {
         let imageView = UIImageView()
@@ -79,7 +88,6 @@ class CharacterDetailView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-
     // MARK: - Setup
 
     func setup() {
@@ -87,6 +95,7 @@ class CharacterDetailView: UIView {
         setupCardView()
         setupCharacterImageView()
         setupNameLabelView()
+        setupInfoStackView()
     }
 
     private func setupBackgroundView() {
@@ -149,14 +158,50 @@ class CharacterDetailView: UIView {
         NSLayoutConstraint.activate(constraints)
     }
 
+    private func setupInfoStackView() {
+
+        let statusView = CharacterDetailInfoView(title: "Character status:")
+        statusView.setup(with: characterData!.status)
+        infoStackView.addArrangedSubview(statusView)
+
+        let speciesView = CharacterDetailInfoView(title: "Character species:")
+        speciesView.setup(with: characterData!.species)
+        infoStackView.addArrangedSubview(speciesView)
+
+        let typeView = CharacterDetailInfoView(title: "Character type:")
+        let type = characterData!.type
+        typeView.setup(with: type.isEmpty ? "No data" : type)
+        infoStackView.addArrangedSubview(typeView)
+
+        let genderView = CharacterDetailInfoView(title: "Character gender:")
+        genderView.setup(with: characterData!.gender)
+        infoStackView.addArrangedSubview(genderView)
+
+        addSubview(infoStackView)
+
+        let constraints = [
+            infoStackView.topAnchor.constraint(equalTo: nameLabelView.bottomAnchor, constant: LayoutMetrics.nameToInfoPadding),
+            infoStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: LayoutMetrics.leadingPadding),
+            infoStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: LayoutMetrics.trailingPadding),
+        ]
+
+        NSLayoutConstraint.activate(constraints)
+    }
+
     // MARK: - Layout Metrics
 
     private enum LayoutMetrics {
+        private static let horizontalPadding: CGFloat = 10
+
         static let backgroundHeightMultiplier: CGFloat = 0.5
         static let imageHeightMultiplier: CGFloat = 0.2
         static let cardHeightMultiplier: CGFloat = 0.8
         static let cardCornerRadius: CGFloat = 20
         static let imageCornerRadius: CGFloat = 8
         static let imageToNameSeparator: CGFloat = 5
+        static let nameToInfoPadding: CGFloat = 25
+        static let leadingPadding: CGFloat = horizontalPadding
+        static let trailingPadding: CGFloat = -horizontalPadding
+        static let infoSpacing: CGFloat = 10
     }
 }

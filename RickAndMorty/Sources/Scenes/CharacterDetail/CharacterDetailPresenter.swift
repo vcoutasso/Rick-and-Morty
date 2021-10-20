@@ -9,6 +9,7 @@ import UIKit
 
 protocol CharacterDetailPresentationLogic {
     func presentCharacterDetail(response: CharacterDetail.Character.Response)
+    func presentFavoriteIcon(response: CharacterDetail.Favorite.Response)
 }
 
 class CharacterDetailPresenter: CharacterDetailPresentationLogic {
@@ -30,4 +31,16 @@ class CharacterDetailPresenter: CharacterDetailPresentationLogic {
         
         viewController?.displayDetailView(viewModel: viewModel)
     }
+
+    // MARK: - Present favorite item
+
+    func presentFavoriteIcon(response: CharacterDetail.Favorite.Response) {
+        let isFavorite = response.isFavorite
+        let systemName = isFavorite ? "heart.fill" : "heart"
+
+        let viewModel = CharacterDetail.Favorite.ViewModel(image: UIImage(systemName: systemName)!)
+
+        viewController?.displayFavoriteButton(viewModel: viewModel)
+    }
+
 }
