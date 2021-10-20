@@ -82,4 +82,14 @@ extension UIImageView {
         spinner.stopAnimating()
         spinner.removeFromSuperview()
     }
+
+    // MARK: - Effects
+
+    func applyBlurEffect(style: UIBlurEffect.Style) {
+        let blurEffect = UIBlurEffect(style: style)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = bounds
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        addSubview(blurEffectView)
+    }
 }

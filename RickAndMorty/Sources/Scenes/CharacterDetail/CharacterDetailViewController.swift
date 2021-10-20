@@ -45,6 +45,11 @@ class CharacterDetailViewController: UIViewController, CharacterDetailDisplayLog
         router = characterDetailRouter
     }
 
+    override func willMove(toParent parent: UIViewController?) {
+        super.willMove(toParent: parent)
+        setupRouting()
+    }
+
     private func setupView() {
         view.backgroundColor = .systemBackground
 
@@ -65,9 +70,15 @@ class CharacterDetailViewController: UIViewController, CharacterDetailDisplayLog
     // MARK: Routing
 
     func setupRouting() {
+        router?.setup()
     }
 
     // MARK: View lifecycle
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupRouting()
+    }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -85,6 +96,6 @@ class CharacterDetailViewController: UIViewController, CharacterDetailDisplayLog
 
     func displayDetailView(viewModel: CharacterDetail.Character.ViewModel) {
         detailView.characterData = viewModel
-        detailView.show()
+        detailView.setup()
     }
 }

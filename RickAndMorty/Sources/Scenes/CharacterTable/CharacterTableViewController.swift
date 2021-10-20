@@ -67,22 +67,26 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
         refreshControl?.addTarget(self, action: #selector(handlePullToRefresh), for: .valueChanged)
     }
 
+    // MARK: - View Lifecycle
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        setupTableView()
+        fetchCharacters()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        setupRouting()
+    }
+
     // MARK: - Routing
 
     func setupRouting() {
         router?.setup()
     }
-
-    // MARK: - View Lifecycle
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        setupTableView()
-        setupRouting()
-        fetchCharacters()
-    }
-
 
     // MARK: - Display logic
 
