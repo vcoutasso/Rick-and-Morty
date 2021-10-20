@@ -26,10 +26,10 @@ class CharacterDetailPresenter: CharacterDetailPresentationLogic {
         let type = character.type
         let gender = character.gender
         let imageLink = character.image
-        let image = UIImageView()
+        let imageView = UIImageView()
 
-        image.downloadRMImage(client: RMImageClient(), from: imageLink) {
-            let viewModel = CharacterDetail.Character.ViewModel(id: id, name: name, status: status, species: species, type: type, gender: gender, image: image, isFavorite: isFavorite)
+        imageView.downloadRMImage(client: RMImageClient(), from: imageLink) {
+            let viewModel = CharacterDetail.Character.ViewModel(id: id, name: name, status: status, species: species, type: type, gender: gender, image: imageView.image!, isFavorite: isFavorite)
             self.viewController?.displayDetailView(viewModel: viewModel)
         }
     }
