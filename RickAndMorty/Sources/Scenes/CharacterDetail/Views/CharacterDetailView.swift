@@ -1,5 +1,5 @@
 //
-//  CharacterDetailScrollView.swift
+//  CharacterDetailView.swift
 //  RickAndMorty
 //
 //  Created by Vinícius Couto on 19/10/21.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CharacterDetailScrollView: UIView {
+class CharacterDetailView: UIView {
 
     // MARK: - Attributes
 
@@ -62,6 +62,8 @@ class CharacterDetailScrollView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = characterData!.name
         label.font = .preferredFont(for: .title2, weight: .bold)
+        label.textAlignment = .center
+        label.numberOfLines = 0
 
         return label
     }()
