@@ -49,4 +49,15 @@ final class CharacterDetailViewControllerTests: XCTestCase {
         // Then
         XCTAssert(interactorSpy.getCharacterCalled)
     }
+
+    func testShouldGetFavoriteStatusWhenViewDidLoad() {
+        // Given
+        loadView()
+
+        // When
+        sut.viewDidLoad()
+
+        // Then
+        XCTAssert(interactorSpy.getFavoriteCalled)
+    }
 }

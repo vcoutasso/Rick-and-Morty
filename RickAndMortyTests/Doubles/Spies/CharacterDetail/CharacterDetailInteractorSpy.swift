@@ -21,11 +21,12 @@ final class CharacterDetailInteractorSpy: CharacterDetailInteractorProtocol {
         getCharacterCalled = true
     }
 
+    private(set) var getFavoriteCalled = false
     func getFavorite(request: CharacterDetail.Favorite.Request) {
-        print("not implemented")
+        getFavoriteCalled = true
     }
 
     func setFavorite(request: CharacterDetail.Favorite.Request) {
-        print("not implemented")
+        fatalError("not implemented")
     }
 }
