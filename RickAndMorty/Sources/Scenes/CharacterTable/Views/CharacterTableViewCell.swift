@@ -13,7 +13,7 @@ class CharacterTableViewCell: UITableViewCell {
 
     private(set) var character: RMCharacter?
 
-    private let imageCacheClient = RMImageClient()
+    private let imageCacheService = RMImageService()
 
     // MARK: - Subviews
 
@@ -55,7 +55,7 @@ class CharacterTableViewCell: UITableViewCell {
 
     func setup(with character: RMCharacter) {
         self.character = character
-        avatarImageView.downloadRMImage(client: imageCacheClient, from: character.image) { [weak self] in
+        avatarImageView.downloadRMImage(service: imageCacheService, from: character.image) { [weak self] in
             guard let self = self else { return }
             self.avatarImageView.backgroundColor = .clear
             self.setNeedsDisplay()

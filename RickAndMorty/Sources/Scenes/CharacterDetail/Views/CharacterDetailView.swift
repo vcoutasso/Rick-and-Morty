@@ -12,13 +12,13 @@ class CharacterDetailView: UIView {
     // MARK: - Attributes
 
     var characterData: CharacterDetail.Character.ViewModel?
-    private let imageClient = RMImageClient()
+    private let imageService = RMImageService()
 
     // MARK: - Lazy views
 
     private lazy var backgroundImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.downloadRMImage(client: imageClient, from: characterData!.imageLink) {
+        imageView.downloadRMImage(service: imageService, from: characterData!.imageLink) {
             imageView.setNeedsDisplay()
         }
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -55,7 +55,7 @@ class CharacterDetailView: UIView {
 
     private lazy var characterImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.downloadRMImage(client: imageClient, from: characterData!.imageLink) {
+        imageView.downloadRMImage(service: imageService, from: characterData!.imageLink) {
             imageView.setNeedsDisplay()
         }
         imageView.translatesAutoresizingMaskIntoConstraints = false

@@ -1,5 +1,5 @@
 //
-//  RMImageClientTests.swift
+//  RMImageServiceTests.swift
 //  RickAndMortyTests
 //
 //  Created by Vinícius Couto on 19/10/21.
@@ -8,11 +8,11 @@
 import XCTest
 @testable import RickAndMorty
 
-class RMImageClientTests: XCTestCase {
+class RMImageServiceTests: XCTestCase {
 
     // MARK: - System under test
 
-    private let sut = RMImageClient()
+    private let sut = RMImageService()
 
     // MARK: - Tests
 

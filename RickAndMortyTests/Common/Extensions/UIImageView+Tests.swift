@@ -32,7 +32,7 @@ class UIImageViewTests: XCTestCase {
         var imageFromCache: UIImage?
 
         // When
-        sut.downloadRMImage(client: imageClientFake, from: imageLink) {
+        sut.downloadRMImage(service: imageClientFake, from: imageLink) {
             completionExpectation.fulfill()
             imageFromCache = self.imageClientFake.getImage(forURL: imageURL)
         }
@@ -52,7 +52,7 @@ class UIImageViewTests: XCTestCase {
         imageClientFake.imageCache.setObject(imageStub, forKey: imageLink as NSString)
 
         // When
-        sut.downloadRMImage(client: imageClientFake, from: imageURL) {
+        sut.downloadRMImage(service: imageClientFake, from: imageURL) {
             completionExpectation.fulfill()
             imageFromCache  = self.imageClientFake.getImage(forURL: imageURL)
         }
@@ -66,7 +66,7 @@ class UIImageViewTests: XCTestCase {
 
 // MARK: - Test doubles
 
-class RMImageClientFake: RMImageClientProtocol, RMImageCacheInjector {
+class RMImageClientFake: RMImageServiceProtocol, RMImageCacheInjector {
     static var cacheCountLimit = 1
 
     func getImage(forURL url: URL) -> UIImage? {

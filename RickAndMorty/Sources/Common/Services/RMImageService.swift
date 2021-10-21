@@ -1,5 +1,5 @@
 //
-//  RMImageClient.swift
+//  RMImageService.swift
 //  RickAndMorty
 //
 //  Created by Vinícius Couto on 18/10/21.
@@ -19,14 +19,14 @@ extension RMImageCacheInjector {
     }
 }
 
-protocol RMImageClientProtocol {
+protocol RMImageServiceProtocol {
     static var cacheCountLimit: Int { get }
 
     func getImage(forURL url: URL) -> UIImage?
     func setImage(_ image: UIImage, forURL url: URL)
 }
 
-class RMImageClient: RMImageClientProtocol, RMImageCacheInjector {
+class RMImageService: RMImageServiceProtocol, RMImageCacheInjector {
     static var cacheCountLimit = 1000
 
     init() {
