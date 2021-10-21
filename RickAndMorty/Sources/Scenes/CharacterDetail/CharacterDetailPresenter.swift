@@ -42,7 +42,7 @@ class CharacterDetailPresenter: CharacterDetailPresenterProtocol {
         let isFavorite = response.isFavorite
         let systemName = isFavorite ? "heart.fill" : "heart"
 
-        let viewModel = CharacterDetail.Favorite.ViewModel(image: UIImage(systemName: systemName)!)
+        let viewModel = CharacterDetail.Favorite.ViewModel(image: UIImage(systemName: systemName) ?? UIImage())
 
         viewController?.displayFavoriteButton(viewModel: viewModel)
     }

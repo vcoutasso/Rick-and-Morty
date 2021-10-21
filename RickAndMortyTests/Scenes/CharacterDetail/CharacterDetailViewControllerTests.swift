@@ -12,6 +12,9 @@ final class CharacterDetailViewControllerTests: XCTestCase {
     // MARK: - Attributes
 
     private let window =  UIWindow()
+
+    // MARK: - Test doubles
+
     private let interactorSpy = CharacterDetailInteractorSpy(presenter: CharacterDetailPresenterDummy())
     private lazy var routerSpy = CharacterDetailRouterSpy(dataStore: interactorSpy)
 
@@ -59,5 +62,61 @@ final class CharacterDetailViewControllerTests: XCTestCase {
 
         // Then
         XCTAssert(interactorSpy.getFavoriteCalled)
+    }
+
+    func testShouldSetupRoutingWhenWillMoveToParent() {
+        // Given / When
+        sut.willMove(toParent: nil)
+
+        // Then
+        XCTAssert(routerSpy.setupCalled)
+    }
+
+    func testShouldSetFavoriteButtonWhenFavoriteTapped() {
+        // Given / When
+        sut.handleFavoriteTapped()
+
+        // Then
+        XCTAssert(interactorSpy.setFavoriteCalled)
+    }
+
+    func testShouldResetNavigationBarRightButtonItemsWhenViewWillDisappear() {
+        // Given
+        let rightBarButtonDummy = UIBarButtonItem()
+        sut.navigationItem.setRightBarButton(rightBarButtonDummy, animated: .random())
+
+        // When
+        sut.viewWillDisappear(.random())
+
+        // Then
+        XCTAssertNil(sut.navigationItem.rightBarButtonItems)
+    }
+
+    func testShouldSetNavigationBarRightButtonItemsWhenDisplayFavoriteButton() {
+        // Given
+        let dummyImage = UIImage()
+        let viewModel = CharacterDetail.Favorite.ViewModel(image: dummyImage)
+        sut.navigationItem.setRightBarButton(UIBarButtonItem(), animated: .random())
+
+        // When
+        sut.displayFavoriteButton(viewModel: viewModel)
+
+        // Then
+        XCTAssertNotNil(sut.navigationItem.rightBarButtonItem?.image)
+    }
+
+    func testDisplayDetailViewShouldSetCharacterData() {
+        // Given
+        let dummyCharacter = Fixtures.RMCharacters.morty
+        let viewModel = CharacterDetail.Character.ViewModel(id: dummyCharacter.id, name: dummyCharacter.name, status: dummyCharacter.status, species: dummyCharacter.species, type: dummyCharacter.type, gender: dummyCharacter.gender, imageLink: dummyCharacter.image)
+        let detailView = sut.detailView
+        detailView.characterData = nil
+
+
+        // When
+        sut.displayDetailView(viewModel: viewModel)
+
+        // Then
+        XCTAssertNotNil(detailView.characterData)
     }
 }

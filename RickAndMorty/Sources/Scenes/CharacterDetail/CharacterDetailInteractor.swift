@@ -30,7 +30,7 @@ class CharacterDetailInteractor: CharacterDetailInteractorProtocol {
     // MARK: - Object lifecycle
 
     init(presenter: CharacterDetailPresenterProtocol,
-         worker: FavoriteCharacterWorker) {
+         worker: FavoriteCharacterWorkerProtocol) {
         self.presenter = presenter
         self.worker = worker
     }
