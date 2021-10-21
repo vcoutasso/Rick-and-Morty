@@ -9,20 +9,14 @@
 import XCTest
 
 final class CharacterDetailViewControllerTests: XCTestCase {
+    // MARK: - Attributse
+    private var window =  UIWindow()
+    private let interactorSpy = CharacterDetailInteractorSpy(presenter: CharacterDetailPresenterDummy())
+    private lazy var routerSpy = CharacterDetailRouterSpy(dataStore: interactorSpy)
+
     // MARK: - Subject under test
 
-    private var window =  UIWindow()
-    private let routerSpy = CharacterDetailRouterSpy()
-    private let interactorSpy = CharacterDetailInteractorSpy()
-    private var sut = CharacterDetailViewController()
-
-    // MARK: - Test lifecycle
-
-    override func setUp() {
-        routerSpy.dataStore = interactorSpy
-        sut.interactor = interactorSpy
-        sut.router = routerSpy
-    }
+    private lazy var sut = CharacterDetailViewController(interactor: interactorSpy, router: routerSpy)
 
     // MARK: - Test setup
 
@@ -58,8 +52,14 @@ final class CharacterDetailViewControllerTests: XCTestCase {
 
 // MARK: - Test doubles
 
-final class CharacterDetailRouterSpy: NSObject, CharacterDetailRoutingLogic, CharacterDetailDataPassing {
-    var dataStore: CharacterDetailDataStore?
+final class CharacterDetailRouterSpy: CharacterDetailRouterProtocol {
+    var viewController: CharacterDetailViewController?
+
+    var dataStore: CharacterDetailDataStore
+
+    init(dataStore: CharacterDetailDataStore) {
+        self.dataStore = dataStore
+    }
 
     private(set) var setupCalled = false
     func setup() {
@@ -67,8 +67,17 @@ final class CharacterDetailRouterSpy: NSObject, CharacterDetailRoutingLogic, Cha
     }
 }
 
-final class CharacterDetailInteractorSpy: CharacterDetailBusinessLogic, CharacterDetailDataStore {
+final class CharacterDetailDataStoreDummy: CharacterDetailDataStore {
+    var character: RMCharacter!
+}
+
+final class CharacterDetailInteractorSpy: CharacterDetailInteractorProtocol {
     var character: RMCharacter! = Seeds.RMCharacters.morty
+    var presenter: CharacterDetailPresenterProtocol
+
+    init(presenter: CharacterDetailPresenterProtocol) {
+        self.presenter = presenter
+    }
 
     private(set) var getCharacterCalled = false
     func getCharacter(request: CharacterDetail.Character.Request) {

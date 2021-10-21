@@ -12,12 +12,20 @@ protocol CharacterDetailRoutingLogic {
 }
 
 protocol CharacterDetailDataPassing {
-    var dataStore: CharacterDetailDataStore? { get }
+    var dataStore: CharacterDetailDataStore { get }
 }
 
-class CharacterDetailRouter: NSObject, CharacterDetailRoutingLogic, CharacterDetailDataPassing {
+protocol CharacterDetailRouterProtocol: CharacterDetailRoutingLogic, CharacterDetailDataPassing {
+    var viewController: CharacterDetailViewController? { set get }
+}
+
+class CharacterDetailRouter: CharacterDetailRouterProtocol {
     weak var viewController: CharacterDetailViewController?
-    var dataStore: CharacterDetailDataStore?
+    var dataStore: CharacterDetailDataStore
+
+    init(dataStore: CharacterDetailDataStore) {
+        self.dataStore = dataStore
+    }
 
     // MARK: - Setup
 

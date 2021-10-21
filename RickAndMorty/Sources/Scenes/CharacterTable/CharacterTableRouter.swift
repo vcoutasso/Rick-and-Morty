@@ -34,8 +34,13 @@ class CharacterTableRouter: NSObject, CharacterTableRoutingLogic, CharacterTable
     // MARK: - Routing
 
     func routeToCharacterDetail() {
-        let destinationVC = CharacterDetailViewController()
-        var destinationDS = destinationVC.router!.dataStore!
+        let detailPresenter = CharacterDetailPresenter()
+        let favoriteWorker = FavoriteCharacterWorker()
+        let detailInteractor = CharacterDetailInteractor(presenter: detailPresenter, worker: favoriteWorker)
+        let detailRouter = CharacterDetailRouter(dataStore: detailInteractor)
+
+        let destinationVC = CharacterDetailViewController(interactor: detailInteractor, router: detailRouter)
+        var destinationDS = destinationVC.router.dataStore
 
         passDataToCharacterDetail(source: dataStore!, destination: &destinationDS)
         navigateToCharacterDetail(source: viewController!, destination: destinationVC)
