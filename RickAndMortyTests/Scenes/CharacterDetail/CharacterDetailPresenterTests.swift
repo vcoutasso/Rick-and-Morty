@@ -9,32 +9,29 @@
 import XCTest
 
 final class CharacterDetailPresenterTests: XCTestCase {
+    // MARK: - Attributes
+
+    private let routerDummy = CharacterDetailRouterDummy()
+    private let interactorDummy = CharacterDetailInteractorDummy()
+    private lazy var viewControllerSpy = CharacterDetailViewControllerSpy(interactor: interactorDummy, router: routerDummy)
+
     // MARK: - Subject under test
-    let spy = CharacterDetailViewControllerSpy()
-    private lazy var sut = CharacterDetailPresenter()
+
+    private let sut = CharacterDetailPresenter()
 
     override func setUp() {
-        sut.viewController = spy
+        sut.viewController = viewControllerSpy
     }
 
     func testPresentCharacterDetailShouldDisplayDetailView() {
         // Given
-        let dummyCharacter = Seeds.RMCharacters.morty
+        let dummyCharacter = Fixtures.RMCharacters.morty
         let response = CharacterDetail.Character.Response(character: dummyCharacter, isFavorite: false)
 
         // When
         sut.presentCharacterDetail(response: response)
 
         // Then
-        XCTAssert(spy.displayDetailViewCalled)
-    }
-}
-
-// MARK: - Test doubles
-
-final class CharacterDetailViewControllerSpy: CharacterDetailViewController {
-    private(set) var displayDetailViewCalled = false
-    override func displayDetailView(viewModel: CharacterDetail.Character.ViewModel) {
-        displayDetailViewCalled = true
+        XCTAssert(viewControllerSpy.displayDetailViewCalled)
     }
 }

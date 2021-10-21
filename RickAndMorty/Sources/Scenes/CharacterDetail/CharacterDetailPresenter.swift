@@ -12,7 +12,11 @@ protocol CharacterDetailPresentationLogic {
     func presentFavoriteIcon(response: CharacterDetail.Favorite.Response)
 }
 
-class CharacterDetailPresenter: CharacterDetailPresentationLogic {
+protocol CharacterDetailPresenterProtocol: CharacterDetailPresentationLogic {
+    var viewController: CharacterDetailDisplayLogic? { get set }
+}
+
+class CharacterDetailPresenter: CharacterDetailPresenterProtocol {
     weak var viewController: CharacterDetailDisplayLogic?
 
     // MARK: Present character detail

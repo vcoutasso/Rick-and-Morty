@@ -13,18 +13,24 @@ protocol CharacterDetailDisplayLogic: AnyObject {
 }
 
 class CharacterDetailViewController: UIViewController, CharacterDetailDisplayLogic {
-    var interactor: CharacterDetailBusinessLogic?
-    var router: (NSObjectProtocol & CharacterDetailRoutingLogic & CharacterDetailDataPassing)?
+    var interactor: CharacterDetailInteractorProtocol
+    var router:  CharacterDetailRouterProtocol
 
     private lazy var detailView = CharacterDetailView()
 
     // MARK: Object lifecycle
 
-    init() {
+    init(interactor: CharacterDetailInteractorProtocol,
+         router: CharacterDetailRouterProtocol) {
+        self.interactor = interactor
+        self.router = router
+
         super.init(nibName: nil, bundle: nil)
+
         setup()
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -32,18 +38,8 @@ class CharacterDetailViewController: UIViewController, CharacterDetailDisplayLog
     // MARK: Setup
 
     private func setup() {
-        let viewController = self
-        let characterDetailInteractor = CharacterDetailInteractor()
-        let characterDetailPresenter = CharacterDetailPresenter()
-        let characterDetailRouter = CharacterDetailRouter()
-
-        characterDetailInteractor.presenter = characterDetailPresenter
-        characterDetailPresenter.viewController = viewController
-        characterDetailRouter.dataStore = characterDetailInteractor
-        characterDetailRouter.viewController = viewController
-
-        interactor = characterDetailInteractor
-        router = characterDetailRouter
+        interactor.presenter.viewController = self
+        router.viewController = self
     }
 
     override func willMove(toParent parent: UIViewController?) {
@@ -78,7 +74,7 @@ class CharacterDetailViewController: UIViewController, CharacterDetailDisplayLog
     // MARK: Routing
 
     func setupRouting() {
-        router?.setup()
+        router.setup()
     }
 
     // MARK: View lifecycle
@@ -99,23 +95,23 @@ class CharacterDetailViewController: UIViewController, CharacterDetailDisplayLog
     // MARK: Get character
 
     func getCharacter() {
-        let dataStore = router!.dataStore!
+        let dataStore = router.dataStore
         let request = CharacterDetail.Character.Request(character: dataStore.character)
-        interactor?.getCharacter(request: request)
+        interactor.getCharacter(request: request)
     }
 
     // MARK: - Set favorite
 
     func setFavoriteButton() {
-        let request = CharacterDetail.Favorite.Request(characterID: router!.dataStore!.character.id)
-        interactor?.setFavorite(request: request)
+        let request = CharacterDetail.Favorite.Request(characterID: router.dataStore.character.id)
+        interactor.setFavorite(request: request)
     }
 
     // MARK: - Get favorite
 
     func getFavoriteButton() {
-        let request = CharacterDetail.Favorite.Request(characterID: router!.dataStore!.character.id)
-        interactor?.getFavorite(request: request)
+        let request = CharacterDetail.Favorite.Request(characterID: router.dataStore.character.id)
+        interactor.getFavorite(request: request)
     }
     
     // MARK: - Display

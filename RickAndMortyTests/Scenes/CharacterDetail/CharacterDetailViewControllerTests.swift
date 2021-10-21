@@ -9,20 +9,15 @@
 import XCTest
 
 final class CharacterDetailViewControllerTests: XCTestCase {
+    // MARK: - Attributes
+
+    private let window =  UIWindow()
+    private let interactorSpy = CharacterDetailInteractorSpy(presenter: CharacterDetailPresenterDummy())
+    private lazy var routerSpy = CharacterDetailRouterSpy(dataStore: interactorSpy)
+
     // MARK: - Subject under test
 
-    private var window =  UIWindow()
-    private let routerSpy = CharacterDetailRouterSpy()
-    private let interactorSpy = CharacterDetailInteractorSpy()
-    private var sut = CharacterDetailViewController()
-
-    // MARK: - Test lifecycle
-
-    override func setUp() {
-        routerSpy.dataStore = interactorSpy
-        sut.interactor = interactorSpy
-        sut.router = routerSpy
-    }
+    private lazy var sut = CharacterDetailViewController(interactor: interactorSpy, router: routerSpy)
 
     // MARK: - Test setup
 
@@ -54,32 +49,15 @@ final class CharacterDetailViewControllerTests: XCTestCase {
         // Then
         XCTAssert(interactorSpy.getCharacterCalled)
     }
-}
 
-// MARK: - Test doubles
+    func testShouldGetFavoriteStatusWhenViewDidLoad() {
+        // Given
+        loadView()
 
-final class CharacterDetailRouterSpy: NSObject, CharacterDetailRoutingLogic, CharacterDetailDataPassing {
-    var dataStore: CharacterDetailDataStore?
+        // When
+        sut.viewDidLoad()
 
-    private(set) var setupCalled = false
-    func setup() {
-        setupCalled = true
-    }
-}
-
-final class CharacterDetailInteractorSpy: CharacterDetailBusinessLogic, CharacterDetailDataStore {
-    var character: RMCharacter! = Seeds.RMCharacters.morty
-
-    private(set) var getCharacterCalled = false
-    func getCharacter(request: CharacterDetail.Character.Request) {
-        getCharacterCalled = true
-    }
-
-    func getFavorite(request: CharacterDetail.Favorite.Request) {
-        print("not implemented")
-    }
-
-    func setFavorite(request: CharacterDetail.Favorite.Request) {
-        print("not implemented")
+        // Then
+        XCTAssert(interactorSpy.getFavoriteCalled)
     }
 }
