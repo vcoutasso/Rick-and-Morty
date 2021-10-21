@@ -21,7 +21,7 @@ class CharacterDetailInteractorTests: XCTestCase {
 
     func testGetCharacterShouldCallPresentCharacterDetail() {
         // Given
-        let dummyCharacter = Seeds.RMCharacters.morty
+        let dummyCharacter = Fixtures.RMCharacters.morty
         let request = CharacterDetail.Character.Request(character: dummyCharacter)
 
         // When
@@ -30,20 +30,4 @@ class CharacterDetailInteractorTests: XCTestCase {
         // Then
         XCTAssert(presenterSpy.presentCharacterDetailCalled)
     }
-}
-
-// MARK: - Test doubles
-
-class CharacterDetailPresenterSpy: CharacterDetailPresenterProtocol {
-    var viewController: CharacterDetailDisplayLogic?
-
-    private(set) var presentCharacterDetailCalled = false
-    func presentCharacterDetail(response: CharacterDetail.Character.Response) {
-      presentCharacterDetailCalled = true
-    }
-
-    func presentFavoriteIcon(response: CharacterDetail.Favorite.Response) {
-        fatalError("not implemented")
-    }
-
 }

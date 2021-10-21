@@ -12,10 +12,14 @@ protocol CharacterTablePresentationLogic {
     func presentFilteredData(response: CharacterTable.FilterData.Response)
 }
 
-class CharacterTablePresenter: CharacterTablePresentationLogic {
+protocol CharacterTablePresenterProtocol: CharacterTablePresentationLogic {
+    var viewController: CharacterTableDisplayLogic? { get set }
+}
+
+class CharacterTablePresenter: CharacterTablePresenterProtocol {
     weak var viewController: CharacterTableDisplayLogic?
 
-    // MARK: - Fetched data
+    // MARK: - Present fetched data
 
     func presentFetchedData(response: CharacterTable.FetchData.Response) {
         let (characters, sections) = characterListToListOfSections(response.characters)
@@ -23,7 +27,7 @@ class CharacterTablePresenter: CharacterTablePresentationLogic {
         viewController?.displayCharacters(viewModel: viewModel)
     }
 
-    // MARK: - Filtered data
+    // MARK: - Present filtered data
 
     func presentFilteredData(response: CharacterTable.FilterData.Response) {
         let (characters, sections) = characterListToListOfSections(response.characters)
@@ -31,7 +35,7 @@ class CharacterTablePresenter: CharacterTablePresentationLogic {
         viewController?.displaySearchResults(viewModel: viewModel)
     }
 
-    // MARK: - List to sections
+    // MARK: - Convert list to sections
 
     private func characterListToListOfSections(_ characters: [RMCharacter]) -> ([[RMCharacter]], [String]) {
         let sortedCharacters = characters.sorted { $0.name < $1.name }

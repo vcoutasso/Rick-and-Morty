@@ -15,8 +15,8 @@ protocol CharacterTableDisplayLogic: AnyObject {
 class CharacterTableViewController: UITableViewController, CharacterTableDisplayLogic {
     // MARK: - Attributes
 
-    var interactor: CharacterTableBusinessLogic?
-    var router: (NSObjectProtocol & CharacterTableRoutingLogic & CharacterTableDataPassing)?
+    var interactor: CharacterTableInteractorProtocol
+    var router: CharacterTableRouterProtocol
 
     // MARK: - Table Data
 
@@ -32,7 +32,10 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
 
     // MARK: - Object lifecycle
 
-    init() {
+    init(interactor: CharacterTableInteractorProtocol, router: CharacterTableRouterProtocol) {
+        self.interactor = interactor
+        self.router = router
+
         super.init(style: .plain)
 
         setup()
@@ -47,17 +50,8 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
     private func setup() {
         title = "Character List"
 
-        let characterTableInteractor = CharacterTableInteractor()
-        let characterTablePresenter = CharacterTablePresenter()
-        let characterTableRouter = CharacterTableRouter()
-
-        characterTableInteractor.presenter = characterTablePresenter
-        characterTablePresenter.viewController = self
-        characterTableRouter.dataStore = characterTableInteractor
-        characterTableRouter.viewController = self
-
-        interactor = characterTableInteractor
-        router = characterTableRouter
+        interactor.presenter.viewController = self
+        router.viewController = self
     }
 
     private func setupTableView() {
@@ -85,7 +79,7 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
     // MARK: - Routing
 
     func setupRouting() {
-        router?.setup()
+        router.setup()
     }
 
     // MARK: - Display logic
@@ -107,8 +101,6 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
     // MARK: - Private methods
 
     private func fetchCharacters() {
-        guard let interactor = interactor else { return }
-
         let request = CharacterTable.FetchData.Request()
         interactor.fetchData(request: request)
     }
@@ -163,7 +155,7 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        router?.routeToCharacterDetail()
+        router.routeToCharacterDetail()
     }
 
     // REVIEW: Could probably use some refactoring
@@ -190,8 +182,6 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
 
 extension CharacterTableViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        guard let interactor = interactor else { return }
-        
         let request = CharacterTable.FilterData.Request(searchText: searchText)
         interactor.filterData(request: request)
     }

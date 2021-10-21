@@ -18,7 +18,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
-        let rootViewController = CharacterTableViewController()
+        let rootPresenter = CharacterTablePresenter()
+        let rootAPIWorker = CharacterTableAPIWorker()
+        let rootFilterWorker = CharacterTableFilterWorker()
+        let rootFavoritesWorker = FavoriteCharacterWorker()
+        let rootInteractor = CharacterTableInteractor(presenter: rootPresenter, apiWorker: rootAPIWorker, filterWorker: rootFilterWorker, favoritesWorker: rootFavoritesWorker)
+        let rootRouter = CharacterTableRouter(dataStore: rootInteractor)
+
+        let rootViewController = CharacterTableViewController(interactor: rootInteractor, router: rootRouter)
         let navigationController = UINavigationController(rootViewController: rootViewController)
         
         window = UIWindow(windowScene: windowScene)

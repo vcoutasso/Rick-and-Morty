@@ -55,11 +55,11 @@ final class CharacterTablePresenterTests: XCTestCase {
     func testCharacterListToListOfSections() {
         // Given
 
-        let dummyCharacters = [Seeds.RMCharacters.rick, Seeds.RMCharacters.morty, Seeds.RMCharacters.summer]
+        let dummyCharacters = [Fixtures.RMCharacters.rick, Fixtures.RMCharacters.morty, Fixtures.RMCharacters.summer]
         let dummyResponse = CharacterTable.FilterData.Response(characters: dummyCharacters)
 
         let sortedSectionNames = ["M", "R", "S"]
-        let sortedSortedCharacters = [[Seeds.RMCharacters.morty], [Seeds.RMCharacters.rick], [Seeds.RMCharacters.summer]]
+        let sortedSortedCharacters = [[Fixtures.RMCharacters.morty], [Fixtures.RMCharacters.rick], [Fixtures.RMCharacters.summer]]
         let expectedViewModel = CharacterTable.FilterData.ViewModel(characters: sortedSortedCharacters, sections: sortedSectionNames)
 
         // When
@@ -69,23 +69,5 @@ final class CharacterTablePresenterTests: XCTestCase {
         // Then
 
         XCTAssertEqual(viewControllerSpy.displaySearchResultsPassedViewModel, expectedViewModel)
-    }
-}
-
-// MARK: - Testing doubles
-
-final class CharacterTableViewControllerSpy: CharacterTableDisplayLogic {
-    private(set) var displayCharactersCalled = false
-    private(set) var displayCharactersPassedViewModel: CharacterTable.FetchData.ViewModel?
-    func displayCharacters(viewModel: CharacterTable.FetchData.ViewModel) {
-        displayCharactersCalled = true
-        displayCharactersPassedViewModel = viewModel
-    }
-
-    private(set) var displaySearchResultsCalled = false
-    private(set) var displaySearchResultsPassedViewModel: CharacterTable.FilterData.ViewModel?
-    func displaySearchResults(viewModel: CharacterTable.FilterData.ViewModel) {
-        displaySearchResultsCalled = true
-        displaySearchResultsPassedViewModel = viewModel
     }
 }

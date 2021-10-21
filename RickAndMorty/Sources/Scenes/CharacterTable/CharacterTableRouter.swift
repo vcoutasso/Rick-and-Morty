@@ -13,14 +13,22 @@ protocol CharacterTableRoutingLogic {
 }
 
 protocol CharacterTableDataPassing {
-    var dataStore: CharacterTableDataStore? { get }
+    var dataStore: CharacterTableDataStore { get }
 }
 
-class CharacterTableRouter: NSObject, CharacterTableRoutingLogic, CharacterTableDataPassing {
-    weak var viewController: CharacterTableViewController?
-    var dataStore: CharacterTableDataStore?
+protocol CharacterTableRouterProtocol: CharacterTableRoutingLogic, CharacterTableDataPassing {
+    var viewController: CharacterTableViewController? { get set }
+}
 
-    var character: RMCharacter?
+class CharacterTableRouter: CharacterTableRouterProtocol {
+    weak var viewController: CharacterTableViewController?
+    var dataStore: CharacterTableDataStore
+
+    // MARK: - Object lifecycle
+
+    init(dataStore: CharacterTableDataStore) {
+        self.dataStore = dataStore
+    }
 
     // MARK: - Setup
 
@@ -42,7 +50,7 @@ class CharacterTableRouter: NSObject, CharacterTableRoutingLogic, CharacterTable
         let destinationVC = CharacterDetailViewController(interactor: detailInteractor, router: detailRouter)
         var destinationDS = destinationVC.router.dataStore
 
-        passDataToCharacterDetail(source: dataStore!, destination: &destinationDS)
+        passDataToCharacterDetail(source: dataStore, destination: &destinationDS)
         navigateToCharacterDetail(source: viewController!, destination: destinationVC)
     }
 

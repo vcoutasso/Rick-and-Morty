@@ -13,7 +13,7 @@ protocol CharacterDetailPresentationLogic {
 }
 
 protocol CharacterDetailPresenterProtocol: CharacterDetailPresentationLogic {
-    var viewController: CharacterDetailDisplayLogic? { set get }
+    var viewController: CharacterDetailDisplayLogic? { get set }
 }
 
 class CharacterDetailPresenter: CharacterDetailPresenterProtocol {

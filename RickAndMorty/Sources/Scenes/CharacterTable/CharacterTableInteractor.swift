@@ -16,8 +16,12 @@ protocol CharacterTableDataStore {
     var characters: [RMCharacter]? { get }
 }
 
-class CharacterTableInteractor: CharacterTableBusinessLogic, CharacterTableDataStore {
-    var presenter: CharacterTablePresentationLogic?
+protocol CharacterTableInteractorProtocol: CharacterTableBusinessLogic, CharacterTableDataStore {
+    var presenter: CharacterTablePresenterProtocol { get set }
+}
+
+class CharacterTableInteractor: CharacterTableInteractorProtocol {
+    var presenter: CharacterTablePresenterProtocol
 
     var apiWorker: CharacterTableAPIWorkerProtocol
     var filterWorker: CharacterTableFilterWorkerProtocol
@@ -27,9 +31,11 @@ class CharacterTableInteractor: CharacterTableBusinessLogic, CharacterTableDataS
 
     // MARK: - Object lifecycle
 
-    init(apiWorker: CharacterTableAPIWorkerProtocol = CharacterTableAPIWorker(),
-         filterWorker: CharacterTableFilterWorkerProtocol = CharacterTableFilterWorker(),
-         favoritesWorker: FavoriteCharacterWorkerProtocol = FavoriteCharacterWorker()) {
+    init(presenter: CharacterTablePresenterProtocol,
+         apiWorker: CharacterTableAPIWorkerProtocol,
+         filterWorker: CharacterTableFilterWorkerProtocol,
+         favoritesWorker: FavoriteCharacterWorkerProtocol) {
+        self.presenter = presenter
         self.apiWorker = apiWorker
         self.filterWorker = filterWorker
         self.favoritesWorker = favoritesWorker
@@ -42,7 +48,7 @@ class CharacterTableInteractor: CharacterTableBusinessLogic, CharacterTableDataS
             self.characters = characters
             let response = CharacterTable.FetchData.Response(characters: characters)
 
-            self.presenter?.presentFetchedData(response: response)
+            self.presenter.presentFetchedData(response: response)
         }
     }
 
@@ -54,6 +60,6 @@ class CharacterTableInteractor: CharacterTableBusinessLogic, CharacterTableDataS
         let filteredCharacters = filterWorker.filterCharacters(characters, contains: request.searchText)
         let response = CharacterTable.FilterData.Response(characters: filteredCharacters)
 
-        self.presenter?.presentFilteredData(response: response)
+        presenter.presentFilteredData(response: response)
     }
 }

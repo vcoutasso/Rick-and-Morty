@@ -9,8 +9,9 @@
 import XCTest
 
 final class CharacterDetailViewControllerTests: XCTestCase {
-    // MARK: - Attributse
-    private var window =  UIWindow()
+    // MARK: - Attributes
+
+    private let window =  UIWindow()
     private let interactorSpy = CharacterDetailInteractorSpy(presenter: CharacterDetailPresenterDummy())
     private lazy var routerSpy = CharacterDetailRouterSpy(dataStore: interactorSpy)
 
@@ -47,48 +48,5 @@ final class CharacterDetailViewControllerTests: XCTestCase {
 
         // Then
         XCTAssert(interactorSpy.getCharacterCalled)
-    }
-}
-
-// MARK: - Test doubles
-
-final class CharacterDetailRouterSpy: CharacterDetailRouterProtocol {
-    var viewController: CharacterDetailViewController?
-
-    var dataStore: CharacterDetailDataStore
-
-    init(dataStore: CharacterDetailDataStore) {
-        self.dataStore = dataStore
-    }
-
-    private(set) var setupCalled = false
-    func setup() {
-        setupCalled = true
-    }
-}
-
-final class CharacterDetailDataStoreDummy: CharacterDetailDataStore {
-    var character: RMCharacter!
-}
-
-final class CharacterDetailInteractorSpy: CharacterDetailInteractorProtocol {
-    var character: RMCharacter! = Seeds.RMCharacters.morty
-    var presenter: CharacterDetailPresenterProtocol
-
-    init(presenter: CharacterDetailPresenterProtocol) {
-        self.presenter = presenter
-    }
-
-    private(set) var getCharacterCalled = false
-    func getCharacter(request: CharacterDetail.Character.Request) {
-        getCharacterCalled = true
-    }
-
-    func getFavorite(request: CharacterDetail.Favorite.Request) {
-        print("not implemented")
-    }
-
-    func setFavorite(request: CharacterDetail.Favorite.Request) {
-        print("not implemented")
     }
 }

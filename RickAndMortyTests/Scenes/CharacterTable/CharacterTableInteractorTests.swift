@@ -15,15 +15,8 @@ final class CharacterTableInteractorTests: XCTestCase {
     private let presenterSpy = CharacterTablePresenterSpy()
     private let apiWorkerSpy = CharacterTableAPIWorkerSpy()
     private let filterWorkerSpy = CharacterTableFilterWorkerSpy()
-    private lazy var sut = CharacterTableInteractor(apiWorker: apiWorkerSpy, filterWorker: filterWorkerSpy)
-
-    // MARK: - Test lifecycle
-
-    override func setUp() {
-        super.setUp()
-
-        sut.presenter = presenterSpy
-    }
+    private let favoriteWorker = FavoriteCharacterWorker()
+    private lazy var sut = CharacterTableInteractor(presenter: presenterSpy, apiWorker: apiWorkerSpy, filterWorker: filterWorkerSpy, favoritesWorker: favoriteWorker)
 
     // MARK: - Unit tests
 
@@ -84,40 +77,4 @@ final class CharacterTableInteractorTests: XCTestCase {
         XCTAssert(presenterSpy.presentFilteredDataCalled)
     }
 
-}
-
-final class CharacterTablePresenterSpy: CharacterTablePresentationLogic {
-    private(set) var presentCharactersDataCalled = false
-    func presentFetchedData(response: CharacterTable.FetchData.Response) {
-        presentCharactersDataCalled = true
-    }
-
-    private(set) var presentFilteredDataCalled = false
-    func presentFilteredData(response: CharacterTable.FilterData.Response) {
-        presentFilteredDataCalled = true
-    }
-}
-
-final class CharacterTableAPIWorkerSpy: CharacterTableAPIWorkerProtocol {
-    private(set) var completionStub = [RMCharacter]()
-
-    private(set) var fetchAllCharactersCalled = false
-    func fetchAllCharacters(completion: @escaping ([RMCharacter]) -> Void) {
-        fetchAllCharactersCalled = true
-        completion(completionStub)
-    }
-
-    func fetchCurrentPage(completion: @escaping ([RMCharacter]) -> Void) {
-        fatalError("not implemented")
-    }
-}
-
-final class CharacterTableFilterWorkerSpy: CharacterTableFilterWorkerProtocol {
-    private(set) var returnStub = [RMCharacter]()
-
-    private(set) var filterCharactersCalled = false
-    func filterCharacters(_ characters: [RMCharacter], contains searchText: String) -> [RMCharacter] {
-        filterCharactersCalled = true
-        return returnStub
-    }
 }

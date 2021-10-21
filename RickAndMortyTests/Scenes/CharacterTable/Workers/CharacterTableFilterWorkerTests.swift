@@ -18,7 +18,7 @@ class CharacterTableFilterWorkerTests: XCTestCase {
     func testFilterCharactersShouldReturnAllOnEmptyString() {
         // Given
 
-        let dummyCharacters = [Seeds.RMCharacters.rick, Seeds.RMCharacters.morty]
+        let dummyCharacters = [Fixtures.RMCharacters.rick, Fixtures.RMCharacters.morty]
         let searchText = ""
         let expectedResult = dummyCharacters
 
@@ -34,9 +34,9 @@ class CharacterTableFilterWorkerTests: XCTestCase {
     func testFilterCharactersShouldReturnOnlyMatches() {
         // Given
 
-        let dummyCharacters = [Seeds.RMCharacters.rick, Seeds.RMCharacters.morty, Seeds.RMCharacters.summer]
+        let dummyCharacters = [Fixtures.RMCharacters.rick, Fixtures.RMCharacters.morty, Fixtures.RMCharacters.summer]
         let searchText = "smith"
-        let expectedResult = [Seeds.RMCharacters.morty, Seeds.RMCharacters.summer]
+        let expectedResult = [Fixtures.RMCharacters.morty, Fixtures.RMCharacters.summer]
 
         // When
 
@@ -50,9 +50,9 @@ class CharacterTableFilterWorkerTests: XCTestCase {
     func testFilterCharactersShouldBeCaseInsensitive() {
         // Given
 
-        let dummyCharacters = [Seeds.RMCharacters.rick, Seeds.RMCharacters.morty, Seeds.RMCharacters.summer]
+        let dummyCharacters = [Fixtures.RMCharacters.rick, Fixtures.RMCharacters.morty, Fixtures.RMCharacters.summer]
         let searchText = "sMiTH"
-        let expectedResult = [Seeds.RMCharacters.morty, Seeds.RMCharacters.summer]
+        let expectedResult = [Fixtures.RMCharacters.morty, Fixtures.RMCharacters.summer]
 
         // When
 

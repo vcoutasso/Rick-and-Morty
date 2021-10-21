@@ -12,7 +12,7 @@ class UIImageViewTests: XCTestCase {
 
     // MARK: - System under test
 
-    let imageClientFake = RMImageClientFake()
+    let imageClientFake = RMImageServiceFake()
     let sut = UIImageView()
 
     // MARK: - Test lifecycle
@@ -26,7 +26,7 @@ class UIImageViewTests: XCTestCase {
 
     func testShouldDownloadAndSetImageWhenNotCached() {
         // Given
-        let imageLink = Seeds.RMCharacters.rick.image
+        let imageLink = Fixtures.RMCharacters.rick.image
         let imageURL = URL(string: imageLink)!
         let completionExpectation = expectation(description: "Completion should be called")
         var imageFromCache: UIImage?
@@ -44,7 +44,7 @@ class UIImageViewTests: XCTestCase {
 
     func testShouldNotSetObjectWhenCached() {
         // Given
-        let imageLink = Seeds.RMCharacters.rick.image
+        let imageLink = Fixtures.RMCharacters.rick.image
         let imageURL = URL(string: imageLink)!
         let completionExpectation = expectation(description: "Completion should be called")
         let imageStub = UIImage()
@@ -61,25 +61,5 @@ class UIImageViewTests: XCTestCase {
         wait(for: [completionExpectation], timeout: 1)
         XCTAssertNotNil(imageFromCache)
         XCTAssertFalse(imageClientFake.setImageCalled)
-    }
-}
-
-// MARK: - Test doubles
-
-class RMImageClientFake: RMImageServiceProtocol, RMImageCacheInjector {
-    static var cacheCountLimit = 1
-
-    func getImage(forURL url: URL) -> UIImage? {
-        imageCache.object(forKey: url.absoluteString as NSString)
-    }
-
-    private(set) var setImageCalled = false
-    func setImage(_ image: UIImage, forURL url: URL) {
-        setImageCalled = true
-        imageCache.setObject(image, forKey: url.absoluteString as NSString)
-    }
-
-    func clearCache() {
-        imageCache.removeAllObjects()
     }
 }
