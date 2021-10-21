@@ -21,15 +21,18 @@ class CharacterTableInteractor: CharacterTableBusinessLogic, CharacterTableDataS
 
     var apiWorker: CharacterTableAPIWorkerProtocol
     var filterWorker: CharacterTableFilterWorkerProtocol
+    var favoritesWorker: FavoriteCharacterWorkerProtocol
 
     var characters: [RMCharacter]?
 
     // MARK: - Object lifecycle
 
     init(apiWorker: CharacterTableAPIWorkerProtocol = CharacterTableAPIWorker(),
-         filterWorker: CharacterTableFilterWorkerProtocol = CharacterTableFilterWorker()) {
+         filterWorker: CharacterTableFilterWorkerProtocol = CharacterTableFilterWorker(),
+         favoritesWorker: FavoriteCharacterWorkerProtocol = FavoriteCharacterWorker()) {
         self.apiWorker = apiWorker
         self.filterWorker = filterWorker
+        self.favoritesWorker = favoritesWorker
     }
 
     // MARK: - Fetch Data

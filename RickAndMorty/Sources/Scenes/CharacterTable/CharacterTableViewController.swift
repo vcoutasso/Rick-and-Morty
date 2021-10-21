@@ -165,6 +165,27 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         router?.routeToCharacterDetail()
     }
+
+    // REVIEW: Could probably use some refactoring
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let worker = FavoriteCharacterWorker()
+        let id = characters[indexPath.section][indexPath.row].id
+        let actionHandler: UIContextualAction.Handler = { action, view, completion in
+            worker.toggleFavorite(for: id)
+            completion(true)
+        }
+
+        let isFavorite = worker.getFavoritedStatus(for: id)
+        let style: UIContextualAction.Style = isFavorite ? .destructive : .normal
+        let title: String = isFavorite ? "Unfavorite" : "Favorite"
+        let action = UIContextualAction(style: style, title: title, handler: actionHandler)
+
+        if !isFavorite {
+            action.backgroundColor = .systemGreen
+        }
+
+        return UISwipeActionsConfiguration(actions: [action])
+    }
 }
 
 extension CharacterTableViewController: UISearchBarDelegate {

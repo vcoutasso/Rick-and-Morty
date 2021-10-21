@@ -19,7 +19,7 @@ protocol CharacterDetailDataStore {
 
 class CharacterDetailInteractor: CharacterDetailBusinessLogic, CharacterDetailDataStore {
     var presenter: CharacterDetailPresentationLogic?
-    var worker: CharacterDetailWorker? = CharacterDetailWorker()
+    var worker: FavoriteCharacterWorkerProtocol? = FavoriteCharacterWorker()
 
     var character: RMCharacter!
 
@@ -28,7 +28,7 @@ class CharacterDetailInteractor: CharacterDetailBusinessLogic, CharacterDetailDa
     func getCharacter(request: CharacterDetail.Character.Request) {
         character = request.character
 
-        let isFavorite = false
+        let isFavorite = isFavorite(id: character.id)
 
         let response = CharacterDetail.Character.Response(character: character!, isFavorite: isFavorite)
         presenter?.presentCharacterDetail(response: response)
@@ -37,12 +37,8 @@ class CharacterDetailInteractor: CharacterDetailBusinessLogic, CharacterDetailDa
     // MARK: - Get favorite
 
     func getFavorite(request: CharacterDetail.Favorite.Request) {
-        guard let worker = worker else { return }
-
         let id = request.characterID
-        var isFavorite = false
-
-        isFavorite = worker.fetchFavoritedStatus(for: id)
+        let isFavorite = isFavorite(id: id)
 
         let response = CharacterDetail.Favorite.Response(isFavorite: isFavorite)
         presenter?.presentFavoriteIcon(response: response)
@@ -54,17 +50,17 @@ class CharacterDetailInteractor: CharacterDetailBusinessLogic, CharacterDetailDa
         guard let worker = worker else { return }
 
         let id = request.characterID
-        var isFavorite = false
+        worker.toggleFavorite(for: id)
 
-        isFavorite = worker.fetchFavoritedStatus(for: id)
+        let isFavorite = isFavorite(id: id)
 
-        if isFavorite {
-            worker.removeFavorite(id: id)
-        } else {
-            worker.addFavorite(id: id)
-        }
-
-        let response = CharacterDetail.Favorite.Response(isFavorite: !isFavorite)
+        let response = CharacterDetail.Favorite.Response(isFavorite: isFavorite)
         presenter?.presentFavoriteIcon(response: response)
+    }
+
+    // MARK: - Convenience methods
+
+    private func isFavorite(id: Int) -> Bool {
+        worker?.getFavoritedStatus(for: id) ?? false
     }
 }
