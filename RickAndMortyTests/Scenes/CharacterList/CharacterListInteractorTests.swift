@@ -22,40 +22,32 @@ final class CharacterListInteractorTests: XCTestCase {
 
     func testFetchDataShouldFetchAllCharacters() {
         // Given
-
         let request: CharacterList.FetchData.Request = .init()
 
         // When
-
         sut.fetchData(request: request)
 
         // Then
-
         XCTAssert(apiWorkerSpy.fetchAllCharactersCalled)
     }
 
-    func testFetchDDataShouldCallPresentCharactersData() {
+    func testFetchDataShouldCallPresentCharactersData() {
         // Given
-
         let request: CharacterList.FetchData.Request = .init()
 
         // When
-
         sut.fetchData(request: request)
 
         // Then
-
         XCTAssert(presenterSpy.presentCharactersDataCalled)
     }
 
     func testFilterDataShouldFilterData() {
         // Given
-
         let request: CharacterList.FilterData.Request = .init(searchText: "")
-        sut.characters = []
+        sut.characters = [Fixtures.RMCharacters.morty]
 
         // When
-
         sut.filterData(request: request)
 
         // Then
@@ -64,17 +56,37 @@ final class CharacterListInteractorTests: XCTestCase {
 
     func testFilterDataShouldPresentFilteredData() {
         // Given
+        let request: CharacterList.FilterData.Request = .init(searchText: "")
+        sut.characters = [Fixtures.RMCharacters.morty]
 
+        // When
+        sut.filterData(request: request)
+
+        // Then
+        XCTAssert(presenterSpy.presentFilteredDataCalled)
+    }
+
+    func testShouldNotFilterDataWhenCharactersIsEmpty() {
+        // Given
         let request: CharacterList.FilterData.Request = .init(searchText: "")
         sut.characters = []
 
         // When
-
         sut.filterData(request: request)
 
         // Then
-
-        XCTAssert(presenterSpy.presentFilteredDataCalled)
+        XCTAssertFalse(filterWorkerSpy.filterCharactersCalled)
     }
 
+    func testShouldNotPresentFilteredDataWhenCharactersIsEmpty() {
+        // Given
+        let request: CharacterList.FilterData.Request = .init(searchText: "")
+        sut.characters = []
+
+        // When
+        sut.filterData(request: request)
+
+        // Then
+        XCTAssertFalse(presenterSpy.presentFilteredDataCalled)
+    }
 }

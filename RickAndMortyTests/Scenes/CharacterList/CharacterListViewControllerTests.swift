@@ -12,6 +12,9 @@ class CharacterListViewControllerTests: XCTestCase {
     // MARK: - Attributes
 
     private let window = UIWindow()
+
+    // MARK: - Test doubles
+
     private let tableViewSpy = TableViewSpy()
     private let interactorSpy = CharacterListInteractorSpy(presenter: CharacterListPresenterDummy())
     private lazy var routerSpy = CharacterListRouterSpy(dataStore: interactorSpy)
@@ -136,5 +139,31 @@ class CharacterListViewControllerTests: XCTestCase {
 
         // Then
         XCTAssert(interactorSpy.filterDataCalled)
+    }
+
+    func testPullToRefreshShouldReloadData() {
+        // Given
+        sut.tableView = tableViewSpy
+        loadView()
+
+        // When
+        sut.viewDidLoad()
+        sut.handlePullToRefresh()
+
+        // Then
+        XCTAssert(tableViewSpy.reloadDataCalled)
+    }
+
+    func testShouldResetSearchTextWhenCancelButtonClicked() {
+        // Given
+        let expectedSearchText: String? = ""
+        let searchBar = sut.searchController.searchBar
+        searchBar.text = "asdf"
+
+        // When
+        sut.searchBarCancelButtonClicked(searchBar)
+
+        // Then
+        XCTAssertEqual(searchBar.text, expectedSearchText)
     }
 }

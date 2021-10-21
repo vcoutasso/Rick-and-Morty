@@ -159,7 +159,7 @@ class CharacterListViewController: UITableViewController, CharacterListDisplayLo
         router.routeToCharacterDetail()
     }
 
-    // REVIEW: Could probably use some refactoring
+    // REVIEW: Could probably use some refactoring. Also, needs testing
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let worker = FavoriteCharacterWorker()
         let id = characters[indexPath.section][indexPath.row].id
@@ -188,6 +188,7 @@ extension CharacterListViewController: UISearchBarDelegate {
     }
 
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchController.searchBar.text = ""
         self.searchBar(searchBar, textDidChange: "")
     }
 }

@@ -67,6 +67,6 @@ class CharacterListRouter: CharacterListRouterProtocol {
         let selectedIndexPath = viewController?.tableView.indexPathForSelectedRow
         let cell = viewController?.tableView.cellForRow(at: selectedIndexPath!) as! CharacterListViewCell
         let selectedCharacter = cell.character!
-        destination.character = source.characters?.first { $0.id == selectedCharacter.id }
+        destination.character = source.characters.first { $0.id == selectedCharacter.id }
     }
 }
