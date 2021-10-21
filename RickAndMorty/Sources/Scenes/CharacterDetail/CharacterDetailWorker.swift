@@ -10,6 +10,3 @@ import CoreData
 
 protocol CharacterDetailWorkerProtocol {
 }
-
-class CharacterDetailWorker: CharacterDetailWorkerProtocol {
-}

@@ -7,7 +7,13 @@
 
 import CoreData
 
-class CoreDataStore {
+protocol CoreDataStoreProtocol {
+    func fetchFavoritedStatus(for id: Int) -> Bool
+    func addFavorite(id: Int)
+    func removeFavorite(id: Int)
+}
+
+class CoreDataStore: CoreDataStoreProtocol {
     let context: NSManagedObjectContext
 
     init(context: NSManagedObjectContext) {
