@@ -5,7 +5,7 @@
 //  Created by Vinícius Couto on 20/10/21.
 //
 
-import UIKit
+import CoreData
 
 protocol FavoriteCharacterWorkerProtocol {
     func getFavoritedStatus(for id: Int) -> Bool
@@ -13,8 +13,15 @@ protocol FavoriteCharacterWorkerProtocol {
 }
 
 class FavoriteCharacterWorker: FavoriteCharacterWorkerProtocol {
-    private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    private lazy var dataStore = CoreDataStore(context: context)
+    let context: NSManagedObjectContext
+    let dataStore: CoreDataStoreProtocol
+
+    // MARK: - Object lifecycle
+
+    init(context: NSManagedObjectContext, dataStore: CoreDataStoreProtocol) {
+        self.context = context
+        self.dataStore = dataStore
+    }
 
     func getFavoritedStatus(for id: Int) -> Bool {
         dataStore.fetchFavoritedStatus(for: id)

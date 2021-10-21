@@ -18,10 +18,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
+
+        let managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        let coreDataStore = CoreDataStore(context: managedObjectContext)
+
         let rootPresenter = CharacterListPresenter()
         let rootAPIWorker = CharacterListAPIWorker()
         let rootFilterWorker = CharacterListFilterWorker()
-        let rootFavoritesWorker = FavoriteCharacterWorker()
+        let rootFavoritesWorker = FavoriteCharacterWorker(context: managedObjectContext, dataStore: coreDataStore)
         let rootInteractor = CharacterListInteractor(presenter: rootPresenter, apiWorker: rootAPIWorker, filterWorker: rootFilterWorker, favoritesWorker: rootFavoritesWorker)
         let rootRouter = CharacterListRouter(dataStore: rootInteractor)
 

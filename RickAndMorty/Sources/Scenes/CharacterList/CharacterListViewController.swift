@@ -159,10 +159,14 @@ class CharacterListViewController: UITableViewController, CharacterListDisplayLo
         router.routeToCharacterDetail()
     }
 
-    // REVIEW: Could probably use some refactoring. Also, needs testing
+    // REVIEW: Needs refactoring. Also, needs testing
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let worker = FavoriteCharacterWorker()
+        let managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        let coreDataStore = CoreDataStore(context: managedObjectContext)
+
+        let worker = FavoriteCharacterWorker(context: managedObjectContext, dataStore: coreDataStore)
         let id = characters[indexPath.section][indexPath.row].id
+        
         let actionHandler: UIContextualAction.Handler = { action, view, completion in
             worker.toggleFavorite(for: id)
             completion(true)

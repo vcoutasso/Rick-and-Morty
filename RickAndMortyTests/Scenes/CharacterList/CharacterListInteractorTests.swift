@@ -15,7 +15,9 @@ final class CharacterListInteractorTests: XCTestCase {
     private let presenterSpy = CharacterListPresenterSpy()
     private let apiWorkerSpy = CharacterListAPIWorkerSpy()
     private let filterWorkerSpy = CharacterListFilterWorkerSpy()
-    private let favoriteWorker = FavoriteCharacterWorker()
+    private let managedObjectContextFake = PersistentContainerFake().container.viewContext
+    private lazy var dataStoreDummy = CoreDataStoreDummy(context: managedObjectContextFake)
+    private lazy var favoriteWorker = FavoriteCharacterWorker(context: managedObjectContextFake, dataStore: dataStoreDummy)
     private lazy var sut = CharacterListInteractor(presenter: presenterSpy, apiWorker: apiWorkerSpy, filterWorker: filterWorkerSpy, favoritesWorker: favoriteWorker)
 
     // MARK: - Unit tests
