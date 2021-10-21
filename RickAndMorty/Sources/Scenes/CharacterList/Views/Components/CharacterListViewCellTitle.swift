@@ -1,5 +1,5 @@
 //
-//  CharacterTableViewCellTitle.swift
+//  CharacterListViewCellTitle.swift
 //  RickAndMorty
 //
 //  Created by Vinícius Couto on 15/10/21.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CharacterTableViewCellTitle: UIStackView {
+class CharacterListViewCellTitle: UIStackView {
 
     // MARK: - Subviews
 

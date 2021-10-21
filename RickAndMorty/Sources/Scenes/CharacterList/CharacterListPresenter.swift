@@ -1,5 +1,5 @@
 //
-//  CharacterTablePresenter.swift
+//  CharacterListPresenter.swift
 //  RickAndMorty
 //
 //  Created by Vinícius Couto on 14/10/21.
@@ -7,31 +7,31 @@
 
 import Foundation
 
-protocol CharacterTablePresentationLogic {
-    func presentFetchedData(response: CharacterTable.FetchData.Response)
-    func presentFilteredData(response: CharacterTable.FilterData.Response)
+protocol CharacterListPresentationLogic {
+    func presentFetchedData(response: CharacterList.FetchData.Response)
+    func presentFilteredData(response: CharacterList.FilterData.Response)
 }
 
-protocol CharacterTablePresenterProtocol: CharacterTablePresentationLogic {
-    var viewController: CharacterTableDisplayLogic? { get set }
+protocol CharacterListPresenterProtocol: CharacterListPresentationLogic {
+    var viewController: CharacterListDisplayLogic? { get set }
 }
 
-class CharacterTablePresenter: CharacterTablePresenterProtocol {
-    weak var viewController: CharacterTableDisplayLogic?
+class CharacterListPresenter: CharacterListPresenterProtocol {
+    weak var viewController: CharacterListDisplayLogic?
 
     // MARK: - Present fetched data
 
-    func presentFetchedData(response: CharacterTable.FetchData.Response) {
+    func presentFetchedData(response: CharacterList.FetchData.Response) {
         let (characters, sections) = characterListToListOfSections(response.characters)
-        let viewModel = CharacterTable.FetchData.ViewModel(characters: characters, sections: sections)
+        let viewModel = CharacterList.FetchData.ViewModel(characters: characters, sections: sections)
         viewController?.displayCharacters(viewModel: viewModel)
     }
 
     // MARK: - Present filtered data
 
-    func presentFilteredData(response: CharacterTable.FilterData.Response) {
+    func presentFilteredData(response: CharacterList.FilterData.Response) {
         let (characters, sections) = characterListToListOfSections(response.characters)
-        let viewModel = CharacterTable.FilterData.ViewModel(characters: characters, sections: sections)
+        let viewModel = CharacterList.FilterData.ViewModel(characters: characters, sections: sections)
         viewController?.displaySearchResults(viewModel: viewModel)
     }
 

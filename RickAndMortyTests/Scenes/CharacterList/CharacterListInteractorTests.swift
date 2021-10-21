@@ -1,5 +1,5 @@
 //
-//  CharacterTableInteractorTests.swift
+//  CharacterListInteractorTests.swift
 //  RickAndMortyTests
 //
 //  Created by Vinícius Couto on 16/10/21.
@@ -8,22 +8,22 @@
 import XCTest
 @testable import RickAndMorty
 
-final class CharacterTableInteractorTests: XCTestCase {
+final class CharacterListInteractorTests: XCTestCase {
 
     // MARK: - Attributes
 
-    private let presenterSpy = CharacterTablePresenterSpy()
-    private let apiWorkerSpy = CharacterTableAPIWorkerSpy()
-    private let filterWorkerSpy = CharacterTableFilterWorkerSpy()
+    private let presenterSpy = CharacterListPresenterSpy()
+    private let apiWorkerSpy = CharacterListAPIWorkerSpy()
+    private let filterWorkerSpy = CharacterListFilterWorkerSpy()
     private let favoriteWorker = FavoriteCharacterWorker()
-    private lazy var sut = CharacterTableInteractor(presenter: presenterSpy, apiWorker: apiWorkerSpy, filterWorker: filterWorkerSpy, favoritesWorker: favoriteWorker)
+    private lazy var sut = CharacterListInteractor(presenter: presenterSpy, apiWorker: apiWorkerSpy, filterWorker: filterWorkerSpy, favoritesWorker: favoriteWorker)
 
     // MARK: - Unit tests
 
     func testFetchDataShouldFetchAllCharacters() {
         // Given
 
-        let request: CharacterTable.FetchData.Request = .init()
+        let request: CharacterList.FetchData.Request = .init()
 
         // When
 
@@ -37,7 +37,7 @@ final class CharacterTableInteractorTests: XCTestCase {
     func testFetchDDataShouldCallPresentCharactersData() {
         // Given
 
-        let request: CharacterTable.FetchData.Request = .init()
+        let request: CharacterList.FetchData.Request = .init()
 
         // When
 
@@ -51,7 +51,7 @@ final class CharacterTableInteractorTests: XCTestCase {
     func testFilterDataShouldFilterData() {
         // Given
 
-        let request: CharacterTable.FilterData.Request = .init(searchText: "")
+        let request: CharacterList.FilterData.Request = .init(searchText: "")
         sut.characters = []
 
         // When
@@ -65,7 +65,7 @@ final class CharacterTableInteractorTests: XCTestCase {
     func testFilterDataShouldPresentFilteredData() {
         // Given
 
-        let request: CharacterTable.FilterData.Request = .init(searchText: "")
+        let request: CharacterList.FilterData.Request = .init(searchText: "")
         sut.characters = []
 
         // When

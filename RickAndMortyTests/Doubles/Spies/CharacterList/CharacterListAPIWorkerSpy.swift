@@ -1,5 +1,5 @@
 //
-//  CharacterTableAPIWorkerSpy.swift
+//  CharacterListAPIWorkerSpy.swift
 //  RickAndMortyTests
 //
 //  Created by Vinícius Couto on 21/10/21.
@@ -8,7 +8,7 @@
 import XCTest
 @testable import RickAndMorty
 
-final class CharacterTableAPIWorkerSpy: CharacterTableAPIWorkerProtocol {
+final class CharacterListAPIWorkerSpy: CharacterListAPIWorkerProtocol {
     private(set) var completionStub = [RMCharacter]()
 
     private(set) var fetchAllCharactersCalled = false

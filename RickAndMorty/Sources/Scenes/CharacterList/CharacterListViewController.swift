@@ -1,5 +1,5 @@
 //
-//  CharacterTableViewController.swift
+//  CharacterListViewController.swift
 //  RickAndMorty
 //
 //  Created by Vinícius Couto on 14/10/21.
@@ -7,16 +7,16 @@
 
 import UIKit
 
-protocol CharacterTableDisplayLogic: AnyObject {
-    func displayCharacters(viewModel: CharacterTable.FetchData.ViewModel)
-    func displaySearchResults(viewModel: CharacterTable.FilterData.ViewModel)
+protocol CharacterListDisplayLogic: AnyObject {
+    func displayCharacters(viewModel: CharacterList.FetchData.ViewModel)
+    func displaySearchResults(viewModel: CharacterList.FilterData.ViewModel)
 }
 
-class CharacterTableViewController: UITableViewController, CharacterTableDisplayLogic {
+class CharacterListViewController: UITableViewController, CharacterListDisplayLogic {
     // MARK: - Attributes
 
-    var interactor: CharacterTableInteractorProtocol
-    var router: CharacterTableRouterProtocol
+    var interactor: CharacterListInteractorProtocol
+    var router: CharacterListRouterProtocol
 
     // MARK: - Table Data
 
@@ -32,7 +32,7 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
 
     // MARK: - Object lifecycle
 
-    init(interactor: CharacterTableInteractorProtocol, router: CharacterTableRouterProtocol) {
+    init(interactor: CharacterListInteractorProtocol, router: CharacterListRouterProtocol) {
         self.interactor = interactor
         self.router = router
 
@@ -55,7 +55,7 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
     }
 
     private func setupTableView() {
-        tableView.register(CharacterTableViewCell.self)
+        tableView.register(CharacterListViewCell.self)
 
         refreshControl = UIRefreshControl()
         refreshControl?.addTarget(self, action: #selector(handlePullToRefresh), for: .valueChanged)
@@ -84,14 +84,14 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
 
     // MARK: - Display logic
 
-    func displayCharacters(viewModel: CharacterTable.FetchData.ViewModel) {
+    func displayCharacters(viewModel: CharacterList.FetchData.ViewModel) {
         characters = viewModel.characters
         sections = viewModel.sections
 
         reloadData(animated: false)
     }
 
-    func displaySearchResults(viewModel: CharacterTable.FilterData.ViewModel) {
+    func displaySearchResults(viewModel: CharacterList.FilterData.ViewModel) {
         characters = viewModel.characters
         sections = viewModel.sections
 
@@ -101,7 +101,7 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
     // MARK: - Private methods
 
     private func fetchCharacters() {
-        let request = CharacterTable.FetchData.Request()
+        let request = CharacterList.FetchData.Request()
         interactor.fetchData(request: request)
     }
 
@@ -145,8 +145,8 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: CharacterTableViewCell.defaultReuseIdentifier) as? CharacterTableViewCell else {
-            return CharacterTableViewCell()
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CharacterListViewCell.defaultReuseIdentifier) as? CharacterListViewCell else {
+            return CharacterListViewCell()
         }
 
         cell.setup(with: characters[indexPath.section][indexPath.row])
@@ -180,9 +180,9 @@ class CharacterTableViewController: UITableViewController, CharacterTableDisplay
     }
 }
 
-extension CharacterTableViewController: UISearchBarDelegate {
+extension CharacterListViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        let request = CharacterTable.FilterData.Request(searchText: searchText)
+        let request = CharacterList.FilterData.Request(searchText: searchText)
         interactor.filterData(request: request)
     }
 

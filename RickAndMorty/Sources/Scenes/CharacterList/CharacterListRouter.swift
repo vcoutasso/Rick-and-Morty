@@ -1,5 +1,5 @@
 //
-//  CharacterTableRouter.swift
+//  CharacterListRouter.swift
 //  RickAndMorty
 //
 //  Created by Vinícius Couto on 14/10/21.
@@ -7,26 +7,26 @@
 
 import UIKit
 
-protocol CharacterTableRoutingLogic {
+protocol CharacterListRoutingLogic {
     func setup()
     func routeToCharacterDetail()
 }
 
-protocol CharacterTableDataPassing {
-    var dataStore: CharacterTableDataStore { get }
+protocol CharacterListDataPassing {
+    var dataStore: CharacterListDataStore { get }
 }
 
-protocol CharacterTableRouterProtocol: CharacterTableRoutingLogic, CharacterTableDataPassing {
-    var viewController: CharacterTableViewController? { get set }
+protocol CharacterListRouterProtocol: CharacterListRoutingLogic, CharacterListDataPassing {
+    var viewController: CharacterListViewController? { get set }
 }
 
-class CharacterTableRouter: CharacterTableRouterProtocol {
-    weak var viewController: CharacterTableViewController?
-    var dataStore: CharacterTableDataStore
+class CharacterListRouter: CharacterListRouterProtocol {
+    weak var viewController: CharacterListViewController?
+    var dataStore: CharacterListDataStore
 
     // MARK: - Object lifecycle
 
-    init(dataStore: CharacterTableDataStore) {
+    init(dataStore: CharacterListDataStore) {
         self.dataStore = dataStore
     }
 
@@ -56,16 +56,16 @@ class CharacterTableRouter: CharacterTableRouterProtocol {
 
     // MARK: - Navigation
 
-    func navigateToCharacterDetail(source: CharacterTableViewController, destination: CharacterDetailViewController) {
+    func navigateToCharacterDetail(source: CharacterListViewController, destination: CharacterDetailViewController) {
         source.navigationController?.pushViewController(destination, animated: true)
     }
 
     // MARK: - Passing data
 
     // TODO: Too messy, clean this up
-    func passDataToCharacterDetail(source: CharacterTableDataStore, destination: inout CharacterDetailDataStore) {
+    func passDataToCharacterDetail(source: CharacterListDataStore, destination: inout CharacterDetailDataStore) {
         let selectedIndexPath = viewController?.tableView.indexPathForSelectedRow
-        let cell = viewController?.tableView.cellForRow(at: selectedIndexPath!) as! CharacterTableViewCell
+        let cell = viewController?.tableView.cellForRow(at: selectedIndexPath!) as! CharacterListViewCell
         let selectedCharacter = cell.character!
         destination.character = source.characters?.first { $0.id == selectedCharacter.id }
     }

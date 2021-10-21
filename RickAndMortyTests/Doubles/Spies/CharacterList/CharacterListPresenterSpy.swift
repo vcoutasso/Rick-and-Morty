@@ -1,5 +1,5 @@
 //
-//  CharacterTablePresenterSpy.swift
+//  CharacterListPresenterSpy.swift
 //  RickAndMortyTests
 //
 //  Created by Vinícius Couto on 21/10/21.
@@ -8,16 +8,16 @@
 import XCTest
 @testable import RickAndMorty
 
-final class CharacterTablePresenterSpy: CharacterTablePresenterProtocol {
-    var viewController: CharacterTableDisplayLogic?
+final class CharacterListPresenterSpy: CharacterListPresenterProtocol {
+    var viewController: CharacterListDisplayLogic?
 
     private(set) var presentCharactersDataCalled = false
-    func presentFetchedData(response: CharacterTable.FetchData.Response) {
+    func presentFetchedData(response: CharacterList.FetchData.Response) {
         presentCharactersDataCalled = true
     }
 
     private(set) var presentFilteredDataCalled = false
-    func presentFilteredData(response: CharacterTable.FilterData.Response) {
+    func presentFilteredData(response: CharacterList.FilterData.Response) {
         presentFilteredDataCalled = true
     }
 }

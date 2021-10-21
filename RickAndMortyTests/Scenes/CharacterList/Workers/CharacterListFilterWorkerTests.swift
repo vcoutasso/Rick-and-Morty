@@ -1,5 +1,5 @@
 //
-//  CharacterTableFilterWorkerTests.swift
+//  CharacterListFilterWorkerTests.swift
 //  RickAndMortyTests
 //
 //  Created by Vinícius Couto on 18/10/21.
@@ -8,10 +8,10 @@
 import XCTest
 @testable import RickAndMorty
 
-class CharacterTableFilterWorkerTests: XCTestCase {
+class CharacterListFilterWorkerTests: XCTestCase {
     // MARK: - Attributes
 
-    private let sut = CharacterTableFilterWorker()
+    private let sut = CharacterListFilterWorker()
 
     // MARK: - Unit tests
 

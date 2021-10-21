@@ -1,5 +1,5 @@
 //
-//  CharacterTableViewCell.swift
+//  CharacterListViewCell.swift
 //  RickAndMorty
 //
 //  Created by Vinícius Couto on 14/10/21.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CharacterTableViewCell: UITableViewCell {
+class CharacterListViewCell: UITableViewCell {
 
     // MARK: - Attributes
 
@@ -17,7 +17,7 @@ class CharacterTableViewCell: UITableViewCell {
 
     // MARK: - Subviews
 
-    private let titleStackView: CharacterTableViewCellTitle = .init()
+    private let titleStackView: CharacterListViewCellTitle = .init()
     private let avatarImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -109,4 +109,4 @@ class CharacterTableViewCell: UITableViewCell {
     }
 }
 
-extension CharacterTableViewCell: ReusableView {}
+extension CharacterListViewCell: ReusableView {}

@@ -1,5 +1,5 @@
 //
-//  CharacterTableRouterSpy.swift
+//  CharacterListRouterSpy.swift
 //  RickAndMortyTests
 //
 //  Created by Vinícius Couto on 21/10/21.
@@ -8,11 +8,11 @@
 import XCTest
 @testable import RickAndMorty
 
-final class CharacterTableRouterSpy: CharacterTableRouterProtocol {
-    var viewController: CharacterTableViewController?
-    var dataStore: CharacterTableDataStore
+final class CharacterListRouterSpy: CharacterListRouterProtocol {
+    var viewController: CharacterListViewController?
+    var dataStore: CharacterListDataStore
 
-    init(dataStore: CharacterTableDataStore) {
+    init(dataStore: CharacterListDataStore) {
         self.dataStore = dataStore
     }
 

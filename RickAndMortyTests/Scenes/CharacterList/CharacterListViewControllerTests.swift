@@ -1,5 +1,5 @@
 //
-//  CharacterTableViewControllerTests.swift
+//  CharacterListViewControllerTests.swift
 //  RickAndMortyTests
 //
 //  Created by Vinícius Couto on 18/10/21.
@@ -8,17 +8,17 @@
 import XCTest
 @testable import RickAndMorty
 
-class CharacterTableViewControllerTests: XCTestCase {
+class CharacterListViewControllerTests: XCTestCase {
     // MARK: - Attributes
 
     private let window = UIWindow()
     private let tableViewSpy = TableViewSpy()
-    private let interactorSpy = CharacterTableInteractorSpy(presenter: CharacterTablePresenterDummy())
-    private lazy var routerSpy = CharacterTableRouterSpy(dataStore: interactorSpy)
+    private let interactorSpy = CharacterListInteractorSpy(presenter: CharacterListPresenterDummy())
+    private lazy var routerSpy = CharacterListRouterSpy(dataStore: interactorSpy)
 
     // MARK: - Subject under test
 
-    private lazy var sut = CharacterTableViewController(interactor: interactorSpy, router: routerSpy)
+    private lazy var sut = CharacterListViewController(interactor: interactorSpy, router: routerSpy)
 
     // MARK: - Test setup
 
@@ -57,7 +57,7 @@ class CharacterTableViewControllerTests: XCTestCase {
 
         let dummySections = ["M", "R", "S"]
         let dummyCharacters = [[Fixtures.RMCharacters.morty], [Fixtures.RMCharacters.rick], [Fixtures.RMCharacters.summer]]
-        let dummyViewModel = CharacterTable.FetchData.ViewModel(characters: dummyCharacters, sections: dummySections)
+        let dummyViewModel = CharacterList.FetchData.ViewModel(characters: dummyCharacters, sections: dummySections)
 
         // When
         sut.displayCharacters(viewModel: dummyViewModel)
@@ -74,7 +74,7 @@ class CharacterTableViewControllerTests: XCTestCase {
 
         let dummySections = ["M", "R", "S"]
         let dummyCharacters = [[Fixtures.RMCharacters.morty], [Fixtures.RMCharacters.rick], [Fixtures.RMCharacters.summer]]
-        let dummyViewModel = CharacterTable.FilterData.ViewModel(characters: dummyCharacters, sections: dummySections)
+        let dummyViewModel = CharacterList.FilterData.ViewModel(characters: dummyCharacters, sections: dummySections)
 
         // When
         sut.displaySearchResults(viewModel: dummyViewModel)
@@ -90,12 +90,12 @@ class CharacterTableViewControllerTests: XCTestCase {
         let dummyCharacter = Fixtures.RMCharacters.rick
         let dummyCharacters = [[dummyCharacter]]
         let dummySections = ["R"]
-        let dummyViewModel = CharacterTable.FetchData.ViewModel(characters: dummyCharacters, sections: dummySections)
+        let dummyViewModel = CharacterList.FetchData.ViewModel(characters: dummyCharacters, sections: dummySections)
         sut.displayCharacters(viewModel: dummyViewModel)
 
         // When
         let indexPath = IndexPath(row: 0, section: 0)
-        let cell = sut.tableView(sut.tableView!, cellForRowAt: indexPath) as! CharacterTableViewCell
+        let cell = sut.tableView(sut.tableView!, cellForRowAt: indexPath) as! CharacterListViewCell
 
         // Then
         XCTAssertEqual(cell.character, dummyCharacter)
@@ -107,7 +107,7 @@ class CharacterTableViewControllerTests: XCTestCase {
         let dummyCharacter = Fixtures.RMCharacters.rick
         let dummyCharacters = [[dummyCharacter]]
         let dummySections = ["R"]
-        let dummyViewModel = CharacterTable.FetchData.ViewModel(characters: dummyCharacters, sections: dummySections)
+        let dummyViewModel = CharacterList.FetchData.ViewModel(characters: dummyCharacters, sections: dummySections)
         sut.displayCharacters(viewModel: dummyViewModel)
 
         // When

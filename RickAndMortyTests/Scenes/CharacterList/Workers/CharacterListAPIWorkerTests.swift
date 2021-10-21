@@ -1,5 +1,5 @@
 //
-//  CharacterTableAPIWorkerTests.swift
+//  CharacterListAPIWorkerTests.swift
 //  RickAndMortyTests
 //
 //  Created by Vinícius Couto on 16/10/21.
@@ -8,10 +8,10 @@
 import XCTest
 @testable import RickAndMorty
 
-final class CharacterTableAPIWorkerTests: XCTestCase {
+final class CharacterListAPIWorkerTests: XCTestCase {
     // MARK: - Attributes
 
-    private let sut = CharacterTableAPIWorker()
+    private let sut = CharacterListAPIWorker()
 
     // MARK: - Stubs
 
