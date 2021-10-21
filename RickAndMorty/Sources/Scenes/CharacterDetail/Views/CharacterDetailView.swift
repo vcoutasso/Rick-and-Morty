@@ -92,6 +92,8 @@ class CharacterDetailView: UIView {
     // MARK: - Setup
 
     func setup() {
+        accessibilityIdentifier = characterData?.name
+        
         setupBackgroundView()
         setupCardView()
         setupCharacterImageView()
