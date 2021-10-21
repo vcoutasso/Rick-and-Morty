@@ -119,7 +119,6 @@ class CharacterListViewControllerTests: XCTestCase {
 
     func testShouldReloadDataOnPull() {
         // Given
-        let tableViewSpy = TableViewSpy()
         sut.tableView = tableViewSpy
         loadView()
 
