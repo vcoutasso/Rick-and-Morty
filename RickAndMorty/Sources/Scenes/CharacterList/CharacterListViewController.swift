@@ -67,6 +67,8 @@ class CharacterListViewController: UITableViewController, CharacterListDisplayLo
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        view.accessibilityIdentifier = title
+
         setupTableView()
         fetchCharacters()
     }
@@ -150,7 +152,10 @@ class CharacterListViewController: UITableViewController, CharacterListDisplayLo
             return CharacterListViewCell()
         }
 
-        cell.setup(with: characters[indexPath.section][indexPath.row])
+        let selectedCharacter = characters[indexPath.section][indexPath.row]
+
+        cell.setup(with: selectedCharacter)
+        cell.accessibilityIdentifier = selectedCharacter.name
 
         return cell
     }
