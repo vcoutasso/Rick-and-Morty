@@ -9,12 +9,15 @@ import XCTest
 @testable import RickAndMorty
 
 final class CharacterListPresenterTests: XCTestCase {
-    // MARK: Attributse
+    // MARK: - Test doubles
 
     private let viewControllerSpy = CharacterListViewControllerSpy()
+
+    // MARK: - Subject under test
+
     private let sut = CharacterListPresenter()
 
-    // MARK: Test lifecycle
+    // MARK: - Test lifecycle
 
     override func setUp() {
         super.setUp()
@@ -26,35 +29,28 @@ final class CharacterListPresenterTests: XCTestCase {
 
     func testPresentCharactersDataShouldDisplayCharacters() {
         // Given
-
         let response: CharacterList.FetchData.Response = .init(characters: [])
 
         // When
-
         sut.presentFetchedData(response: response)
 
         // Then
-
         XCTAssert(viewControllerSpy.displayCharactersCalled)
     }
 
     func testPresentFilteredDataShouldDisplaySearchResults() {
         // Given
-
         let response: CharacterList.FilterData.Response = .init(characters: [])
 
         // When
-
         sut.presentFilteredData(response: response)
 
         // Then
-
         XCTAssert(viewControllerSpy.displaySearchResultsCalled)
     }
 
     func testCharacterListToListOfSections() {
         // Given
-
         let dummyCharacters = [Fixtures.RMCharacters.rick, Fixtures.RMCharacters.morty, Fixtures.RMCharacters.summer]
         let dummyResponse = CharacterList.FilterData.Response(characters: dummyCharacters)
 
@@ -63,11 +59,9 @@ final class CharacterListPresenterTests: XCTestCase {
         let expectedViewModel = CharacterList.FilterData.ViewModel(characters: sortedSortedCharacters, sections: sortedSectionNames)
 
         // When
-
         sut.presentFilteredData(response: dummyResponse)
 
         // Then
-
         XCTAssertEqual(viewControllerSpy.displaySearchResultsPassedViewModel, expectedViewModel)
     }
 }

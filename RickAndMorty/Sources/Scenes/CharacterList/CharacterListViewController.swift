@@ -15,8 +15,8 @@ protocol CharacterListDisplayLogic: AnyObject {
 class CharacterListViewController: UITableViewController, CharacterListDisplayLogic {
     // MARK: - Attributes
 
-    var interactor: CharacterListInteractorProtocol
-    var router: CharacterListRouterProtocol
+    private(set) var interactor: CharacterListInteractorProtocol
+    private(set) var router: CharacterListRouterProtocol
 
     // MARK: - Table Data
 
@@ -41,6 +41,7 @@ class CharacterListViewController: UITableViewController, CharacterListDisplayLo
         setup()
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -158,10 +159,14 @@ class CharacterListViewController: UITableViewController, CharacterListDisplayLo
         router.routeToCharacterDetail()
     }
 
-    // REVIEW: Could probably use some refactoring
+    // REVIEW: Needs refactoring. Also, needs testing
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let worker = FavoriteCharacterWorker()
+        let managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        let coreDataStore = CoreDataStore(context: managedObjectContext)
+
+        let worker = FavoriteCharacterWorker(context: managedObjectContext, dataStore: coreDataStore)
         let id = characters[indexPath.section][indexPath.row].id
+        
         let actionHandler: UIContextualAction.Handler = { action, view, completion in
             worker.toggleFavorite(for: id)
             completion(true)
@@ -187,6 +192,7 @@ extension CharacterListViewController: UISearchBarDelegate {
     }
 
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchController.searchBar.text = ""
         self.searchBar(searchBar, textDidChange: "")
     }
 }

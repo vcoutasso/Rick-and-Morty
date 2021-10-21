@@ -16,7 +16,8 @@ final class CharacterDetailPresenterSpy: CharacterDetailPresenterProtocol {
       presentCharacterDetailCalled = true
     }
 
+    private(set) var presentFavoriteIconCalled = false
     func presentFavoriteIcon(response: CharacterDetail.Favorite.Response) {
-        fatalError("not implemented")
+        presentFavoriteIconCalled = true
     }
 }

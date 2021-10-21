@@ -10,7 +10,7 @@ import XCTest
 
 final class CharacterListInteractorSpy: CharacterListInteractorProtocol {
     var presenter: CharacterListPresenterProtocol
-    var characters: [RMCharacter]?
+    var characters = [RMCharacter]()
 
     init(presenter: CharacterListPresenterProtocol) {
         self.presenter = presenter

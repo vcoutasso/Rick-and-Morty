@@ -13,7 +13,7 @@ protocol CharacterListBusinessLogic {
 }
 
 protocol CharacterListDataStore {
-    var characters: [RMCharacter]? { get }
+    var characters: [RMCharacter] { get }
 }
 
 protocol CharacterListInteractorProtocol: CharacterListBusinessLogic, CharacterListDataStore {
@@ -23,11 +23,11 @@ protocol CharacterListInteractorProtocol: CharacterListBusinessLogic, CharacterL
 class CharacterListInteractor: CharacterListInteractorProtocol {
     var presenter: CharacterListPresenterProtocol
 
-    var apiWorker: CharacterListAPIWorkerProtocol
-    var filterWorker: CharacterListFilterWorkerProtocol
-    var favoritesWorker: FavoriteCharacterWorkerProtocol
+    private(set) var apiWorker: CharacterListAPIWorkerProtocol
+    private(set) var filterWorker: CharacterListFilterWorkerProtocol
+    private(set) var favoritesWorker: FavoriteCharacterWorkerProtocol
 
-    var characters: [RMCharacter]?
+    var characters = [RMCharacter]()
 
     // MARK: - Object lifecycle
 
@@ -55,11 +55,11 @@ class CharacterListInteractor: CharacterListInteractorProtocol {
     // MARK: - Filter Data
 
     func filterData(request: CharacterList.FilterData.Request) {
-        guard let characters = characters else { return }
+        if !characters.isEmpty {
+            let filteredCharacters = filterWorker.filterCharacters(characters, contains: request.searchText)
+            let response = CharacterList.FilterData.Response(characters: filteredCharacters)
 
-        let filteredCharacters = filterWorker.filterCharacters(characters, contains: request.searchText)
-        let response = CharacterList.FilterData.Response(characters: filteredCharacters)
-
-        presenter.presentFilteredData(response: response)
+            presenter.presentFilteredData(response: response)
+        }
     }
 }

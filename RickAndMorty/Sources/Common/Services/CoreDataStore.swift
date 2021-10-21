@@ -8,13 +8,15 @@
 import CoreData
 
 protocol CoreDataStoreProtocol {
+    var context: NSManagedObjectContext { get }
+
     func fetchFavoritedStatus(for id: Int) -> Bool
     func addFavorite(id: Int)
     func removeFavorite(id: Int)
 }
 
 class CoreDataStore: CoreDataStoreProtocol {
-    let context: NSManagedObjectContext
+    var context: NSManagedObjectContext
 
     init(context: NSManagedObjectContext) {
         self.context = context

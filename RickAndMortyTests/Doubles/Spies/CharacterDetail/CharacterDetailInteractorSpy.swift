@@ -26,7 +26,8 @@ final class CharacterDetailInteractorSpy: CharacterDetailInteractorProtocol {
         getFavoriteCalled = true
     }
 
+    private(set) var setFavoriteCalled = false
     func setFavorite(request: CharacterDetail.Favorite.Request) {
-        fatalError("not implemented")
+        setFavoriteCalled = true
     }
 }

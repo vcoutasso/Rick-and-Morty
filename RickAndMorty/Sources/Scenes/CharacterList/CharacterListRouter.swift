@@ -42,8 +42,11 @@ class CharacterListRouter: CharacterListRouterProtocol {
     // MARK: - Routing
 
     func routeToCharacterDetail() {
+        let managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        let coreDataStore = CoreDataStore(context: managedObjectContext)
+
         let detailPresenter = CharacterDetailPresenter()
-        let favoriteWorker = FavoriteCharacterWorker()
+        let favoriteWorker = FavoriteCharacterWorker(context: managedObjectContext, dataStore: coreDataStore)
         let detailInteractor = CharacterDetailInteractor(presenter: detailPresenter, worker: favoriteWorker)
         let detailRouter = CharacterDetailRouter(dataStore: detailInteractor)
 
@@ -67,6 +70,6 @@ class CharacterListRouter: CharacterListRouterProtocol {
         let selectedIndexPath = viewController?.tableView.indexPathForSelectedRow
         let cell = viewController?.tableView.cellForRow(at: selectedIndexPath!) as! CharacterListViewCell
         let selectedCharacter = cell.character!
-        destination.character = source.characters?.first { $0.id == selectedCharacter.id }
+        destination.character = source.characters.first { $0.id == selectedCharacter.id }
     }
 }

@@ -13,10 +13,10 @@ protocol CharacterDetailDisplayLogic: AnyObject {
 }
 
 class CharacterDetailViewController: UIViewController, CharacterDetailDisplayLogic {
-    var interactor: CharacterDetailInteractorProtocol
-    var router:  CharacterDetailRouterProtocol
+    private(set) var interactor: CharacterDetailInteractorProtocol
+    private(set) var router:  CharacterDetailRouterProtocol
 
-    private lazy var detailView = CharacterDetailView()
+    private(set) lazy var detailView = CharacterDetailView()
 
     // MARK: Object lifecycle
 
