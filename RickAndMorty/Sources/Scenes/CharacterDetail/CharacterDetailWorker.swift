@@ -6,11 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 protocol CharacterDetailWorkerProtocol {
-    func doSomeWork()
-}
-
-class CharacterDetailWorker: CharacterDetailWorkerProtocol {
-    func doSomeWork() {}
 }

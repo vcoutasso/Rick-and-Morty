@@ -91,6 +91,11 @@ class CharacterDetailViewController: UIViewController, CharacterDetailDisplayLog
         getFavoriteButton()
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationItem.rightBarButtonItems = nil
+    }
+
     // MARK: Get character
 
     func getCharacter() {

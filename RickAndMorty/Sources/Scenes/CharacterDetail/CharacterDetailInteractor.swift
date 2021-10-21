@@ -19,7 +19,7 @@ protocol CharacterDetailDataStore {
 
 class CharacterDetailInteractor: CharacterDetailBusinessLogic, CharacterDetailDataStore {
     var presenter: CharacterDetailPresentationLogic?
-    var worker: CharacterDetailWorker?
+    var worker: FavoriteCharacterWorkerProtocol? = FavoriteCharacterWorker()
 
     var character: RMCharacter!
 
@@ -28,28 +28,39 @@ class CharacterDetailInteractor: CharacterDetailBusinessLogic, CharacterDetailDa
     func getCharacter(request: CharacterDetail.Character.Request) {
         character = request.character
 
-        let isFavorite = false
+        let isFavorite = isFavorite(id: character.id)
 
         let response = CharacterDetail.Character.Response(character: character!, isFavorite: isFavorite)
         presenter?.presentCharacterDetail(response: response)
     }
 
-    // MARK: - Get/set favorite
+    // MARK: - Get favorite
 
     func getFavorite(request: CharacterDetail.Favorite.Request) {
-        // TODO: Worker must get this from database
-        let isFavorite = Bool.random()
+        let id = request.characterID
+        let isFavorite = isFavorite(id: id)
 
         let response = CharacterDetail.Favorite.Response(isFavorite: isFavorite)
         presenter?.presentFavoriteIcon(response: response)
     }
 
+    // MARK: - Set favorite
+
     func setFavorite(request: CharacterDetail.Favorite.Request) {
-        // TODO: Worker must get this from database
-        var isFavorite = Bool.random()
-        isFavorite.toggle()
+        guard let worker = worker else { return }
+
+        let id = request.characterID
+        worker.toggleFavorite(for: id)
+
+        let isFavorite = isFavorite(id: id)
 
         let response = CharacterDetail.Favorite.Response(isFavorite: isFavorite)
         presenter?.presentFavoriteIcon(response: response)
+    }
+
+    // MARK: - Convenience methods
+
+    private func isFavorite(id: Int) -> Bool {
+        worker?.getFavoritedStatus(for: id) ?? false
     }
 }

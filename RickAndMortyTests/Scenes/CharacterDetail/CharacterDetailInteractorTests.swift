@@ -37,4 +37,8 @@ class CharacterDetailPresentationLogicSpy: CharacterDetailPresentationLogic {
     func presentCharacterDetail(response: CharacterDetail.Character.Response) {
       presentCharacterDetailCalled = true
     }
+
+    func presentFavoriteIcon(response: CharacterDetail.Favorite.Response) {
+        fatalError("not implemented")
+    }
 }

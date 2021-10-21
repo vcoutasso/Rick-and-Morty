@@ -74,4 +74,12 @@ final class CharacterDetailInteractorSpy: CharacterDetailBusinessLogic, Characte
     func getCharacter(request: CharacterDetail.Character.Request) {
         getCharacterCalled = true
     }
+
+    func getFavorite(request: CharacterDetail.Favorite.Request) {
+        print("not implemented")
+    }
+
+    func setFavorite(request: CharacterDetail.Favorite.Request) {
+        print("not implemented")
+    }
 }
