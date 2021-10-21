@@ -23,9 +23,9 @@ protocol CharacterListInteractorProtocol: CharacterListBusinessLogic, CharacterL
 class CharacterListInteractor: CharacterListInteractorProtocol {
     var presenter: CharacterListPresenterProtocol
 
-    var apiWorker: CharacterListAPIWorkerProtocol
-    var filterWorker: CharacterListFilterWorkerProtocol
-    var favoritesWorker: FavoriteCharacterWorkerProtocol
+    private(set) var apiWorker: CharacterListAPIWorkerProtocol
+    private(set) var filterWorker: CharacterListFilterWorkerProtocol
+    private(set) var favoritesWorker: FavoriteCharacterWorkerProtocol
 
     var characters: [RMCharacter]?
 

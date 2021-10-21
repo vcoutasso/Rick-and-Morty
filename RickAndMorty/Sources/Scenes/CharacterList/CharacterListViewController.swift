@@ -15,8 +15,8 @@ protocol CharacterListDisplayLogic: AnyObject {
 class CharacterListViewController: UITableViewController, CharacterListDisplayLogic {
     // MARK: - Attributes
 
-    var interactor: CharacterListInteractorProtocol
-    var router: CharacterListRouterProtocol
+    private(set) var interactor: CharacterListInteractorProtocol
+    private(set) var router: CharacterListRouterProtocol
 
     // MARK: - Table Data
 
